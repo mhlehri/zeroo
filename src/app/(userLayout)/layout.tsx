@@ -8,7 +8,7 @@ import "../globals.css";
 import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 
 const lato = Lato({
-  weight: ["400", "900", "700"],
+  weight: ["400", "900", "700", "300", "100"],
   variable: "--font-lato-sans",
   subsets: ["latin"],
 });

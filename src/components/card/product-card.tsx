@@ -1,25 +1,33 @@
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 export default function ProductCard({ product }: { product: TProduct }) {
+  console.log(product?.images[0], "Product Image");
   return (
-    <Card>
-      <CardHeader>
-        <Image src={"/1.jpg"} width={300} height={200} alt="" />
+    <Card className="overflow-hidden w-full max-w-[230px] md:max-w-[270px]">
+      <CardHeader className="p-2 md:p-3">
+        <Image
+          src={product?.images[0]}
+          className="w-full h-[200px] rounded md:rounded-lg"
+          width={300}
+          height={240}
+          alt={product?.name}
+        />
       </CardHeader>
-      <CardContent className="space-y-2">
-        <h4 className="uppercase font-bold">{product?.name}</h4>
-        <p className="text-sm font-bold">${product?.price.toPrecision(2)}</p>
+      <CardContent className="space-y-3 px-2 md:px-4 pt-0">
+        <h4 className="uppercase text-sm truncate">{product?.name}</h4>
+        <h6 className="text-xl md:text-2xl">
+          ৳
+          <span className="font-bold lg:text-3xl">
+            {product?.price.toFixed(2)}
+          </span>
+        </h6>
+        <Button className="text-xs md:text-sm w-full" size="sm">
+          <ShoppingCart /> Add to Cart
+        </Button>
       </CardContent>
-      <CardFooter className="*:w-full *:uppercase gap-1 flex flex-col">
-        <Button size="xs" className="text-sm">
-          Add to Cart
-        </Button>
-        <Button size="xs" className="text-sm" variant="outline">
-          Buy Now
-        </Button>
-      </CardFooter>
     </Card>
   );
 }

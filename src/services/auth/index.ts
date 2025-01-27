@@ -50,6 +50,6 @@ export async function getCurrentUser() {
 }
 
 export async function logout() {
-    const cookieStore = await cookies();
-    cookieStore.delete("user-token");
+  const cookieStore = await cookies();
+  cookieStore.delete("user-token");
 }

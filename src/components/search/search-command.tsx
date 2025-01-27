@@ -10,6 +10,7 @@ import { useDebounce } from "@/lib/use-debounce";
 import { getProducts } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2, Search } from "lucide-react";
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
@@ -70,13 +71,20 @@ export function CommandDialogSearch() {
                   <div>
                     {products?.map((product: TProduct) => (
                       <div
-                        key={product._id}
+                        key={product?._id}
                         className="flex items-center gap-2 p-2"
                         onSelect={() => {
                           setQuery(product?.name || "");
                           setOpen(false);
                         }}
                       >
+                        <Image
+                        className="rounded-lg"
+                          src={product?.images[0]}
+                          alt={product?.name}
+                          width={50}
+                          height={50}
+                        />
                         <div className="flex flex-col">
                           <span className="font-medium">{product.name}</span>
                           <span className="text-sm text-muted-foreground">

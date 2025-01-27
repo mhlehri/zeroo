@@ -11,7 +11,7 @@ export default {
     extend: {
       container: {
         screens: {
-          "2xl": "1280px",
+          "2xl": "1440px",
         },
         padding: "4px",
         center: true,
