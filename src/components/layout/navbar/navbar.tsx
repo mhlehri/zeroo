@@ -8,14 +8,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useCategories } from "@/hooks/use-category";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import BottomNavigation from "./bottom-navigation";
 import RightSide from "./right-side";
-import { useQuery } from "@tanstack/react-query";
-import { getCategories } from "@/services/category";
-import { Loader2 } from "lucide-react";
 
 type TLink = {
   href: string;
@@ -78,15 +77,7 @@ export default function Navbar() {
     };
   }, [isMobile]);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["categories"],
-    queryFn: async () => {
-      const result = await getCategories();
-      console.log(result?.data, "result");
-      return result?.data;
-    },
-  });
-  const { categories } = data || [];
+  const { categories, isCategoriesLoading } = useCategories();
 
   console.log(categories, "categories");
 
@@ -136,7 +127,7 @@ export default function Navbar() {
                                   .toLocaleLowerCase()}`}
                               ></ListItem>
                             ))
-                          ) : isLoading ? (
+                          ) : isCategoriesLoading ? (
                             <div className="flex items-center justify-center p-4">
                               <Loader2 className="h-6 w-6 animate-spin" />
                             </div>

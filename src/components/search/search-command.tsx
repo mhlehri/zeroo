@@ -6,38 +6,44 @@ import {
   CommandInput,
   CommandList,
 } from "@/components/ui/command";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { useProducts } from "@/hooks/use-product";
 import { useDebounce } from "@/lib/use-debounce";
-import { getProducts } from "@/services/product";
-import { useQuery } from "@tanstack/react-query";
 import { Loader2, Search } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
-import { Input } from "../ui/input";
+import { useRouter } from "next/navigation";
+import { type KeyboardEvent, useState } from "react";
 
 export function CommandDialogSearch() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
-  const debouncedQuery = useDebounce(query, 500);
+  const debouncedQuery = useDebounce(query, 300);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["products", debouncedQuery],
-    queryFn: async () => {
-      const result = await getProducts({ searchTerm: debouncedQuery });
-      console.log(result, "Fetched Result");
-      return result; // Ensure the API returns { data: { products: [...] } }
-    },
+  const { products, isLoading } = useProducts({
+    query: debouncedQuery,
   });
-
-  // Memoize products to avoid unnecessary re-renders
-  const products = useMemo(() => data?.data?.products || [], [data]);
-  console.log(debouncedQuery, "Debounced Query");
-  console.log(query, "Query");
-  console.log(products, "products");
 
   const handleSearch = (value: string) => {
     setQuery(value);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (query.trim()) {
+        router.push(`/products?query=${encodeURIComponent(query.trim())}`);
+        setOpen(false);
+      }
+    }
+  };
+
+  const handleProductClick = (productName: string) => {
+    setQuery(productName);
+    router.push(`/products?query=${encodeURIComponent(productName)}`);
+    setOpen(false);
   };
 
   return (
@@ -46,7 +52,7 @@ export function CommandDialogSearch() {
         <Input
           placeholder="Search by products..."
           className="bg-black/5 rounded-lg border-primary-200 hover:placeholder:text-black placeholder:text-black/50 py-0 hidden md:block text-sm"
-          onFocus={() => setOpen(true)} // Open dialog on focus
+          onFocus={() => setOpen(true)}
         />
         <Search className="text-primary md:absolute right-2 top-[20%]" />
       </DialogTrigger>
@@ -56,6 +62,7 @@ export function CommandDialogSearch() {
             placeholder="Search products..."
             value={query}
             onValueChange={handleSearch}
+            onKeyDown={handleKeyDown}
           />
           <CommandList>
             {isLoading ? (
@@ -72,15 +79,12 @@ export function CommandDialogSearch() {
                     {products?.map((product: TProduct) => (
                       <div
                         key={product?._id}
-                        className="flex items-center gap-2 p-2"
-                        onSelect={() => {
-                          setQuery(product?.name || "");
-                          setOpen(false);
-                        }}
+                        className="flex items-center gap-2 p-2 cursor-pointer hover:bg-accent"
+                        onClick={() => handleProductClick(product?.name)}
                       >
                         <Image
-                        className="rounded-lg"
-                          src={product?.images[0]}
+                          className="rounded-lg"
+                          src={product?.images[0] || "/placeholder.svg"}
                           alt={product?.name}
                           width={50}
                           height={50}

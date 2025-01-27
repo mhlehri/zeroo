@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/services/product";
-import { useDebounce } from "@/lib/use-debounce";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 type TProductParams = {
   query?: string;
@@ -17,16 +16,16 @@ export function useProducts({
   category,
 }: TProductParams) {
   const [products, setProducts] = useState<TProduct[]>([]);
-  const debouncedQuery = useDebounce(query, 300);
-  if (debouncedQuery && debouncedQuery?.length > 0) {
+
+  if (query && query?.length > 0) {
     sortOrder = "";
     limit = 10;
     category = "";
   }
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["products", debouncedQuery, sortOrder, limit, category],
+    queryKey: ["products", query, sortOrder, limit, category],
     queryFn: () =>
-      getProducts({ searchTerm: debouncedQuery, sortOrder, limit, category }),
+      getProducts({ searchTerm: query, sortOrder, limit, category }),
   });
 
   useEffect(() => {
