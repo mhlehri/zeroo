@@ -37,15 +37,26 @@ import { useProducts } from "@/hooks/use-product";
 import { DataTableColumnHeader } from "./column-header";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
+import ProductModal from "../modal/product-modal";
+import Image from "next/image";
 
 export const columns: ColumnDef<TProduct>[] = [
-  // {
-  //   accessorKey: "serial",
-  //   header: "SN.",
-  //   cell: ({ row, table }) => (
-  //     <div>{table.getRowModel().rows.indexOf(row) + 1}</div>
-  //   ),
-  // },
+  {
+    accessorKey: "images",
+    header: "Image",
+    cell: ({ row }) => {
+      const images = row.getValue("images") as string[];
+      return (
+        <Image
+          src={images[0]}
+          alt={row.getValue("name")}
+          width={50}
+          height={50}
+          className="size-12 rounded"
+        />
+      );
+    },
+  },
   {
     accessorKey: "name",
     header: "Name",
@@ -85,32 +96,39 @@ export const columns: ColumnDef<TProduct>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const product = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product.name)}
-            >
-              Copy Product Name
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Product</DropdownMenuItem>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <ActionCell product={product} />;
     },
   },
 ];
+
+const ActionCell = ({ product }: { product: TProduct }) => {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuItem
+          onClick={() => navigator.clipboard.writeText(product.name)}
+        >
+          Copy Product Name
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <ProductModal product={product}>View Product</ProductModal>
+        </DropdownMenuItem>
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
 
 export default function ProductList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);

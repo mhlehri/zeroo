@@ -57,7 +57,7 @@ export function CommandDialogSearch() {
         <Search className="text-primary md:absolute right-2 top-[20%]" />
       </DialogTrigger>
       <DialogContent
-        className="overflow-hidden p-0 shadow-lg top-[20%] fixed translate-y-[-20%]"
+        className="overflow-hidden p-0 shadow-lg top-[20%] md:top-[50%]  md:translate-y-[-50%] fixed translate-y-[-20%]"
         dir=""
       >
         <Command>
