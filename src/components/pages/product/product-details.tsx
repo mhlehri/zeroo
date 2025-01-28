@@ -6,7 +6,12 @@ import EmblaCarousel from "./EmblaCarousel";
 
 export default function ProductDetails({ product }: { product: TProduct }) {
   const slides = product?.images;
-  const { name, price, description, stock } = product || {};
+  const { name, price, description, stock } = product || {
+    name: "",
+    price: 0,
+    description: "",
+    stock: 0,
+  };
   const rating = 4;
   const [quantity, setQuantity] = useState(1);
 
@@ -32,7 +37,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
           <span className="ml-2 text-gray-600">({rating} out of 5 stars)</span>
         </div>
         <p className="text-2xl text-gray-900">
-          ৳<span className="font-bold">{price.toFixed(2)}</span>
+          ৳<span className="font-bold">{price?.toFixed(2)}</span>
         </p>
         <p className="text-gray-700">{description}</p>
 

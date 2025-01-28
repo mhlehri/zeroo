@@ -1,5 +1,9 @@
-import React from "react";
+import CategoryList from "@/components/data-table/category-list";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="container">
+      <CategoryList />
+    </div>
+  );
 }

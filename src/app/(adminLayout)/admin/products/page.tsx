@@ -1,5 +1,9 @@
-import React from "react";
+import ProductList from "@/components/data-table/product-list";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="container">
+      <ProductList />
+    </div>
+  );
 }

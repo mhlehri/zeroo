@@ -1,5 +1,9 @@
-import React from "react";
+import { DataTableDemo } from "@/components/data-table/order-list";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div>
+      <DataTableDemo />
+    </div>
+  );
 }

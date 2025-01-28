@@ -53,7 +53,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <div className="lg:max-w-lg w-full mx-auto">
       <div className="overflow-hidden" ref={emblaMainRef}>
         <div className="flex touch-pan-y">
-          {slides.map((img, index) => (
+          {slides?.map((img, index) => (
             <div className="flex-[0_0_100%] min-w-0" key={index}>
               <Card className="w-full aspect-square flex items-center justify-center overflow-hidden">
                 <Image
@@ -71,7 +71,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
       <div className="mt-4 overflow-hidden" ref={emblaThumbsRef}>
         <div className="flex space-x-2">
-          {slides.map((img, index) => (
+          {slides?.map((img, index) => (
             <Thumb
               key={index}
               onClick={() => onThumbClick(index)}

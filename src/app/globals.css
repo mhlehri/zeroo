@@ -7,7 +7,25 @@
   body {
     @apply bg-gray-50;
   }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
 
+::-webkit-scrollbar-thumb {
+  background: #c4c4c4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a6a6a6;
+}
+
+::-webkit-scrollbar-track {
+  background: #f4f4f4;
+  border-radius: 4px;
+}
   :root {
     --radius: 0.5rem;
     --sidebar-background: 0 0% 98%;
