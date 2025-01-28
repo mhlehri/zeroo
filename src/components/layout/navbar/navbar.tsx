@@ -15,6 +15,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import BottomNavigation from "./bottom-navigation";
 import RightSide from "./right-side";
+import { useRouter } from "next/navigation";
 
 type TLink = {
   href: string;
@@ -45,7 +46,7 @@ export default function Navbar() {
   // const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     const toggleVisibility = () => {
       if (isMobile) return; // Prevent sticky behavior for mobile devices
@@ -78,8 +79,6 @@ export default function Navbar() {
   }, [isMobile]);
 
   const { categories, isCategoriesLoading } = useCategories();
-
-  console.log(categories, "categories");
 
   return (
     <>
@@ -120,12 +119,13 @@ export default function Navbar() {
                           {categories?.length > 0 ? (
                             categories?.map((category: TCategory) => (
                               <ListItem
+                                onClick={() => router.push("/dashboard")}
                                 key={category.name}
                                 title={category.name}
                                 href={`${category.name
                                   .replace(/\s+/g, "-")
                                   .toLocaleLowerCase()}`}
-                              ></ListItem>
+                              />
                             ))
                           ) : isCategoriesLoading ? (
                             <div className="flex items-center justify-center p-4">
@@ -144,7 +144,6 @@ export default function Navbar() {
           {isSticky && <RightSide />}
         </div>
       </div>
-
       <BottomNavigation categories={categories} />
     </>
   );

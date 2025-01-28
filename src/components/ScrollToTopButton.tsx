@@ -31,9 +31,14 @@ export function ScrollToTopButton() {
   return (
     <>
       {isVisible && (
-        <div className="fixed bottom-12 md:bottom-4 right-4">
-          <Button onClick={scrollToTop} size="icon" className="rounded-full">
-            <ChevronUp className="h-4 w-4" />
+        <div className="fixed bottom-20 md:bottom-4 right-4">
+          <Button
+            onClick={scrollToTop}
+            variant="outline"
+            size="icon"
+            className="rounded-full bg-transparent"
+          >
+            <ChevronUp className="h-4 w-4 text-primary" />
           </Button>
         </div>
       )}

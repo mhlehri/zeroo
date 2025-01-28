@@ -1,4 +1,4 @@
-// "use server";
+"use server";
 import ax from "@/lib/axios-instance";
 import axios from "axios";
 

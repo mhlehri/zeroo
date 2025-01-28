@@ -16,7 +16,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
           alt={product?.name}
         />
       </CardHeader>
-      <CardContent className="space-y-3 px-2 md:px-4 pt-0">
+      <CardContent className="space-y-3 px-2 md:px-4 pt-0 pb-0">
         <h4 className="uppercase text-sm truncate">{product?.name}</h4>
         <h6 className="text-xl md:text-2xl">
           ৳

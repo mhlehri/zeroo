@@ -1,14 +1,17 @@
 import Product from "@/components/pages/product/product";
 
-export default function page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams: { query: string };
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { query } = searchParams;
+  const { query = "" } = await searchParams;
+  const queryString = Array.isArray(query) ? query[0] || "" : query;
+
+  console.log(queryString);
   return (
     <div className="container">
-      <Product query={query} />
+      <Product query={queryString} />
     </div>
   );
 }

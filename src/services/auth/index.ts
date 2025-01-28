@@ -33,11 +33,14 @@ export async function signupAction(formData: FieldValues) {
     throw error;
   }
 }
+export const getToken = async () => {
+  const cookieStore = await cookies();
+  return cookieStore.get("user-token")?.value;
+};
 
 export async function getCurrentUser() {
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get("user-token")?.value;
+    const token = await getToken();
     if (!token) {
       return null;
     }

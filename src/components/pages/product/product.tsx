@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { useProducts } from "@/hooks/use-product";
-import { Loader2, Search } from "lucide-react";
+import { Filter, Loader2, Search } from "lucide-react";
 import { useState } from "react";
 
 export default function Product({ query }: { query: string }) {
@@ -42,10 +42,9 @@ export default function Product({ query }: { query: string }) {
   console.log("selectedCategory =>", selectedCategory, "from product.tsx");
 
   return (
-    <div className="container my-4 md:my-6 space-y-5">
+    <div className="container my-2 md:my-6 space-y-3 md:space-y-5">
       <div className="flex justify-between items-center">
-        {/* <h1 className="text-xl md:text-2xl lg:text-3xl font-bold">Products</h1> */}
-        <Breadcrumb>
+        <Breadcrumb className="hidden md:block">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -56,8 +55,11 @@ export default function Product({ query }: { query: string }) {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <Button variant="outline" className="text-xs md:text-sm flex md:hidden">
+          <Filter /> Filters
+        </Button>
         <Select value={sortOrder} onValueChange={setSortOrder}>
-          <SelectTrigger className="w-[180px]">
+          <SelectTrigger className="w-fit text-xs md:text-sm">
             <SelectValue placeholder="Sort by" />
           </SelectTrigger>
           <SelectContent>

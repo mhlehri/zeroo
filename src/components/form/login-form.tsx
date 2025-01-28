@@ -28,7 +28,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const {setLoading} =useUser()
+  const { setLoading } = useUser();
   const redirect = searchParams.get("redirect") || "/";
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -47,7 +47,7 @@ export default function LoginForm() {
       toast.success(res.message, {
         richColors: true,
       });
-setLoading(true)
+      setLoading(true);
       router.push(redirect);
     } else {
       toast.error(res.message, {
@@ -59,7 +59,10 @@ setLoading(true)
   return (
     <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-3 md:space-y-4"
+        >
           <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
             Login
           </h3>
