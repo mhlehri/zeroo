@@ -1,4 +1,4 @@
-import { getProducts } from "@/services/product";
+import { getProductById, getProducts } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -37,4 +37,17 @@ export function useProducts({
   }, [data]);
 
   return { products, isLoading, isError };
+}
+
+export function useProductById(id: string) {
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["products", id],
+    queryFn: () => getProductById(id),
+  });
+
+  return { product, isLoading, isError };
 }

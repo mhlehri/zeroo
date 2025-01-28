@@ -30,9 +30,9 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
         primary: {
-          DEFAULT: "#f59e0b", // Changed to amber-500 hex color
+          DEFAULT: "#475569", // Changed to slate-600 hex color
           // eslint-disable-next-line @typescript-eslint/no-require-imports
-          ...require("tailwindcss/colors").amber,
+          ...require("tailwindcss/colors").slate,
         },
       },
       borderRadius: {

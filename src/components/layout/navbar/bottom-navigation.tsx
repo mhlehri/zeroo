@@ -22,7 +22,7 @@ export default function BottomNavigation({ categories }: NavProps) {
   }, [pathname]);
   console.log(pathname, isProductPage);
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-amber-200 md:hidden">
+    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-slate-200 md:hidden">
       <div
         className={`grid h-full max-w-lg  mx-auto ${
           isProductPage ? "grid-cols-4" : "grid-cols-3"

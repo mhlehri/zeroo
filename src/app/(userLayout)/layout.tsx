@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${lato.variable} antialiased`}>
+      <body className={` ${lato.variable} antialiased text-slate-900`}>
         <Provider>
           <Navbar />
           {children}

@@ -27,12 +27,10 @@ export async function getProducts({
   }
 }
 
-export async function getProductByName() {
+export async function getProductById(id: string) {
   try {
-    const { data } = await ax.get(`/products`, {
-      params: { name },
-    });
-    return data;
+    const { data } = await ax.get(`/products/${id}`);
+    return data.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return error.response.data;

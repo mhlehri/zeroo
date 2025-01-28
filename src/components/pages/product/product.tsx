@@ -1,4 +1,5 @@
 "use client";
+import CardSkeleton from "@/components/card/card-skeleton";
 import ProductCard from "@/components/card/product-card";
 import {
   Breadcrumb,
@@ -18,13 +19,23 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { useProducts } from "@/hooks/use-product";
-import { Filter, Loader2, Search } from "lucide-react";
-import { useState } from "react";
+import { Filter, Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function Product({ query }: { query: string }) {
+export default function Product({
+  query,
+  category,
+  sort,
+}: {
+  query: string;
+  category: string;
+  sort: string;
+}) {
   const [sortOrder, setSortOrder] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  console.log("Query =>", query, "from product.tsx");
+  console.log("Category =>", category, "from product.tsx");
+  console.log("selectedCategory =>", selectedCategory, "from product.tsx");
   const { products, isLoading, isError } = useProducts({
     sortOrder,
     category: selectedCategory,
@@ -40,6 +51,11 @@ export default function Product({ query }: { query: string }) {
     "from product.tsx"
   );
   console.log("selectedCategory =>", selectedCategory, "from product.tsx");
+
+  useEffect(() => {
+    setSelectedCategory(category);
+    setSortOrder(sort ? sort : "");
+  }, [category, sort]);
 
   return (
     <div className="container my-2 md:my-6 space-y-3 md:space-y-5">
@@ -80,8 +96,13 @@ export default function Product({ query }: { query: string }) {
             <h4 className="text-lg uppercase font-medium mb-2">Categories</h4>
             <ul className="flex flex-col">
               {isCategoriesLoading ? (
-                <div className="flex items-center justify-center p-4">
-                  <Loader2 className="h-6 w-6 animate-spin" />
+                <div className="flex flex-col gap-6">
+                  {Array.from({ length: 8 }).map((_, index) => (
+                    <div
+                      key={index}
+                      className="h-2.5 bg-gray-200 rounded w-3/4 animate-pulse"
+                    ></div>
+                  ))}
                 </div>
               ) : (
                 categories &&
@@ -91,7 +112,7 @@ export default function Product({ query }: { query: string }) {
                     variant="link"
                     onClick={() => setSelectedCategory(category?.name)}
                     asChild
-                    className="inline-block cursor-pointer pl-0"
+                    className="inline-block cursor-pointer pl-0 font-normal"
                   >
                     <li>{category.name}</li>
                   </Button>
@@ -102,23 +123,24 @@ export default function Product({ query }: { query: string }) {
         </div>
         <div className="lg:pl-4 w-full">
           {isError && <p>Error fetching data</p>}
-          {isLoading ? (
-            <div className="flex items-center justify-center p-4">
-              <Loader2 className="h-6 w-6 animate-spin" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 place-items-center lg:grid-cols-4 gap-2 sm:gap-4">
-              {products?.length ? (
-                products?.map((product: TProduct) => (
-                  <ProductCard key={product._id} product={product} />
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 place-items-center lg:grid-cols-4 gap-2 sm:gap-4">
+            {isLoading ? (
+              Array(8)
+                .fill(null)
+                .map((_, index) => (
+                  <CardSkeleton key={`${index}-card-skeleton`} />
                 ))
-              ) : (
-                <p className="text-center font-medium text-lg flex gap-2 w-full">
-                  <Search /> No products found
-                </p>
-              )}
-            </div>
-          )}
+            ) : products?.length ? (
+              products?.map((product: TProduct) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            ) : (
+              <p className="text-center font-medium text-lg flex gap-2 w-full">
+                <Search /> No products found
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

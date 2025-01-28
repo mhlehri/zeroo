@@ -5,21 +5,21 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:ring-offset-amber-950 dark:focus-visible:ring-amber-300",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300",
   {
     variants: {
       variant: {
         default:
-          "bg-amber-600 text-amber-50 hover:bg-amber-600/90 dark:bg-amber-50 dark:text-amber-900 dark:hover:bg-amber-50/90",
+          "bg-slate-600 text-slate-50 hover:bg-slate-600/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90",
         destructive:
-          "bg-red-500 text-amber-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-amber-50 dark:hover:bg-red-900/90",
+          "bg-red-500 text-slate-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90",
         outline:
-          "border border-amber-200  bg-white hover:bg-amber-100 text-amber-900 dark:border-amber-800 dark:bg-amber-950 dark:hover:bg-amber-800 dark:hover:text-amber-50",
+          "border border-slate-500 bg-white hover:bg-slate-100 text-slate-800 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50",
         secondary:
-          "bg-amber-100 text-amber-900 hover:bg-amber-100/80 dark:bg-amber-800 dark:text-amber-50 dark:hover:bg-amber-800/80",
+          "bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50 dark:hover:bg-slate-800/80",
         ghost:
-          "hover:bg-amber-100 hover:text-amber-900 dark:hover:bg-amber-800 dark:hover:text-amber-50",
-        link: "text-amber-900 underline-offset-4 hover:underline dark:text-amber-50",
+          "hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-800 dark:hover:text-slate-50",
+        link: "text-slate-800 underline-offset-4 hover:underline dark:text-slate-50",
       },
       size: {
         default: "h-10 px-4 py-2",

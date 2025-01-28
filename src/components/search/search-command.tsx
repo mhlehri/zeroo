@@ -51,7 +51,7 @@ export function CommandDialogSearch() {
       <DialogTrigger className="block w-full md:max-w-sm relative outline-none">
         <Input
           placeholder="Search by products..."
-          className="bg-black/5 rounded-lg outline-none ring-0 border-primary-200 hover:placeholder:text-black placeholder:text-black/50 py-0 hidden md:block text-sm"
+          className="bg-black/5 rounded-lg outline-none ring-0 border-primary-200 hover:placeholder:text-primary-700 placeholder:text-black/50 py-0 hidden md:block text-sm"
           onFocus={() => setOpen(true)}
         />
         <Search className="text-primary md:absolute right-2 top-[20%]" />

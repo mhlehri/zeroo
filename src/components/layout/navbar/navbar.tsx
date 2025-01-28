@@ -37,7 +37,7 @@ const links: TLink[] = [
     label: "Categories",
   },
   {
-    href: "/products?sort=newest",
+    href: "/products?sort=new",
     label: "New Arrivals",
   },
 ];
@@ -83,7 +83,7 @@ export default function Navbar() {
   return (
     <>
       <div className="bg-primary-50/90 backdrop-blur-lg sticky top-0 md:relative z-50">
-        <div className="flex justify-between items-center p-4 gap-6 container border-b border-b-primary-100">
+        <div className="flex justify-between items-center p-4 gap-6 container border-b border-b-primary-200">
           {/* <MobileMenu className="h-fit md:hidden" textHidden={true}/> */}
           <div className="">
             <Link
@@ -119,12 +119,16 @@ export default function Navbar() {
                           {categories?.length > 0 ? (
                             categories?.map((category: TCategory) => (
                               <ListItem
-                                onClick={() => router.push("/dashboard")}
+                                onClick={() => {
+                                  router.push(
+                                    `/products?category=${encodeURIComponent(
+                                      category.name
+                                    )}`
+                                  );
+                                  router.refresh();
+                                }}
                                 key={category.name}
                                 title={category.name}
-                                href={`${category.name
-                                  .replace(/\s+/g, "-")
-                                  .toLocaleLowerCase()}`}
                               />
                             ))
                           ) : isCategoriesLoading ? (
@@ -150,13 +154,13 @@ export default function Navbar() {
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<"div">,
+  React.ComponentPropsWithoutRef<"div">
 >(({ className, title, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
-        <a
+        <div
           ref={ref}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
@@ -165,7 +169,7 @@ const ListItem = React.forwardRef<
           {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
-        </a>
+        </div>
       </NavigationMenuLink>
     </li>
   );
