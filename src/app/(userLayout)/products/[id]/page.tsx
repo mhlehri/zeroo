@@ -10,7 +10,7 @@ export default async function page({
   const product = await getProductById(id);
   console.log(product, "product from product details page");
   return (
-    <div>
+    <div className="container px-4">
       <ProductDetails product={product} />
     </div>
   );

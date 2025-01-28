@@ -1,6 +1,6 @@
-import type React from "react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import type React from "react";
 
 type PropType = {
   selected: boolean;
@@ -21,9 +21,9 @@ export const Thumb: React.FC<PropType> = (props) => {
     >
       <Image
         src={img}
-        className="object-cover w-full h-full"
-        width={80}
-        height={80}
+        className="object-cover w-full h-full bg-gray-300"
+        width={150}
+        height={150}
         alt="Thumb"
       />
     </Button>

@@ -50,7 +50,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaMainApi, onSelect]);
 
   return (
-    <div className="max-w-96 w-full mx-auto">
+    <div className="lg:max-w-lg w-full mx-auto">
       <div className="overflow-hidden" ref={emblaMainRef}>
         <div className="flex touch-pan-y">
           {slides.map((img, index) => (
