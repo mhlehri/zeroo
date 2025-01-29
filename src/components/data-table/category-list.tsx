@@ -36,6 +36,7 @@ import {
 import { useCategories } from "@/hooks/use-category";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
+import CategoryDeleteModal from "../modal/category-delete";
 
 export const columns: ColumnDef<TCategory>[] = [
   //   {
@@ -67,7 +68,7 @@ export const columns: ColumnDef<TCategory>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const product = row.original;
+      const category = row.original;
 
       return (
         <DropdownMenu>
@@ -80,13 +81,17 @@ export const columns: ColumnDef<TCategory>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product._id)}
+              onClick={() => navigator.clipboard.writeText(category._id)}
             >
               Copy Category ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <CategoryDeleteModal id={category._id} name={category.name}>
+                Delete
+              </CategoryDeleteModal>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
