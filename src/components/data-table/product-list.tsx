@@ -39,6 +39,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import ProductModal from "../modal/product-modal";
 import Image from "next/image";
+import ProductDeleteModal from "../modal/product-detele";
 
 export const columns: ColumnDef<TProduct>[] = [
   {
@@ -120,7 +121,11 @@ const ActionCell = ({ product }: { product: TProduct }) => {
           <ProductModal product={product}>View Product</ProductModal>
         </DropdownMenuItem>
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <ProductDeleteModal name={product.name} id={product._id}>
+            Delete
+          </ProductDeleteModal>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

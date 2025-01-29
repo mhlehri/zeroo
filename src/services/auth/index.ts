@@ -36,7 +36,7 @@ export async function signupAction(formData: FieldValues) {
 export async function getUsers() {
   try {
     const { data } = await ax.get("/auth/users");
-    console.log(data, "user");
+    console.log(data, "users");
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

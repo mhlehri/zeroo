@@ -53,7 +53,7 @@ export default function AddCategoryForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const formData = { ...values, images: imageUrl };
+    const formData = { ...values, image: imageUrl };
     if (!imageUrl?.length) {
       setErrorImage(true);
     } else {

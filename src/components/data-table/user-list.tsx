@@ -93,9 +93,9 @@ const ActionCell = ({ user }: { user: TUser }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuItem
-          onClick={() => navigator.clipboard.writeText(user?.name)}
+          onClick={() => navigator.clipboard.writeText(user?.email)}
         >
-          Copy Product Name
+          Copy user email
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -105,7 +105,7 @@ const ActionCell = ({ user }: { user: TUser }) => {
   );
 };
 
-export default function ProductList() {
+export default function UserList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []

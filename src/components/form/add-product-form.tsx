@@ -2,7 +2,7 @@
 import { useCategories } from "@/hooks/use-category";
 import { addProduct } from "@/services/product";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
@@ -61,8 +61,11 @@ export default function AddProductForm() {
       name: "",
       description: "",
       category: "",
+      price: "",
+      stock: "",
     },
   });
+  const queryClient = useQueryClient();
   const { mutate: createProduct } = useMutation<unknown, Error, FieldValues>({
     mutationKey: ["products"],
     mutationFn: async (values: FieldValues) => {
@@ -72,6 +75,7 @@ export default function AddProductForm() {
         toast.success(res.message, {
           richColors: true,
         });
+        queryClient.invalidateQueries({ queryKey: ["products"] });
         form.reset();
         setImageUrls([]);
       } else {
