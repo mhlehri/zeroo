@@ -196,7 +196,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
             <CldUploadWidget
               uploadPreset="zeroo_products"
               onSuccess={(result, { widget }) => {
-                if (typeof result.info !== "string") {
+                if (typeof result.info !== "string" && result.info) {
                   const url = result.info.secure_url;
                   setImageUrls([...imageUrls, url]);
                   setErrorImage(false);

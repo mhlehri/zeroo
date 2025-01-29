@@ -1,4 +1,4 @@
-import { getUsers } from "@/services/auth";
+import { getUserById, getUsers } from "@/services/auth";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
@@ -23,4 +23,25 @@ export function useUsers() {
   }, [data]);
 
   return { users, isUsersLoading, isError };
+}
+
+export function useUserById(id: string) {
+  const [user, setUser] = useState<TUser>();
+
+  const {
+    data,
+    isLoading: isUserLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["users", id],
+    queryFn: async () => await getUserById(id),
+  });
+
+  useEffect(() => {
+    if (data?.data) {
+      setUser(data.data);
+    }
+  }, [data]);
+
+  return { user, isUserLoading, isError };
 }

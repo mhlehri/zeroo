@@ -38,6 +38,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import { useUsers } from "@/hooks/use-user";
 import UserDeleteModal from "../modal/user-delete";
+import Link from "next/link";
 export const columns: ColumnDef<TUser>[] = [
   {
     accessorKey: "name",
@@ -51,9 +52,7 @@ export const columns: ColumnDef<TUser>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("email")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("email")}</div>,
   },
   {
     accessorKey: "phone",
@@ -99,7 +98,14 @@ const ActionCell = ({ user }: { user: TUser }) => {
           Copy user email
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/admin/update-user?id=${user._id}`}
+            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+          >
+            Edit
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <UserDeleteModal name={user.name} id={user._id}>
             Delete

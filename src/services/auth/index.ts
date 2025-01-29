@@ -80,3 +80,33 @@ export async function deleteUser(id: string) {
     throw error;
   }
 }
+
+export async function updateUserAction({
+  id,
+  formData,
+}: {
+  id: string;
+  formData: FieldValues;
+}) {
+  try {
+    const { data } = await ax.put(`/auth/${id}`, formData);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
+
+export async function getUserById(id: string) {
+  try {
+    const { data } = await ax.get(`/auth/${id}`);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}

@@ -1,5 +1,4 @@
-import UserUpdateForm from "../../../../components/form/update-user-form";
-
+import UserUpdateForm from "@/components/form/update-user-form";
 export default async function Page({
   searchParams,
 }: {
