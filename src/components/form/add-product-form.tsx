@@ -46,15 +46,9 @@ const formSchema = z.object({
   category: z.string().min(1, {
     message: "Category number is required.",
   }),
-  // images: z.array(
-  //   z.string({
-  //     message: "Image is required",
-  //   })
-  // ),
 });
 
 export default function AddProductForm() {
-  // const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -106,7 +100,6 @@ export default function AddProductForm() {
   //   setAmenities(amenitiesList);
   // };
 
-  // console.log(imagePreviews);
   const submitting = form.formState.isSubmitting;
   console.log(imageUrls);
   return (
@@ -239,9 +232,9 @@ export default function AddProductForm() {
                 imageUrls.map((image, index) => (
                   <div key={index} className="relative group">
                     <Image
-                      className="size-10 border rounded"
-                      width={50}
-                      height={50}
+                      className="size-24 border p-2 border-dashed border-slate-300 rounded"
+                      width={100}
+                      height={100}
                       src={image}
                       alt={`Preview ${index}`}
                     />

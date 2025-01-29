@@ -64,3 +64,21 @@ export async function deleteProduct(id: string) {
     throw error;
   }
 }
+
+export async function updateProduct({
+  id,
+  formData,
+}: {
+  id: string;
+  formData: FieldValues;
+}) {
+  try {
+    const { data } = await ax.put(`/products/${id}`, formData);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}

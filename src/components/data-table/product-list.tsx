@@ -33,13 +33,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useProducts } from "@/hooks/use-product";
+import { useGetProducts } from "@/hooks/use-product";
 import { DataTableColumnHeader } from "./column-header";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import ProductModal from "../modal/product-modal";
 import Image from "next/image";
 import ProductDeleteModal from "../modal/product-detele";
+import Link from "next/link";
 
 export const columns: ColumnDef<TProduct>[] = [
   {
@@ -120,7 +121,14 @@ const ActionCell = ({ product }: { product: TProduct }) => {
         <DropdownMenuItem asChild>
           <ProductModal product={product}>View Product</ProductModal>
         </DropdownMenuItem>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link
+            href={`/admin/update-product?id=${product._id}`}
+            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+          >
+            Edit
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <ProductDeleteModal name={product.name} id={product._id}>
             Delete
@@ -140,7 +148,7 @@ export default function ProductList() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { products, isLoading } = useProducts({});
+  const { products, isLoading } = useGetProducts({});
 
   console.log(products);
 

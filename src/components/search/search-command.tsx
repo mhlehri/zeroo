@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/command";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { useProducts } from "@/hooks/use-product";
+import { useGetProducts } from "@/hooks/use-product";
 import { useDebounce } from "@/lib/use-debounce";
 import { Loader2, Search } from "lucide-react";
 import Image from "next/image";
@@ -22,7 +22,7 @@ export function CommandDialogSearch() {
 
   const debouncedQuery = useDebounce(query, 300);
 
-  const { products, isLoading } = useProducts({
+  const { products, isLoading } = useGetProducts({
     query: debouncedQuery,
   });
 

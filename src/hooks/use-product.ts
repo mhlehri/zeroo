@@ -1,6 +1,7 @@
-import { getProductById, getProducts } from "@/services/product";
+import { getProductById, getProducts, updateProduct } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { FieldValues } from "react-hook-form";
 
 type TProductParams = {
   query?: string;
@@ -9,7 +10,7 @@ type TProductParams = {
   category?: string;
 };
 
-export function useProducts({
+export function useGetProducts({
   query,
   sortOrder,
   limit,
@@ -39,7 +40,7 @@ export function useProducts({
   return { products, isLoading, isError };
 }
 
-export function useProductById(id: string) {
+export function useGetProductById(id: string) {
   const {
     data: product,
     isLoading,
@@ -50,4 +51,23 @@ export function useProductById(id: string) {
   });
 
   return { product, isLoading, isError };
+}
+
+export function useUpdateProductById({
+  id,
+  formData,
+}: {
+  id: string;
+  formData: FieldValues;
+}) {
+  const {
+    data: product,
+    isLoading: isUpdateProductLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["products", id],
+    queryFn: () => updateProduct({ id, formData }),
+  });
+
+  return { product, isUpdateProductLoading, isError };
 }

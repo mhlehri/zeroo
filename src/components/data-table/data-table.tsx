@@ -34,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useProducts } from "@/hooks/use-product";
+import { useGetProducts } from "@/hooks/use-product";
 
 export const columns: ColumnDef<TProduct>[] = [
   // {
@@ -155,7 +155,7 @@ export function DataTableDemo() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { products, isLoading } = useProducts({});
+  const { products, isLoading } = useGetProducts({});
 
   console.log(products);
 

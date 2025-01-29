@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
-import { useProducts } from "@/hooks/use-product";
+import { useGetProducts } from "@/hooks/use-product";
 import { Filter, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -36,7 +36,7 @@ export default function Product({
   console.log("Query =>", query, "from product.tsx");
   console.log("Category =>", category, "from product.tsx");
   console.log("selectedCategory =>", selectedCategory, "from product.tsx");
-  const { products, isLoading, isError } = useProducts({
+  const { products, isLoading, isError } = useGetProducts({
     sortOrder,
     category: selectedCategory,
     query,
