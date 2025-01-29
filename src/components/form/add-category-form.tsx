@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -32,6 +31,8 @@ export default function AddCategoryForm() {
       name: "",
     },
   });
+  const [errorImage, setErrorImage] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { mutate: createCategory } = useMutation<unknown, Error, FieldValues>({
     mutationKey: ["categories"],
     mutationFn: async (values: FieldValues) => {
@@ -42,7 +43,7 @@ export default function AddCategoryForm() {
           richColors: true,
         });
         form.reset();
-        setImageUrls([]);
+        setImageUrl("");
       } else {
         toast.error(res.message, {
           richColors: true,
@@ -50,29 +51,28 @@ export default function AddCategoryForm() {
       }
     },
   });
-  const [errorImage, setErrorImage] = useState(false);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const formData = { ...values, images: imageUrls };
-    if (imageUrls.length) {
-      createCategory(formData);
-    } else {
+    const formData = { ...values, images: imageUrl };
+    if (!imageUrl?.length) {
       setErrorImage(true);
+    } else {
+      setErrorImage(false);
+      createCategory(formData);
     }
   }
 
   const submitting = form.formState.isSubmitting;
-  console.log(imageUrls);
+  console.log(imageUrl);
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
+    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-3 md:space-y-4"
         >
           <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
-            Add Product
+            Add Category
           </h3>
           <FormField
             control={form.control}
@@ -81,7 +81,7 @@ export default function AddCategoryForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="full name" {...field} />
+                  <Input placeholder="category name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +102,8 @@ export default function AddCategoryForm() {
                   "secure_url" in info &&
                   typeof info.secure_url === "string"
                 ) {
-                  setImageUrls((prev) => [...prev, info.secure_url]);
+                  setImageUrl(info.secure_url);
+                  setErrorImage(false);
                   widget.close();
                 }
               }}
@@ -111,47 +112,37 @@ export default function AddCategoryForm() {
                 <Button
                   type="button"
                   className={`border-dashed ${
-                    errorImage ? "border-red-500" : ""
-                  } w-full border-slate-300`}
+                    errorImage
+                      ? "border-red-500 text-red-500"
+                      : "border-slate-300"
+                  } w-full`}
                   variant="outline"
                   onClick={() => open()}
                 >
-                  Upload Images
+                  Upload Image
                 </Button>
               )}
             </CldUploadWidget>
             {errorImage ? (
-              <p className="text-xs text-red-500">Image is required!</p>
+              <p className="text-xs text-red-500 mt-1">Image is required!</p>
             ) : null}
 
-            <div className="flex gap-2 flex-wrap">
-              {imageUrls.length > 0 &&
-                imageUrls.map((image, index) => (
-                  <div key={index} className="relative group">
-                    <Image
-                      className="size-10 border rounded"
-                      width={50}
-                      height={50}
-                      src={image}
-                      alt={`Preview ${index}`}
-                    />
-                    <button className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                      ×
-                    </button>
-                  </div>
-                ))}
+            <div className="">
+              {imageUrl && (
+                <Image
+                  className="size-32 p-2 border-dashed mt-2 border-slate-300 border rounded"
+                  width={100}
+                  height={100}
+                  src={imageUrl}
+                  alt={`Preview image`}
+                />
+              )}
             </div>
           </div>
 
           <Button disabled={submitting} type="submit">
             {submitting ? "Submitting..." : "Submit"}
           </Button>
-          <p className="text-xs text-slate-600 text-center">
-            Already have an account?{" "}
-            <Link href="/login" className="text-black font-semibold underline">
-              Login
-            </Link>
-          </p>
         </form>
       </Form>
     </div>

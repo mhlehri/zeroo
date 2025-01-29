@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 export function useCategories() {
-  const [categories, setProducts] = useState<TCategory[]>([]);
+  const [categories, setCategories] = useState<TCategory[]>([]);
 
   const {
     data,
@@ -16,9 +16,9 @@ export function useCategories() {
 
   useEffect(() => {
     if (data?.data?.categories) {
-      setProducts(data.data.categories);
+      setCategories(data.data.categories);
     } else {
-      setProducts([]);
+      setCategories([]);
     }
   }, [data]);
 

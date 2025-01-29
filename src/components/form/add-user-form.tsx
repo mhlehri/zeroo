@@ -2,7 +2,6 @@
 import { signupAction } from "@/services/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -45,7 +44,6 @@ const formSchema = z.object({
 });
 
 export default function AddUserForm() {
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -65,7 +63,7 @@ export default function AddUserForm() {
         toast.success(res.message, {
           richColors: true,
         });
-        router.push("/login");
+        form.reset();
       } else {
         toast.error(res.message, {
           richColors: true,
@@ -79,7 +77,7 @@ export default function AddUserForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
+    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

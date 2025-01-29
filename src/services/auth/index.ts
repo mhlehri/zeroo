@@ -33,6 +33,18 @@ export async function signupAction(formData: FieldValues) {
     throw error;
   }
 }
+export async function getUsers() {
+  try {
+    const { data } = await ax.get("/auth/users");
+    console.log(data, "user");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
 export const getToken = async () => {
   const cookieStore = await cookies();
   return cookieStore.get("user-token")?.value;

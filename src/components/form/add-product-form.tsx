@@ -89,10 +89,11 @@ export default function AddProductForm() {
     const price = parseFloat(values.price);
     const stock = parseFloat(values.stock);
     const formData = { ...values, price, stock, images: imageUrls };
-    if (imageUrls.length) {
-      createProduct(formData);
-    } else {
+    if (!imageUrls.length) {
       setErrorImage(true);
+    } else {
+      createProduct(formData);
+      setErrorImage(false);
     }
   }
 
@@ -105,7 +106,7 @@ export default function AddProductForm() {
   const submitting = form.formState.isSubmitting;
   console.log(imageUrls);
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
+    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -160,7 +161,7 @@ export default function AddProductForm() {
               <FormItem>
                 <FormLabel>Stock</FormLabel>
                 <FormControl>
-                  <Input placeholder="product stock" {...field} />
+                  <Input type="number" placeholder="product stock" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -207,6 +208,7 @@ export default function AddProductForm() {
                   typeof info.secure_url === "string"
                 ) {
                   setImageUrls((prev) => [...prev, info.secure_url]);
+                  setErrorImage(false);
                   widget.close();
                 }
               }}
@@ -215,8 +217,8 @@ export default function AddProductForm() {
                 <Button
                   type="button"
                   className={`border-dashed ${
-                    errorImage ? "border-red-500" : ""
-                  } w-full border-slate-300`}
+                    errorImage ? "border-red-500" : "border-slate-300"
+                  } w-full`}
                   variant="outline"
                   onClick={() => open()}
                 >
@@ -239,9 +241,6 @@ export default function AddProductForm() {
                       src={image}
                       alt={`Preview ${index}`}
                     />
-                    <button className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                      ×
-                    </button>
                   </div>
                 ))}
             </div>

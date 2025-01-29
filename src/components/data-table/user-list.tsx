@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -33,69 +33,79 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useCategories } from "@/hooks/use-category";
+import { DataTableColumnHeader } from "./column-header";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
-
-export const columns: ColumnDef<TCategory>[] = [
-  //   {
-  //     accessorKey: "serial",
-  //     header: "SN.",
-  //     cell: ({ row, table }) => (
-  //       <div>{table.getRowModel().rows.indexOf(row) + 1}</div>
-  //     ),
-  //   },
+import { useUsers } from "@/hooks/use-user";
+export const columns: ColumnDef<TUser>[] = [
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
+  },
+  {
+    accessorKey: "email",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
     cell: ({ row }) => (
-      <div className="capitalize whitespace-nowrap">{row.getValue("name")}</div>
+      <div className="capitalize">{row.getValue("email")}</div>
+    ),
+  },
+  {
+    accessorKey: "phone",
+    header: "Phone",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("phone")}</div>
+    ),
+  },
+  {
+    accessorKey: "address",
+    header: "Address",
+
+    cell: ({ row }) => (
+      <div className="lowercase">{row.getValue("address")}</div>
     ),
   },
   {
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const product = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product._id)}
-            >
-              Copy Category ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Category</DropdownMenuItem>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      const user = row.original;
+      return <ActionCell user={user} />;
     },
   },
 ];
 
-export default function CategoryList() {
+const ActionCell = ({ user }: { user: TUser }) => {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="h-8 w-8 p-0">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuItem
+          onClick={() => navigator.clipboard.writeText(user?.name)}
+        >
+          Copy Product Name
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};
+
+export default function ProductList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -104,12 +114,12 @@ export default function CategoryList() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { categories, isCategoriesLoading } = useCategories();
+  const { users, isUsersLoading } = useUsers();
 
-  console.log(categories);
+  console.log(users);
 
   const table = useReactTable({
-    data: categories,
+    data: users,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -128,7 +138,7 @@ export default function CategoryList() {
   });
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter names..."
@@ -161,7 +171,7 @@ export default function CategoryList() {
             ))}
           </TableHeader>
           <TableBody>
-            {isCategoriesLoading ? (
+            {isUsersLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}

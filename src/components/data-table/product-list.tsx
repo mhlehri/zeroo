@@ -60,17 +60,13 @@ export const columns: ColumnDef<TProduct>[] = [
   {
     accessorKey: "name",
     header: "Name",
-    cell: ({ row }) => (
-      <div className="capitalize whitespace-nowrap">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
   },
   {
-    accessorKey: "description",
-    header: "Desc",
+    accessorKey: "category",
+    header: "Category",
     cell: ({ row }) => (
-      <div className="capitalize truncate max-w-32">
-        {row.getValue("description")}
-      </div>
+      <div className="capitalize">{row.getValue("category")}</div>
     ),
   },
   {
