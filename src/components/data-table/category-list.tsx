@@ -37,6 +37,7 @@ import { useCategories } from "@/hooks/use-category";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import CategoryDeleteModal from "../modal/category-delete";
+import Link from "next/link";
 
 export const columns: ColumnDef<TCategory>[] = [
   //   {
@@ -86,7 +87,14 @@ export const columns: ColumnDef<TCategory>[] = [
               Copy Category ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link
+                href={`/admin/update-category?id=${category._id}`}
+                className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+              >
+                Edit
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <CategoryDeleteModal id={category._id} name={category.name}>
                 Delete

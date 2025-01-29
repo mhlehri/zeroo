@@ -1,4 +1,4 @@
-import { getCategories } from "@/services/category";
+import { getCategories, getCategoryById } from "@/services/category";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -23,4 +23,25 @@ export function useCategories() {
   }, [data]);
 
   return { categories, isCategoriesLoading, isError };
+}
+
+export function useCategoryById(id: string) {
+  const [category, setCategory] = useState<TCategory>();
+
+  const {
+    data,
+    isLoading: isCategoryLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["categories", id],
+    queryFn: async () => await getCategoryById(id),
+  });
+
+  useEffect(() => {
+    if (data?.data) {
+      setCategory(data.data);
+    }
+  }, [data]);
+
+  return { category, isCategoryLoading, isError };
 }

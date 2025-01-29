@@ -14,6 +14,17 @@ export async function getCategories() {
     throw error;
   }
 }
+export async function getCategoryById(id: string) {
+  try {
+    const { data } = await ax.get(`/category/${id}`);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
 
 export async function addCategory(formData: FieldValues) {
   try {
@@ -26,6 +37,25 @@ export async function addCategory(formData: FieldValues) {
     throw error;
   }
 }
+
+export async function updateCategory({
+  id,
+  formData,
+}: {
+  id: string;
+  formData: FieldValues;
+}) {
+  try {
+    const { data } = await ax.put(`/category/${id}`, formData);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
+
 export async function deleteCategory(id: string) {
   try {
     const { data } = await ax.delete(`/category/${id}`);

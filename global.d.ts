@@ -22,6 +22,7 @@ declare global {
   type TCategory = {
     _id: string;
     name: string;
+    image: string;
     isDeleted: boolean;
   };
 
