@@ -37,6 +37,7 @@ import { DataTableColumnHeader } from "./column-header";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import { useUsers } from "@/hooks/use-user";
+import UserDeleteModal from "../modal/user-delete";
 export const columns: ColumnDef<TUser>[] = [
   {
     accessorKey: "name",
@@ -99,7 +100,11 @@ const ActionCell = ({ user }: { user: TUser }) => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <UserDeleteModal name={user.name} id={user._id}>
+            Delete
+          </UserDeleteModal>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

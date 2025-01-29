@@ -1,5 +1,10 @@
 "use client";
+import { deleteUser } from "@/services/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -10,13 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
-import { deleteProduct } from "@/services/product";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-export default function ProductDeleteModal({
+export default function UserDeleteModal({
   name,
   id,
   children,
@@ -28,10 +27,10 @@ export default function ProductDeleteModal({
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
 
-  const { mutate: deleteP, isPending } = useMutation({
-    mutationKey: ["products"], // Tracks mutation
+  const { mutate: removeUser, isPending } = useMutation({
+    mutationKey: ["users"],
     mutationFn: async (id: string) => {
-      const res = await deleteProduct(id);
+      const res = await deleteUser(id);
       return res;
     },
     onSuccess: (data) => {
@@ -39,7 +38,7 @@ export default function ProductDeleteModal({
         toast.success(data?.message, { richColors: true });
 
         // ✅ Revalidate "products" after deletion
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        queryClient.invalidateQueries({ queryKey: ["users"] });
 
         setOpen(false); // Close modal on success
       } else {
@@ -70,7 +69,7 @@ export default function ProductDeleteModal({
         <DialogFooter>
           <Button
             disabled={isPending}
-            onClick={() => deleteP(id)} // Only call deleteP here
+            onClick={() => removeUser(id)}
             variant="destructive"
           >
             <Trash /> {isPending ? "Deleting..." : "Delete"}

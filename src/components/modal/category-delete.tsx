@@ -1,5 +1,10 @@
 "use client";
+import { deleteCategory } from "@/services/category";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Trash } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
@@ -10,12 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Button } from "../ui/button";
-import { deleteProduct } from "@/services/product";
-import { toast } from "sonner";
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 export default function CategoryDeleteModal({
   name,
   id,
@@ -31,7 +30,7 @@ export default function CategoryDeleteModal({
   const { mutate: deleteCa, isPending } = useMutation({
     mutationKey: ["categories"],
     mutationFn: async (id: string) => {
-      const res = await deleteProduct(id);
+      const res = await deleteCategory(id);
       return res;
     },
     onSuccess: (data) => {
@@ -59,7 +58,9 @@ export default function CategoryDeleteModal({
       </DialogTrigger>
       <DialogContent className="max-h-[500px] xl:max-h-full overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Are you sure you want to delete {name}?</DialogTitle>
+          <DialogTitle>
+            Are you sure you want to delete &quot;{name}&quot;?
+          </DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete the
             product.

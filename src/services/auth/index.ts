@@ -68,3 +68,15 @@ export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete("user-token");
 }
+
+export async function deleteUser(id: string) {
+  try {
+    const { data } = await ax.delete(`/auth/${id}`);
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
