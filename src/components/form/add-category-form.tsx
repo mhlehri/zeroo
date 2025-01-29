@@ -1,10 +1,10 @@
 "use client";
-import { useCategories } from "@/hooks/use-category";
-import { addProduct } from "@/services/product";
+import { addCategory } from "@/services/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -19,55 +19,24 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
-import { Textarea } from "../ui/textarea";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  description: z
-    .string()
-    .min(2, {
-      message: "Description must be at least 2 characters.",
-    })
-    .optional(),
-  price: z.string().min(1, {
-    message: "Price is required.",
-  }),
-  stock: z.string().min(1, {
-    message: "Stock is required.",
-  }),
-  category: z.string().min(1, {
-    message: "Category number is required.",
-  }),
-  // images: z.array(
-  //   z.string({
-  //     message: "Image is required",
-  //   })
-  // ),
 });
 
-export default function AddProductForm() {
-  // const router = useRouter();
+export default function AddCategoryForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      description: "",
-      category: "",
     },
   });
-  const { mutate: createProduct } = useMutation<unknown, Error, FieldValues>({
-    mutationKey: ["products"],
+  const { mutate: createCategory } = useMutation<unknown, Error, FieldValues>({
+    mutationKey: ["categories"],
     mutationFn: async (values: FieldValues) => {
-      const res = await addProduct(values);
-      console.log(res, "res fdfdflfjsdklf");
+      const res = await addCategory(values);
+      console.log(res, "res category");
       if (res.success) {
         toast.success(res.message, {
           richColors: true,
@@ -83,25 +52,16 @@ export default function AddProductForm() {
   });
   const [errorImage, setErrorImage] = useState(false);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const { categories } = useCategories();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const price = parseFloat(values.price);
-    const stock = parseFloat(values.stock);
-    const formData = { ...values, price, stock, images: imageUrls };
+    const formData = { ...values, images: imageUrls };
     if (imageUrls.length) {
-      createProduct(formData);
+      createCategory(formData);
     } else {
       setErrorImage(true);
     }
   }
 
-  // const handleTagsChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //   const amenitiesList = e.target.value.split(",").map((item) => item.trim());
-  //   setAmenities(amenitiesList);
-  // };
-
-  // console.log(imagePreviews);
   const submitting = form.formState.isSubmitting;
   console.log(imageUrls);
   return (
@@ -127,77 +87,13 @@ export default function AddProductForm() {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="product description here" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <Input placeholder="product price" type="number" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="stock"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Stock</FormLabel>
-                <FormControl>
-                  <Input placeholder="product stock" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Category</FormLabel>
-                <Select
-                  onValueChange={(value) => {
-                    field.onChange(value);
-                  }}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a category" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {categories?.map((category) => (
-                      <SelectItem key={category?.name} value={category?.name}>
-                        {category?.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
           <div>
             <CldUploadWidget
-              uploadPreset="zeroo_products" // Replace with your Cloudinary upload preset
+              uploadPreset="zeroo_products"
+              options={{
+                multiple: false,
+              }}
               onSuccess={(result, { widget }) => {
                 const info = result?.info;
                 if (
@@ -250,6 +146,12 @@ export default function AddProductForm() {
           <Button disabled={submitting} type="submit">
             {submitting ? "Submitting..." : "Submit"}
           </Button>
+          <p className="text-xs text-slate-600 text-center">
+            Already have an account?{" "}
+            <Link href="/login" className="text-black font-semibold underline">
+              Login
+            </Link>
+          </p>
         </form>
       </Form>
     </div>

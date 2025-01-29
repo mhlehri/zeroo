@@ -1,5 +1,9 @@
-import React from "react";
+import AddCategoryForm from "@/components/form/add-category-form";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="container">
+      <AddCategoryForm />
+    </div>
+  );
 }
