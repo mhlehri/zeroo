@@ -1,5 +1,9 @@
-import React from "react";
+import AddUserForm from "@/components/form/add-user-form";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="container">
+      <AddUserForm />
+    </div>
+  );
 }

@@ -44,7 +44,7 @@ const formSchema = z.object({
   }),
 });
 
-export default function SignupForm() {
+export default function AddUserForm() {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
