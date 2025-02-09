@@ -11,12 +11,12 @@ export default function Page() {
         Welcome to Zeroo Admin Dashboard
       </h2>
       <div className="container space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex gap-4 *:min-w-56 *:first-of-type:bg-amber-200 *:last-of-type:bg-teal-200 *:nth-of-type-[2]:bg-rose-200">
           <TotalProductsOverview />
           <TotalCategoriesOverview />
           <TotalUserOverview />
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex gap-4">
           <DailyOrdersOverview />
           <DailyOrderPaymentOverview />
         </div>

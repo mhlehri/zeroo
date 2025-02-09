@@ -1,37 +1,30 @@
 "use client";
 import { useUsers } from "@/hooks/use-user";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
-import { Loader2 } from "lucide-react";
+import { Loader2, Users } from "lucide-react";
 import Link from "next/link";
 
 export default function TotalUserOverview() {
   const { users, isUsersLoading } = useUsers();
 
   return (
-    <Card>
-      <CardHeader className="text-center text-xl font-bold md:text-2xl">
-        Total Products
-      </CardHeader>
-      <CardContent>
-        <p className="text-center text-xl font-bold md:text-2xl lg:text-3xl">
-          {isUsersLoading ? (
-            <Loader2 className="mx-auto animate-spin" />
-          ) : (
-            users.length
-          )}
+    <div className="rounded border p-4">
+      <div className="text-lg font-medium md:text-xl">
+        <Users />
+        Total Users
+      </div>
+      <div>
+        <p className="text-lg font-medium md:text-xl lg:text-2xl">
+          {isUsersLoading ? <Loader2 className="animate-spin" /> : users.length}
         </p>
-      </CardContent>
-
-      {!isUsersLoading && (
-        <CardFooter>
+        {!isUsersLoading && (
           <Link
             href="/admin/user-list"
-            className="mx-auto my-auto text-center text-sm underline hover:text-blue-500"
+            className="my-auto text-sm underline hover:text-blue-500"
           >
             View list
           </Link>
-        </CardFooter>
-      )}
-    </Card>
+        )}
+      </div>
+    </div>
   );
 }
