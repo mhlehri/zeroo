@@ -38,7 +38,7 @@ export function NavMain({
   console.log(isMobile);
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
+      <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
           if (item.items) {
