@@ -8,6 +8,7 @@ type TProductParams = {
   sortOrder?: string;
   limit?: number;
   category?: string;
+  page?: number;
 };
 
 export function useGetProducts({
@@ -15,18 +16,20 @@ export function useGetProducts({
   sortOrder,
   limit,
   category,
+  page,
 }: TProductParams) {
   const [products, setProducts] = useState<TProduct[]>([]);
-
+  const [totalProducts, setTotalProducts] = useState(0);
   if (query && query?.length > 0) {
     sortOrder = "";
-    limit = 10;
+    limit = 12;
+    page = 1;
     category = "";
   }
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["products", query, sortOrder, limit, category],
+    queryKey: ["products", query, sortOrder, limit, category, page],
     queryFn: () =>
-      getProducts({ searchTerm: query, sortOrder, limit, category }),
+      getProducts({ searchTerm: query, sortOrder, limit, category, page }),
   });
 
   useEffect(() => {
@@ -35,9 +38,12 @@ export function useGetProducts({
     } else {
       setProducts([]);
     }
+    if (data?.data?.total) {
+      setTotalProducts(data.data.total);
+    }
   }, [data]);
 
-  return { products, isLoading, isError };
+  return { totalProducts, products, isLoading, isError };
 }
 
 export function useGetProductById(id: string) {

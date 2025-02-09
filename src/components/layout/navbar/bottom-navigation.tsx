@@ -1,16 +1,17 @@
 "use client";
-import { Filter, ShoppingCart, Store } from "lucide-react";
+import { CommandDialogSearch } from "@/components/search/search-command";
+import { CircleUser, Home, Search, Store } from "lucide-react";
 import Link from "next/link";
-import MobileMenu from "./mobile-menu";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import UserDropdown from "./user-dropdown";
 
 export type NavProps = {
   links?: unknown[];
-  categories: { name: string }[];
+  categories: { name: string; image: string }[];
 };
 
-export default function BottomNavigation({ categories }: NavProps) {
+export default function BottomNavigation() {
   const [isProductPage, setIsProductPage] = useState(false);
   const pathname = usePathname();
   useEffect(() => {
@@ -22,47 +23,54 @@ export default function BottomNavigation({ categories }: NavProps) {
   }, [pathname]);
   console.log(pathname, isProductPage);
   return (
-    <div className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-slate-200 md:hidden">
-      <div
-        className={`grid h-full max-w-lg  mx-auto ${
-          isProductPage ? "grid-cols-4" : "grid-cols-3"
-        }`}
-      >
+    <div
+      hidden={isProductPage}
+      className="bg-primary-50 fixed bottom-0 left-0 z-50 w-full border-t border-slate-200 py-2 md:hidden"
+    >
+      <div className={`mx-auto grid h-full max-w-lg grid-cols-4`}>
+        <Link
+          href="/"
+          className={`hover:bg-primary-50 ${pathname === "/" ? "text-primary font-semibold" : "text-primary-500"} inline-flex flex-col items-center justify-center gap-1 px-5`}
+        >
+          <Home className="size-5" />
+          <span className="text-[10px]">Home</span>
+        </Link>
         <Link
           href="/products"
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 gap-1"
+          className="hover:bg-primary-50 text-primary-500 inline-flex flex-col items-center justify-center gap-1 px-5"
         >
-          <Store className="w-6 h-6 text-primary" />
-          <span className="text-xs text-gray-500">Shop</span>
+          <Store className="size-5" />
+          <span className="text-[10px]">Shop</span>
         </Link>
-        {isProductPage && (
-          <div className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 gap-1">
-            <Filter className="size-6 text-primary" />
-            <span className="text-xs text-gray-500">Filters</span>
+        <CommandDialogSearch>
+          <div className="hover:bg-primary-50 text-primary-500 inline-flex flex-col items-center justify-center gap-1 px-5">
+            <Search className="size-5" />
+            <span className="text-[10px]">Explore</span>
           </div>
-        )}
-        <Link
+        </CommandDialogSearch>
+        {/* <Link
           href="/cart"
-          className="relative inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 gap-1"
+          className="hover:bg-primary-50 relative inline-flex flex-col items-center justify-center gap-1 px-5"
         >
-          <ShoppingCart className="w-6 h-6 text-primary" />
-          <span className="text-xs text-gray-500">Cart</span>
+          <ShoppingBag className="text-primary-400 size-5" />
+          <span className="text-primary-500 text-[10px]">Cart</span>
           <span
-            className={`absolute top-2 ${
-              isProductPage ? "right-8" : "right-12"
-            }  bg-primary text-white text-xs w-4 h-4 rounded-full flex items-center justify-center`}
+            className={`absolute top-0 right-8 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] text-white`}
           >
-            0
+            {cart.length}
           </span>
-        </Link>
-        <MobileMenu
-          categories={categories}
-          className="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 gap-1"
-        />
-        {/* <UserDropdown mainClass="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 gap-1">
-          <User className={"size-6 text-primary"} />
-          <span className="text-xs text-gray-500 truncate">Account</span>
-        </UserDropdown> */}
+        </Link> */}
+
+        <UserDropdown mainClass="inline-flex flex-col items-center justify-center px-5 hover:bg-primary-50 gap-1 text-primary-500">
+          <CircleUser
+            className={`${pathname === "/orders" || pathname === "/profile" ? "text-primary font-semibold" : ""} size-5`}
+          />
+          <span
+            className={`${pathname === "/orders" || pathname === "/profile" ? "text-primary" : ""} truncate text-[10px]`}
+          >
+            Account
+          </span>
+        </UserDropdown>
       </div>
     </div>
   );

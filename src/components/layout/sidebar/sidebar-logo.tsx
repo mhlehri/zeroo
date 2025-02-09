@@ -1,6 +1,6 @@
 "use client";
 
-import { Frame } from "lucide-react";
+import { Blend } from "lucide-react";
 
 import {
   SidebarMenu,
@@ -14,17 +14,19 @@ export function SidebarLogo() {
     <SidebarMenu>
       <SidebarMenuItem>
         <SidebarMenuButton
-          size="lg"
+          asChild
+          size="sm"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
         >
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <Frame  className="size-4" />
-          </div>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <Link href="/admin/dashboard" className="truncate font-semibold">
+          <Link
+            href="/admin/dashboard"
+            className="flex w-full truncate font-semibold"
+          >
+            <Blend />
+            <div className="grid flex-1 text-left text-sm leading-tight">
               Zeroo
-            </Link>
-          </div>
+            </div>
+          </Link>
         </SidebarMenuButton>
       </SidebarMenuItem>
     </SidebarMenu>

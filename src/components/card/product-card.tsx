@@ -1,42 +1,43 @@
-import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import Link from "next/link";
+import AddToCart from "../button/addToCart";
+import BuyNow from "../button/buyNow";
 
 export default function ProductCard({ product }: { product: TProduct }) {
-  console.log(product?.images[0], "Product Image");
+  // console.log(product?.images[0], "Product Image");
+  const productSend = {
+    id: product?._id,
+    name: product?.name,
+    price: product?.price,
+    image: product?.images[0],
+    stock: product?.stock,
+  };
   return (
-    <Card className="overflow-hidden w-full max-w-[230px] md:max-w-[270px]">
+    <div className="mb-4 w-full max-w-[230px] overflow-hidden rounded-md border-none shadow-none">
       <Link href={`/products/${product?._id}`}>
-        <CardHeader className="p-0 sm:p-2 md:p-3">
+        <div className="mb-2">
           <Image
             src={product?.images[0]}
-            className="w-full h-[200px] rounded-none sm:rounded md:rounded-lg"
-            width={300}
+            className="h-full w-full rounded-md lg:h-[240px]"
+            width={240}
             height={240}
             alt={product?.name}
             loading="lazy"
           />
-        </CardHeader>
-        <CardContent className="gap-0.5 md:gap-2 px-2 py-2 md:pb-4 md:px-4 md:pt-0 text-center grid grid-rows-2">
-          <h4 className="uppercase text-sm md:text-base truncate">
+        </div>
+        <div className="mb-2 grid grid-rows-2 gap-0.5 md:gap-2">
+          <h4 className="truncate text-sm font-medium capitalize md:text-base">
             {product?.name}
           </h4>
           <h6 className="text-sm md:text-base">
-            ৳<span className="font-bold">{product?.price.toFixed(2)}</span>
+            TK. <span className="font-bold">{product?.price.toFixed(2)}</span>
           </h6>
-        </CardContent>
+        </div>
       </Link>
-      <CardFooter className="px-2 md:px-4 pt-0 pb-2 md:pb-4">
-        <Button
-          variant="outline"
-          className="text-xs md:text-sm w-full"
-          size="sm"
-        >
-          <ShoppingCart /> Add to Cart
-        </Button>
-      </CardFooter>
-    </Card>
+      <div className="max-w-[1360px]:flex-nowrap flex flex-wrap gap-2 xl:gap-1">
+        <AddToCart textVisible product={productSend} />
+        <BuyNow product={productSend} />
+      </div>
+    </div>
   );
 }

@@ -101,7 +101,7 @@ const ActionCell = ({ user }: { user: TUser }) => {
         <DropdownMenuItem asChild>
           <Link
             href={`/admin/update-user?id=${user._id}`}
-            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
           >
             Edit
           </Link>

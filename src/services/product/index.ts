@@ -6,18 +6,20 @@ import { FieldValues } from "react-hook-form";
 //? This function fetches products from the server
 export async function getProducts({
   searchTerm = "",
-  limit = 10,
+  limit = 12,
   sortOrder = "",
   category = "",
+  page = 1,
 }: {
   searchTerm?: string;
   limit?: number;
   sortOrder?: string;
   category?: string;
+  page?: number;
 }) {
   try {
     const { data } = await ax.get(`/products`, {
-      params: { searchTerm, limit, sortOrder, category },
+      params: { searchTerm, limit, sortOrder, category, page },
     });
 
     return data;

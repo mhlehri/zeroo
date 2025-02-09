@@ -1,11 +1,12 @@
-import Title from "@/components/title";
 import CardCarousel from "@/components/card/card-carousel";
+import { getProducts } from "@/services/product";
 
-export default function FeaturedProducts() {
-  return (
-    <section>
-      <Title className="mb-6">Featured Products</Title>
-      <CardCarousel cardArr={[]}></CardCarousel>
-    </section>
-  );
+export default async function FeaturedProducts() {
+  const { data } = await getProducts({
+    limit: 8,
+    sortOrder: "new",
+  });
+  const products = await data?.products;
+
+  return <CardCarousel cardArr={products}></CardCarousel>;
 }

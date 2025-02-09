@@ -57,13 +57,13 @@ export default function LoginForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
+    <div className="relative z-40 h-fit w-full max-w-md rounded-lg border p-6 shadow-xs sm:p-8 md:p-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-3 md:space-y-4"
+          className="relative z-40 space-y-3 md:space-y-4"
         >
-          <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
+          <h3 className="text-primary text-2xl font-semibold md:text-3xl">
             Login
           </h3>
           <FormField
@@ -73,7 +73,7 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="email address" {...field} />
+                  <Input type="email" placeholder="Enter email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -86,7 +86,11 @@ export default function LoginForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="*****" type="password" {...field} />
+                  <Input
+                    placeholder="Enter password"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,9 +99,9 @@ export default function LoginForm() {
           <Button disabled={submitting} type="submit">
             {submitting ? "Checking..." : "Continue"}
           </Button>
-          <p className="text-xs text-slate-600 text-center">
+          <p className="text-center text-xs text-slate-600">
             Don&apos;t have an account?{" "}
-            <Link href="/signup" className="text-black font-semibold underline">
+            <Link href="/signup" className="font-semibold text-black underline">
               Signup
             </Link>
           </p>

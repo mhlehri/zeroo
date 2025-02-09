@@ -11,6 +11,7 @@ import Image from "next/image";
 type PropType = {
   slides: string[];
   options?: EmblaOptionsType;
+  className?: string;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
@@ -28,7 +29,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       if (!emblaMainApi || !emblaThumbsApi) return;
       emblaMainApi.scrollTo(index);
     },
-    [emblaMainApi, emblaThumbsApi]
+    [emblaMainApi, emblaThumbsApi],
   );
 
   const onSelect = useCallback(() => {
@@ -50,17 +51,17 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaMainApi, onSelect]);
 
   return (
-    <div className="lg:max-w-lg w-full mx-auto">
+    <div className="relative mx-auto w-full lg:max-w-lg">
       <div className="overflow-hidden" ref={emblaMainRef}>
         <div className="flex touch-pan-y">
           {slides?.map((img, index) => (
-            <div className="flex-[0_0_100%] min-w-0" key={index}>
-              <Card className="w-full aspect-square flex items-center justify-center overflow-hidden">
+            <div className="min-w-0 flex-[0_0_100%]" key={index}>
+              <Card className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-none md:rounded-md">
                 <Image
                   width={400}
                   height={400}
-                  src={img}
-                  className="w-full h-full object-cover"
+                  src={img || "/placeholder.svg"}
+                  className="h-full w-full object-cover"
                   alt="Product Image"
                 />
               </Card>
@@ -69,7 +70,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
         </div>
       </div>
 
-      <div className="mt-4 overflow-hidden" ref={emblaThumbsRef}>
+      {/* Thumbnails for larger screens */}
+      <div
+        className="mt-4 hidden overflow-hidden sm:block"
+        ref={emblaThumbsRef}
+      >
         <div className="flex space-x-2">
           {slides?.map((img, index) => (
             <Thumb
@@ -81,6 +86,22 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           ))}
         </div>
       </div>
+
+      {/* Dots for mobile devices */}
+      {slides.length > 1 && (
+        <div className="bg-primary-50 mt-1 flex justify-center space-x-2 rounded-full p-1 sm:hidden">
+          {slides?.map((_, index) => (
+            <button
+              key={index}
+              className={`h-2 w-2 rounded-full transition-colors duration-300 ${
+                index === selectedIndex ? "bg-primary" : "bg-primary-300"
+              }`}
+              onClick={() => onThumbClick(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

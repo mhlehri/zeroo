@@ -21,35 +21,35 @@ export default function ProductModal({
 
   return (
     <Dialog>
-      <DialogTrigger className="relative cursor-pointer  w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 dark:focus:bg-slate-800 dark:focus:text-slate-50">
+      <DialogTrigger className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:bg-slate-800 dark:focus:text-slate-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
         {children}
       </DialogTrigger>
-      <DialogContent className="max-h-[500px] xl:max-h-full overflow-y-auto">
-        <div className="flex flex-col my-4 w-full  gap-4 justify-center">
+      <DialogContent className="max-h-[500px] overflow-y-auto xl:max-h-full">
+        <div className="my-4 flex w-full flex-col justify-center gap-4">
           <div className="max-w-[280px]">
             <EmblaCarousel slides={slides} />
           </div>
           <div className="space-y-3">
-            <h1 className="text-3xl font-bold text-gray-900">{name}</h1>
+            <h1 className="text-primary-900 text-3xl font-bold">{name}</h1>
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-5 h-5 ${
+                  className={`h-5 w-5 ${
                     i < rating
-                      ? "text-yellow-400 fill-current"
-                      : "text-gray-300"
+                      ? "fill-current text-yellow-400"
+                      : "text-primary-300"
                   }`}
                 />
               ))}
-              <span className="ml-2 text-gray-600">
+              <span className="text-primary-600 ml-2">
                 ({rating} out of 5 stars)
               </span>
             </div>
-            <p className="text-2xl text-gray-900">
-              ৳<span className="font-bold">{price?.toFixed(2)}</span>
+            <p className="text-primary-900 text-2xl">
+              TK. <span className="font-bold">{price?.toFixed(2)}</span>
             </p>
-            <p className="text-gray-700">{description}</p>
+            <p className="text-primary-700">{description}</p>
             <p className={`${stock > 0 ? "text-green-600" : "text-red-600"}`}>
               {stock > 0 ? `In stock (${stock} available)` : "Out of stock"}
             </p>

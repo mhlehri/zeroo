@@ -1,5 +1,6 @@
 "use client";
 
+import CategoryMenuSkeleton from "@/components/skeleton/category-menu-skeleton";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -10,12 +11,15 @@ import {
 } from "@/components/ui/navigation-menu";
 import { useCategories } from "@/hooks/use-category";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import BottomNavigation from "./bottom-navigation";
-import RightSide from "./right-side";
-import { useRouter } from "next/navigation";
+import RightSideSticky from "./righ-side-sticky";
+import RightSideNotSticky from "./right-side-not-sticky";
+import { ArrowLeft, Blend } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type TLink = {
   href: string;
@@ -44,66 +48,64 @@ const links: TLink[] = [
 
 export default function Navbar() {
   // const [open, setOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
-  const [isSticky, setIsSticky] = useState(false);
-  const router = useRouter();
-  useEffect(() => {
-    const toggleVisibility = () => {
-      if (isMobile) return; // Prevent sticky behavior for mobile devices
-      if (window.pageYOffset > 100) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
-    };
-
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Initial check on component mount
-
-    if (!isMobile) {
-      window.addEventListener("scroll", toggleVisibility);
-    }
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("scroll", toggleVisibility);
-    };
-  }, [isMobile]);
-
   const { categories, isCategoriesLoading } = useCategories();
+  const router = useRouter();
+  const [isDetailsPage, setIsDetailsPage] = useState(false);
+  const [isProductPage, setIsProductPage] = useState(false);
+  const [isCartPage, setIsCartPage] = useState(false);
+  const isMobile = useIsMobile();
+  const pathname = usePathname();
+  useEffect(() => {
+    setIsProductPage(pathname === "/products");
+    setIsDetailsPage(
+      pathname.startsWith("/products/") && pathname.split("/").length === 3,
+    );
+    setIsCartPage(pathname === "/cart");
+  }, [pathname]);
+
+  // console.log(pathname, isProductPage);
 
   return (
     <>
-      <div className="bg-primary-50/90 backdrop-blur-lg sticky top-0 md:relative z-50">
-        <div className="flex justify-between items-center p-4 gap-6 container border-b border-b-primary-200">
+      <div className="bg-primary-50 sticky top-0 z-50 md:relative">
+        <div className="border-b-primary-200 container flex items-center justify-between gap-4 border-b py-2 md:gap-6 md:py-4">
           {/* <MobileMenu className="h-fit md:hidden" textHidden={true}/> */}
-          <div className="">
-            <Link
-              href="/"
-              className="text-2xl md:text-3xl font-bold text-primary"
-            >
-              Zeroo
-            </Link>
-          </div>
-          {!isSticky && <RightSide />}
+          {(isMobile && isProductPage) ||
+          (isMobile && isCartPage) ||
+          (isMobile && isDetailsPage) ? (
+            <ArrowLeft
+              className="text-primary-700"
+              onClick={() => router.back()}
+            />
+          ) : (
+            <>
+              {/* <div className="flex items-center divide-x divide-slate-300">
+                <MobileMenu
+                  textHidden
+                  isLoading={isCategoriesLoading}
+                  categories={categories}
+                  className="hover:bg-primary-50 inline-flex flex-col items-center justify-center gap-1 pr-2 md:hidden"
+                />
+              </div> */}
+              <Link
+                href="/"
+                className="text-primary flex items-center gap-2 pl-2 text-2xl font-bold md:text-3xl"
+              >
+                <Blend /> <span className="">Zeroo</span>
+              </Link>
+            </>
+          )}
+          <RightSideNotSticky />
         </div>
       </div>
-      <div className="shadow-md hidden md:block bg-primary-50/90 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container flex items-center px-4 py-2 justify-between gap-4">
-          <ul className="flex items-center gap-6 lg:gap-10">
+      <div className="bg-primary-50 sticky top-0 z-50 hidden shadow-md md:block">
+        <div className="container flex items-center justify-between gap-4 px-4 py-2">
+          <ul className="text-primary flex items-center gap-6 font-medium lg:gap-10">
             {links?.map((link, index) =>
               link.label !== "Categories" ? (
                 <li
                   key={`nav-item-${index}`}
-                  className="text-sm text-center uppercase hover:opacity-70 hover:underline whitespace-nowrap"
+                  className={`text-center text-sm whitespace-nowrap uppercase hover:underline hover:opacity-70 ${pathname === link.href ? "font-semibold" : ""}`}
                 >
                   <Link href={link.href}>{link.label}</Link>
                 </li>
@@ -111,67 +113,82 @@ export default function Navbar() {
                 <NavigationMenu key={`nav-item-${index}`}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
-                      <NavigationMenuTrigger className="text-sm text-center uppercase font-normal  hover:opacity-70 hover:underline p-0 bg-none">
+                      <NavigationMenuTrigger className="bg-none p-0 text-center text-sm uppercase hover:underline hover:opacity-70">
                         {link.label}
                       </NavigationMenuTrigger>
                       <NavigationMenuContent>
-                        <ul className="grid w-[360px] gap-3 p-4 md:grid-cols-2">
-                          {categories?.length > 0 ? (
-                            categories?.map((category: TCategory) => (
-                              <ListItem
-                                onClick={() => {
-                                  router.push(
-                                    `/products?category=${encodeURIComponent(
-                                      category.name
-                                    )}`
-                                  );
-                                  router.refresh();
-                                }}
-                                key={category.name}
-                                title={category.name}
-                              />
-                            ))
-                          ) : isCategoriesLoading ? (
-                            <div className="flex items-center justify-center p-4">
-                              <Loader2 className="h-6 w-6 animate-spin" />
-                            </div>
-                          ) : null}
-                        </ul>
+                        {isCategoriesLoading ? (
+                          <div className="grid w-[360px] gap-3 p-4 md:grid-cols-2">
+                            <CategoryMenuSkeleton />
+                            <CategoryMenuSkeleton />
+                            <CategoryMenuSkeleton />
+                            <CategoryMenuSkeleton />
+                            <CategoryMenuSkeleton />
+                          </div>
+                        ) : (
+                          <ul className="grid w-[360px] gap-3 p-2 md:grid-cols-2">
+                            {categories?.length > 0
+                              ? categories?.map((category: TCategory) => (
+                                  <ListItem
+                                    key={category.name}
+                                    title={category.name}
+                                    image={category?.image}
+                                  />
+                                ))
+                              : null}
+                          </ul>
+                        )}
                       </NavigationMenuContent>
                     </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>
-              )
+              ),
             )}
           </ul>
           {/* search */}
-          {isSticky && <RightSide />}
+          <RightSideSticky />
         </div>
       </div>
-      <BottomNavigation categories={categories} />
+      <BottomNavigation />
     </>
   );
 }
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, title, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <div
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-        </div>
-      </NavigationMenuLink>
-    </li>
-  );
-});
+interface ListItemProps extends React.ComponentPropsWithoutRef<"a"> {
+  image?: string;
+  title?: string;
+}
+
+const ListItem = forwardRef<React.ElementRef<"a">, ListItemProps>(
+  ({ className, image, title, ...props }, ref) => {
+    return (
+      <li>
+        <NavigationMenuLink asChild>
+          <Link
+            href={`/products?category=${encodeURIComponent(title as string)}`}
+            ref={ref}
+            className={cn(
+              "hover:bg-primary/10 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-1.5 leading-none no-underline outline-hidden transition-colors select-none",
+              className,
+            )}
+            {...props}
+          >
+            <div className="flex items-center gap-2 text-sm leading-none font-medium">
+              {image && (
+                <Image
+                  src={image}
+                  width={30}
+                  height={30}
+                  alt=""
+                  className="size-8 rounded"
+                />
+              )}
+              {title}
+            </div>
+          </Link>
+        </NavigationMenuLink>
+      </li>
+    );
+  },
+);
 ListItem.displayName = "ListItem";

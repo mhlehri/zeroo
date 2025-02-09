@@ -2,13 +2,14 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Define Cart Item Type
-interface CartItem {
+// Define Cart Item Type with Stock Information
+export interface CartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
   image?: string;
+  stock: number; // Add stock to the CartItem
 }
 
 // Cart Context Type
@@ -18,6 +19,7 @@ interface CartContextType {
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
+  cartLoading: boolean;
 }
 
 // Create Context
@@ -26,13 +28,16 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 // Cart Provider Component
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartLoading, setCartLoading] = useState(true);
 
   // Load cart from localStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
+      setCartLoading(false);
     }
+    setCartLoading(false);
   }, []);
 
   // Save cart to localStorage on change
@@ -45,9 +50,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart((prevCart) => {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existingItem) {
+        // Update quantity if already in cart, but respect stock limits
+        const newQuantity = Math.min(
+          existingItem.quantity + item.quantity,
+          item.stock
+        );
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+            ? { ...cartItem, quantity: newQuantity }
             : cartItem
         );
       }
@@ -60,11 +70,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // Update Quantity
+  // Update Quantity with Stock Limit
   const updateQuantity = (id: string, quantity: number) => {
-    setCart((prevCart) =>
-      prevCart.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
+    setCart((prevCart) => {
+      const cartItem = prevCart.find((item) => item.id === id);
+      if (cartItem) {
+        const newQuantity = Math.min(quantity, cartItem.stock); // Limit quantity by stock
+        return prevCart.map((item) =>
+          item.id === id ? { ...item, quantity: newQuantity } : item
+        );
+      }
+      return prevCart;
+    });
   };
 
   // Clear Cart
@@ -74,7 +91,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart }}
+      value={{
+        cart,
+        cartLoading,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>

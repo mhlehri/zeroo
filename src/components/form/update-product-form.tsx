@@ -28,6 +28,7 @@ import {
 } from "../ui/select";
 import { Textarea } from "../ui/textarea";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -38,7 +39,6 @@ const formSchema = z.object({
 });
 
 export default function UpdateProductForm({ id }: { id: string }) {
-  const queryClient = useQueryClient();
   const { product, isLoading } = useGetProductById(id);
   const { categories } = useCategories();
   const [imageUrls, setImageUrls] = useState<string[]>([]);
@@ -68,6 +68,9 @@ export default function UpdateProductForm({ id }: { id: string }) {
     }
   }, [product, form]);
 
+  console.log(imageUrls, "imageUrls");
+
+  const queryClient = useQueryClient();
   const { mutate: updateProductMutation, isPending } = useMutation({
     mutationKey: ["products"],
     mutationFn: async (values: z.infer<typeof formSchema>) => {
@@ -92,14 +95,15 @@ export default function UpdateProductForm({ id }: { id: string }) {
   function removeImage(index: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
   }
+  console.log(imageUrls, "imageUrls");
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loader2 className="mx-auto my-2 animate-spin" />;
 
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
+    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
+          <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
             Edit Product
           </h3>
           <FormField
@@ -194,13 +198,26 @@ export default function UpdateProductForm({ id }: { id: string }) {
 
           <div>
             <CldUploadWidget
+              signatureEndpoint={
+                process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
+              }
+              options={{
+                context: {
+                  caption: `${form.getValues("name")}`,
+                  alt: `${form.getValues("name")} - ${form.getValues("category")}`,
+                  metadata: {
+                    productId: `${id}`,
+                    category: `${form.getValues("category")}`,
+                  },
+                  tags: [`${form.getValues("category")}`],
+                },
+              }}
               uploadPreset="zeroo_products"
-              onSuccess={(result, { widget }) => {
+              onSuccess={(result) => {
                 if (typeof result.info !== "string" && result.info) {
                   const url = result.info.secure_url;
-                  setImageUrls([...imageUrls, url]);
+                  setImageUrls((prev) => [...prev, url]);
                   setErrorImage(false);
-                  widget.close();
                 }
               }}
             >
@@ -218,11 +235,11 @@ export default function UpdateProductForm({ id }: { id: string }) {
             {errorImage && (
               <p className="text-xs text-red-500">Image is required!</p>
             )}
-            <div className="flex gap-2 flex-wrap mt-2">
+            <div className="mt-2 flex flex-wrap gap-2">
               {imageUrls.map((image, index) => (
-                <div key={index} className="relative group">
+                <div key={index} className="group relative">
                   <Image
-                    className="size-24 border border-dashed p-1 rounded"
+                    className="size-24 rounded border border-dashed p-1"
                     width={100}
                     height={100}
                     src={image}
@@ -231,7 +248,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 bg-red-500 text-white p-1 text-xs rounded-full"
+                    className="absolute top-0 right-0 size-4 rounded-full bg-red-500 text-xs text-white"
                   >
                     X
                   </button>

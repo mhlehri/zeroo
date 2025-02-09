@@ -39,7 +39,7 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 import ProductModal from "../modal/product-modal";
 import Image from "next/image";
-import ProductDeleteModal from "../modal/product-detele";
+import ProductDeleteModal from "../modal/product-delete";
 import Link from "next/link";
 
 export const columns: ColumnDef<TProduct>[] = [
@@ -86,7 +86,7 @@ export const columns: ColumnDef<TProduct>[] = [
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
-      return <div className="font-medium">{amount}৳</div>;
+      return <div className="font-medium">{amount}TK. </div>;
     },
   },
   {
@@ -119,12 +119,12 @@ const ActionCell = ({ product }: { product: TProduct }) => {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <ProductModal product={product}>View Product</ProductModal>
+          <ProductModal product={product}>View Details</ProductModal>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link
             href={`/admin/update-product?id=${product._id}`}
-            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+            className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
           >
             Edit
           </Link>
@@ -142,13 +142,15 @@ const ActionCell = ({ product }: { product: TProduct }) => {
 export default function ProductList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { products, isLoading } = useGetProducts({});
+  const { products, isLoading } = useGetProducts({
+    limit: 0,
+  });
 
   console.log(products);
 
@@ -196,7 +198,7 @@ export default function ProductList() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -224,7 +226,7 @@ export default function ProductList() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

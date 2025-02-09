@@ -1,8 +1,8 @@
 "use client";
-import { ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ArrowUpToLine } from "lucide-react";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
@@ -30,18 +30,17 @@ export function ScrollToTopButton() {
 
   return (
     <>
-      {isVisible && (
-        <div className="fixed bottom-20 md:bottom-4 right-4">
-          <Button
-            onClick={scrollToTop}
-            variant="outline"
-            size="icon"
-            className="rounded-full bg-transparent"
-          >
-            <ChevronUp className="h-4 w-4 text-primary" />
-          </Button>
-        </div>
-      )}
+      <div
+        className={`${isVisible ? "right-4" : "-right-10"} fixed bottom-16 z-50 transition-discrete duration-300 md:bottom-6`}
+      >
+        <Button
+          onClick={scrollToTop}
+          size="icon"
+          className="bg-primary/50 rounded-full"
+        >
+          <ArrowUpToLine className="text-primary-200 size-3 md:size-4" />
+        </Button>
+      </div>
     </>
   );
 }

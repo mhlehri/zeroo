@@ -9,6 +9,46 @@ declare global {
     createdAt?: string;
     updatedAt?: string;
   };
+
+  type TCartProduct = {
+    id: string;
+    name: string;
+    price: number;
+    image?: string;
+    stock: number;
+  };
+
+  type TOrder = {
+    _id: string;
+    user: TUser;
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    products: {
+      product: TProduct | string;
+      quantity: number;
+    }[];
+    paymentMethod: string;
+    paymentStatus: string;
+    totalAmount: number;
+    orderStatus: string;
+    transactionId: string;
+    isDeleted: boolean;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+  type TReview = {
+    _id: string;
+    productId: string;
+    userId?: string;
+    rating: number;
+    comment: string;
+    isShown?: boolean;
+    isDeleted: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
   type TProduct = {
     _id: string;
     name: string;

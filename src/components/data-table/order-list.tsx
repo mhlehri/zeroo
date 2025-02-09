@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -13,7 +12,8 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ChevronDown, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -34,133 +34,143 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetProducts } from "@/hooks/use-product";
+import { useGetOrders } from "@/hooks/use-order";
+import { useUpdateOrderStatus } from "@/hooks/use-update-order-status";
+import OrderDeleteModal from "../modal/oder-delete";
+import OrderModal from "../modal/order-modal";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { DataTableColumnHeader } from "./column-header";
 
-export const columns: ColumnDef<TProduct>[] = [
-  // {
-  //   id: "select",
-  //   header: ({ table }) => (
-  //     <Checkbox
-  //       checked={
-  //         table.getIsAllPageRowsSelected() ||
-  //         (table.getIsSomePageRowsSelected() && "indeterminate")
-  //       }
-  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-  //       aria-label="Select all"
-  //     />
-  //   ),
-  //   cell: ({ row }) => (
-  //     <Checkbox
-  //       checked={row.getIsSelected()}
-  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
-  //       aria-label="Select row"
-  //     />
-  //   ),
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
-  {
-    accessorKey: "serial",
-    header: "SN.",
-    cell: ({ row, table }) => (
-      <div>{table.getRowModel().rows.indexOf(row) + 1}</div>
-    ),
-  },
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => (
-      <div className="capitalize whitespace-nowrap">{row.getValue("name")}</div>
-    ),
-  },
-  {
-    accessorKey: "stock",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Stock
-          <ArrowUpDown />
-        </Button>
-      );
-    },
-
-    cell: ({ row }) => <div className="lowercase">{row.getValue("stock")}</div>,
-  },
-  {
-    accessorKey: "price",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        className="p-0"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Price
-        <ArrowUpDown />
-      </Button>
-    ),
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("price"));
-
-      // // Format the amount as a taka amount
-      // const formatted = new Intl.NumberFormat("en-BD", {
-      //   style: "currency",
-      //   currency: "BDT",
-      // }).format(amount);
-
-      return <div className="font-medium">{amount}৳</div>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const product = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(product._id)}
-            >
-              Copy Product ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View Product</DropdownMenuItem>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
-
-export function DataTableDemo() {
+export function OrderList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
+  const updateOrderStatusMutation = useUpdateOrderStatus();
+
+  const columns: ColumnDef<TOrder>[] = [
+    {
+      accessorKey: "name",
+      header: "Cus. Name",
+      cell: ({ row }) => (
+        <div className="whitespace-nowrap capitalize">
+          {row.getValue("name")}
+        </div>
+      ),
+    },
+    {
+      accessorKey: "paymentStatus",
+      header: ({ column }) => {
+        return <DataTableColumnHeader column={column} title="Payment Status" />;
+      },
+
+      cell: ({ row }) => (
+        <div className="capitalize">{row.getValue("paymentStatus")}</div>
+      ),
+    },
+    {
+      accessorKey: "orderStatus",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Order Status" />
+      ),
+      cell: ({ row }) => {
+        const order = row.original;
+
+        if (order.orderStatus === "delivered") {
+          return <div className="capitalize">{order.orderStatus}</div>;
+        }
+
+        return (
+          <Select
+            onValueChange={(newStatus) =>
+              updateOrderStatusMutation.mutate({ id: order._id, newStatus })
+            }
+            defaultValue={order.orderStatus}
+            disabled={updateOrderStatusMutation.isPending}
+          >
+            <SelectTrigger className="w-[140px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {order.orderStatus !== "delivered" && (
+                <SelectItem value="confirmed">Confirmed</SelectItem>
+              )}
+              {order.orderStatus === "cancelled" ||
+                order.orderStatus === "confirmed" ||
+                order.orderStatus === "delivered" || (
+                  <SelectItem value="unconfirmed">Unconfirmed</SelectItem>
+                )}
+              {order.orderStatus !== "delivered" && (
+                <SelectItem value="cancelled">Cancelled</SelectItem>
+              )}
+              {order.orderStatus !== "cancelled" && (
+                <SelectItem value="delivered">Delivered</SelectItem>
+              )}
+            </SelectContent>
+          </Select>
+        );
+      },
+    },
+    {
+      accessorKey: "totalAmount",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Amount" />
+      ),
+      cell: ({ row }) => {
+        const amount = parseFloat(row.getValue("totalAmount"));
+        return <div className="font-medium">{amount.toFixed(2)}TK. </div>;
+      },
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const order = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => navigator.clipboard.writeText(order._id)}
+              >
+                Copy Order ID
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <OrderModal order={order}>View Details</OrderModal>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <OrderDeleteModal id={order._id}>Delete</OrderDeleteModal>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { products, isLoading } = useGetProducts({});
+  const { orders, isLoading } = useGetOrders({});
 
-  console.log(products);
+  console.log(orders, "orders");
 
   const table = useReactTable({
-    data: products,
+    data: orders,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -228,7 +238,7 @@ export function DataTableDemo() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -256,7 +266,7 @@ export function DataTableDemo() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -276,7 +286,7 @@ export function DataTableDemo() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>

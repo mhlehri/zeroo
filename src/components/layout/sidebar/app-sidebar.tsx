@@ -14,7 +14,6 @@ import {
   ListEnd,
   ListOrdered,
   Package,
-  Settings2,
   Users,
 } from "lucide-react";
 import * as React from "react";
@@ -80,32 +79,32 @@ export const items = [
       },
     ],
   },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings2,
-    items: [
-      {
-        title: "General",
-        url: "#",
-      },
-      {
-        title: "Team",
-        url: "#",
-      },
-      {
-        title: "Billing",
-        url: "#",
-      },
-      {
-        title: "Limits",
-        url: "#",
-      },
-    ],
-  },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings2,
+  //   items: [
+  //     {
+  //       title: "General",
+  //       url: "#",
+  //     },
+  //     {
+  //       title: "Team",
+  //       url: "#",
+  //     },
+  //     {
+  //       title: "Billing",
+  //       url: "#",
+  //     },
+  //     {
+  //       title: "Limits",
+  //       url: "#",
+  //     },
+  //   ],
+  // },
 ];
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const {user} = useUser()
+  const { user } = useUser();
   return (
     <Sidebar collapsible="icon" className="" {...props}>
       <SidebarHeader>

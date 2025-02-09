@@ -3,7 +3,7 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="container my-4">
+    <div className="container mx-0 my-4">
       <AddProductForm />
     </div>
   );

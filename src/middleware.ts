@@ -4,9 +4,9 @@ import { getCurrentUser } from "./services/auth";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
-  const protectedPaths = [/^\/admin/];
+  const adminPaths = [/^\/admin/];
   const authPaths = ["/login", "/signup"];
-
+  const protectedPaths = ["/profile", "/orders", "/checkout"];
   const user = (await getCurrentUser()) as TUser | null;
   const pathname = request.nextUrl.pathname;
   console.log(pathname, "middleware");
@@ -16,14 +16,17 @@ export async function middleware(request: NextRequest) {
       return NextResponse.next();
     } else {
       return NextResponse.redirect(
-        new URL(`/login?redirect=${pathname}`, request.url)
+        new URL(`/login?redirect=${pathname}`, request.url),
       );
     }
   }
-  if (protectedPaths.some((path) => path.test(pathname))) {
+  if (adminPaths.some((path) => path.test(pathname))) {
     if (user?.role && user?.role === "admin") {
       return NextResponse.next();
     }
+  }
+  if (protectedPaths.includes(pathname)) {
+    return NextResponse.next();
   }
 
   return NextResponse.redirect(new URL("/", request.url));
@@ -31,5 +34,12 @@ export async function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/signup", "/admin/:path*", "/profile", "/orders"],
+  matcher: [
+    "/login",
+    "/signup",
+    "/admin/:path*",
+    "/profile",
+    "/orders",
+    // "/checkout",
+  ],
 };

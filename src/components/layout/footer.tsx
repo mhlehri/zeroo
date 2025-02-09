@@ -1,14 +1,17 @@
+import { Blend } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-950 text-slate-200 py-10">
-      <div className="max-w-7xl mx-auto px-6 md:px-16 lg:px-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer className="bg-primary-900 bg-cover bg-fixed py-10 pb-16 text-slate-50 md:pb-0">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:grid-cols-3 md:px-16 lg:px-32">
         {/* About Section */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">About Zeroo</h3>
-          <p className="text-sm text-slate-400 leading-relaxed">
+          <Blend />
+          <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
+            About Zeroo
+          </h3>
+          <p className="text-sm leading-relaxed text-slate-100">
             Zeroo is your go-to destination for high-quality kids&apos; items
             and accessories. We strive to provide the best products for your
             little ones, ensuring safety, comfort, and style.
@@ -17,7 +20,7 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+          <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             <li>
               <Link href="/" className="hover:underline">
@@ -44,7 +47,7 @@ export default function Footer() {
 
         {/* Contact Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+          <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
           <ul className="space-y-2 text-sm">
             <li>
               Email:{" "}
@@ -70,18 +73,18 @@ export default function Footer() {
       </div>
 
       {/* Bottom Section */}
-      <div className="mt-8 border-t border-slate-700 pt-6 text-center">
-        <p className="text-sm text-slate-500">
+      <div className="border-primary-700 mt-8 border-t pt-6 text-center">
+        <p className="text-sm text-slate-300">
           © {new Date().getFullYear()} Zeroo. All rights reserved.
         </p>
         <div className="mt-4 flex justify-center space-x-4">
-          <Link href="#" className="text-slate-400 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-200">
             <i className="fab fa-facebook-f"></i> Facebook
           </Link>
-          <Link href="#" className="text-slate-400 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-200">
             <i className="fab fa-twitter"></i> Twitter
           </Link>
-          <Link href="#" className="text-slate-400 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-200">
             <i className="fab fa-instagram"></i> Instagram
           </Link>
         </div>

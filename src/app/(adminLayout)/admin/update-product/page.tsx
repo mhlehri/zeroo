@@ -1,16 +1,16 @@
-import UserUpdateForm from "../../../../components/form/update-user-form";
+import UpdateProductForm from "@/components/form/update-product-form";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Record<string, string | "">;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const id = searchParams.id; // Directly access the property
+  const { id = "" } = await searchParams; // Directly access the property
   console.log(id, "searchParams");
 
   return (
     <div>
-      <UserUpdateForm id={id} />
+      <UpdateProductForm id={id} />
     </div>
   );
 }

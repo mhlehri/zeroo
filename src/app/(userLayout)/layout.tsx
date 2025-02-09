@@ -1,15 +1,15 @@
 import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar/navbar";
+import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 import { Toaster } from "@/components/ui/sonner";
 import Provider from "@/lib/provider";
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "../globals.css";
-import { ScrollToTopButton } from "@/components/ScrollToTopButton";
 
-const lato = Lato({
-  weight: ["400", "900", "700", "300", "100"],
-  variable: "--font-lato-sans",
+const roboto = Roboto({
+  weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto-sans",
   subsets: ["latin"],
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${lato.variable} antialiased text-slate-900`}>
+      <body className={` ${roboto.variable} antialiased text-slate-900`}>
         <Provider>
           <Navbar />
           {children}

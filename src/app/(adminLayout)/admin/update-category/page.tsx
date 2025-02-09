@@ -3,9 +3,9 @@ import UpdateCategoryForm from "@/components/form/update-category-form";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Record<string, string | "">;
+  searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
-  const id = searchParams.id; // Directly access the property
+  const { id = "" } = await searchParams; // Directly access the property
   console.log(id, "searchParams");
 
   return (

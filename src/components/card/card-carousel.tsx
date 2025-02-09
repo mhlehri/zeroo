@@ -6,31 +6,44 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import ProductCard from "./product-card";
+import Autoplay from "embla-carousel-autoplay";
 
-export default function CardCarousel({ cardArr }: { cardArr: unknown[] }) {
+export default function CardCarousel({ cardArr }: { cardArr: TProduct[] }) {
   return (
     <Carousel
-      className="w-full group z-40"
+      className="group z-40 w-full"
+      plugins={[
+        Autoplay({
+          delay: 5000,
+          stopOnInteraction: true,
+        }),
+      ]}
       opts={{
         slidesToScroll: 2,
         duration: 25,
+        dragFree: true,
       }}
     >
-      <CarouselContent className="-ml-1 select-none">
-        {(cardArr.length ? cardArr : Array.from({ length: 10 })).map(
-          (_, index) => (
+      <CarouselContent className="-ml-2 select-none sm:-ml-3 md:-ml-4">
+        {cardArr.length ? (
+          cardArr.map((_, index) => (
             <CarouselItem
               key={index}
-              className="pl-1 basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5"
+              className="basis-1/2 pl-2 sm:basis-auto sm:pl-3 md:pl-4"
             >
-              <div className="p-1"></div>
+              <div className="p-1">
+                <ProductCard product={_} />
+              </div>
             </CarouselItem>
-          )
+          ))
+        ) : (
+          <>Loading...</>
         )}
       </CarouselContent>
-      <div className="">
-        <CarouselPrevious className="left-0 2xl:-left-10 border-none p-0 text-primary" />
-        <CarouselNext className="right-0 2xl:-right-10 border-none p-0 text-primary" />
+      <div>
+        <CarouselPrevious className="text-primary left-0 border-none p-0 2xl:-left-10" />
+        <CarouselNext className="text-primary right-0 border-none p-0 2xl:-right-10" />
       </div>
     </Carousel>
   );

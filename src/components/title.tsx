@@ -10,7 +10,10 @@ export default function Title({
 }) {
   return (
     <h2
-      className={cn("text-2xl md:text-3xl font-bold text-balance", className)}
+      className={cn(
+        "text-primary-950 mb-3 text-lg font-semibold text-balance sm:mb-4 sm:text-xl md:mb-6 md:text-2xl lg:text-3xl",
+        className,
+      )}
     >
       {children}
     </h2>

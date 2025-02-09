@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -34,35 +34,34 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useCategories } from "@/hooks/use-category";
+import Image from "next/image";
+import Link from "next/link";
+import CategoryDeleteModal from "../modal/category-delete";
+import { DataTableColumnHeader } from "./column-header";
 import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
-import CategoryDeleteModal from "../modal/category-delete";
-import Link from "next/link";
 
 export const columns: ColumnDef<TCategory>[] = [
-  //   {
-  //     accessorKey: "serial",
-  //     header: "SN.",
-  //     cell: ({ row, table }) => (
-  //       <div>{table.getRowModel().rows.indexOf(row) + 1}</div>
-  //     ),
-  //   },
+  {
+    accessorKey: "image",
+    header: "Image",
+    cell: ({ row }) => (
+      <Image
+        src={row.getValue("image")}
+        alt={row.getValue("name")}
+        width={30}
+        height={30}
+        className="rounded-md"
+      />
+    ),
+  },
   {
     accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="p-0"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
     cell: ({ row }) => (
-      <div className="capitalize whitespace-nowrap">{row.getValue("name")}</div>
+      <div className="whitespace-nowrap capitalize">{row.getValue("name")}</div>
     ),
   },
   {
@@ -90,7 +89,7 @@ export const columns: ColumnDef<TCategory>[] = [
             <DropdownMenuItem asChild>
               <Link
                 href={`/admin/update-category?id=${category._id}`}
-                className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+                className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
               >
                 Edit
               </Link>
@@ -110,7 +109,7 @@ export const columns: ColumnDef<TCategory>[] = [
 export default function CategoryList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -140,7 +139,7 @@ export default function CategoryList() {
   });
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter names..."
@@ -164,7 +163,7 @@ export default function CategoryList() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -192,7 +191,7 @@ export default function CategoryList() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

@@ -81,10 +81,10 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
   }
 
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
+    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
+          <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
             Edit Category
           </h3>
 
@@ -106,8 +106,18 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
           {/* ✅ Image Upload */}
           <div>
             <CldUploadWidget
+              signatureEndpoint={
+                process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
+              }
               uploadPreset="zeroo_products"
-              options={{ multiple: false }}
+              options={{
+                multiple: false,
+                context: {
+                  caption: `${form.getValues("name")}`,
+                  alt: `${form.getValues("name")}-image`,
+                },
+                tags: [`${form.getValues("name")}`],
+              }}
               onSuccess={(result, { widget }) => {
                 const info = result?.info;
                 if (
@@ -138,7 +148,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               )}
             </CldUploadWidget>
             {errorImage && (
-              <p className="text-xs text-red-500 mt-1">Image is required!</p>
+              <p className="mt-1 text-xs text-red-500">Image is required!</p>
             )}
 
             {/* ✅ Image Preview */}
@@ -146,14 +156,16 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               <>loading...</>
             ) : imageUrl ? (
               <Image
-                className="size-32 p-2 border-dashed mt-2 border-slate-300 border rounded"
+                className="mt-2 size-32 rounded border border-dashed border-slate-300 p-2"
                 width={100}
                 height={100}
                 src={imageUrl}
                 alt="Preview image"
               />
             ) : (
-              <p className="text-xs text-gray-400 mt-1">No images avalaible</p>
+              <p className="text-primary-400 mt-1 text-xs">
+                No images avalaible
+              </p>
             )}
           </div>
 

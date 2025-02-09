@@ -11,17 +11,15 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { deleteProduct } from "@/services/product";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteOrder } from "@/services/order";
 
-export default function ProductDeleteModal({
-  name,
+export default function OrderDeleteModal({
   id,
   children,
 }: {
-  name: string;
   id: string;
   children: React.ReactNode;
 }) {
@@ -29,17 +27,17 @@ export default function ProductDeleteModal({
   const queryClient = useQueryClient();
 
   const { mutate: deleteP, isPending } = useMutation({
-    mutationKey: ["products"], // Tracks mutation
+    mutationKey: ["orders"],
     mutationFn: async (id: string) => {
-      const res = await deleteProduct(id);
+      const res = await deleteOrder(id);
       return res;
     },
     onSuccess: (data) => {
       if (data?.success) {
         toast.success(data?.message, { richColors: true });
 
-        // ✅ Revalidate "products" after deletion
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        // ✅ Revalidate "orders" after deletion
+        queryClient.invalidateQueries({ queryKey: ["orders"] });
 
         setOpen(false); // Close modal on success
       } else {
@@ -54,14 +52,12 @@ export default function ProductDeleteModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50">
+      <DialogTrigger className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50">
         {children}
       </DialogTrigger>
       <DialogContent className="max-h-[500px] xl:max-h-full overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>
-            Are you sure you want to delete &quot;{name}&quot;?
-          </DialogTitle>
+          <DialogTitle>Are you sure you want to delete?</DialogTitle>
           <DialogDescription>
             This action cannot be undone. This will permanently delete the
             product.
@@ -70,7 +66,7 @@ export default function ProductDeleteModal({
         <DialogFooter>
           <Button
             disabled={isPending}
-            onClick={() => deleteP(id)} // Only call deleteP here
+            onClick={() => deleteP(id)}
             variant="destructive"
           >
             <Trash /> {isPending ? "Deleting..." : "Delete"}

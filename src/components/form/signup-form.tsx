@@ -48,7 +48,7 @@ export default function SignupForm() {
     },
   });
   const { mutate: registerUser } = useMutation<unknown, Error, FieldValues>({
-    mutationKey: ["user"],
+    mutationKey: ["users"],
     mutationFn: async (values: FieldValues) => {
       const res = await signupAction(values);
       if (res.success) {
@@ -69,10 +69,13 @@ export default function SignupForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit">
+    <div className="h-fit w-full max-w-md rounded-lg border p-6 shadow-xs sm:p-8 md:p-10">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
-          <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="space-y-3 md:space-y-4"
+        >
+          <h3 className="text-primary text-2xl font-semibold md:text-3xl">
             Signup
           </h3>
           <FormField
@@ -82,7 +85,7 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="full name" {...field} />
+                  <Input placeholder="Enter name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,7 +98,7 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input type="email" placeholder="email address" {...field} />
+                  <Input type="email" placeholder="Enter email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +111,7 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="phone number" type="number" {...field} />
+                  <Input placeholder="Enter phone" type="number" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -121,7 +124,7 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="address" {...field} />
+                  <Input placeholder="Enter address" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -134,7 +137,11 @@ export default function SignupForm() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder="*****" type="password" {...field} />
+                  <Input
+                    placeholder="Enter password"
+                    type="password"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -143,9 +150,9 @@ export default function SignupForm() {
           <Button disabled={submitting} type="submit">
             {submitting ? "Submitting..." : "Submit"}
           </Button>
-          <p className="text-xs text-slate-600 text-center">
+          <p className="text-center text-xs text-slate-600">
             Already have an account?{" "}
-            <Link href="/login" className="text-black font-semibold underline">
+            <Link href="/login" className="font-semibold text-black underline">
               Login
             </Link>
           </p>

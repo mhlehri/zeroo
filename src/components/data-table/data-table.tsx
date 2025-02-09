@@ -70,7 +70,7 @@ export const columns: ColumnDef<TProduct>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <div className="capitalize whitespace-nowrap">{row.getValue("name")}</div>
+      <div className="whitespace-nowrap capitalize">{row.getValue("name")}</div>
     ),
   },
   {
@@ -111,7 +111,7 @@ export const columns: ColumnDef<TProduct>[] = [
       //   currency: "BDT",
       // }).format(amount);
 
-      return <div className="font-medium">{amount}৳</div>;
+      return <div className="font-medium">{amount}TK. </div>;
     },
   },
   {
@@ -149,7 +149,7 @@ export const columns: ColumnDef<TProduct>[] = [
 export function DataTableDemo() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -228,7 +228,7 @@ export function DataTableDemo() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -256,7 +256,7 @@ export function DataTableDemo() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}
@@ -276,7 +276,7 @@ export function DataTableDemo() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex-1 text-sm">
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </div>

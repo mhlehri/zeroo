@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useCategories() {
   const [categories, setCategories] = useState<TCategory[]>([]);
-
+  const [totalCategories, setTotalCategories] = useState(0);
   const {
     data,
     isLoading: isCategoriesLoading,
@@ -20,9 +20,12 @@ export function useCategories() {
     } else {
       setCategories([]);
     }
+    if (data?.data?.total) {
+      setTotalCategories(data.data.total);
+    }
   }, [data]);
 
-  return { categories, isCategoriesLoading, isError };
+  return { totalCategories, categories, isCategoriesLoading, isError };
 }
 
 export function useCategoryById(id: string) {
