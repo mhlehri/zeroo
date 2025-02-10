@@ -13,7 +13,7 @@ export default function TotalUserOverview() {
         Total Users
       </div>
       <div>
-        <p className="text-lg font-semibold md:text-xl lg:text-2xl">
+        <p className="text-xl font-semibold md:text-2xl lg:text-3xl">
           {isUsersLoading ? <Loader2 className="animate-spin" /> : users.length}
         </p>
         {/* {!isUsersLoading && (

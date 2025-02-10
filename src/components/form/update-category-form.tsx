@@ -153,7 +153,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
 
             {/* ✅ Image Preview */}
             {isCategoryLoading ? (
-              <>loading...</>
+              <div className="loader mx-auto" />
             ) : imageUrl ? (
               <Image
                 className="mt-2 size-32 rounded border border-dashed border-slate-300 p-2"

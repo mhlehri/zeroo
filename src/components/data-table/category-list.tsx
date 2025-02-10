@@ -178,7 +178,7 @@ export default function CategoryList() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  <div className="loader mx-auto" />
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (

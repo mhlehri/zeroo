@@ -12,7 +12,7 @@ export default function TotalProductsOverview() {
         <Package /> Total Products
       </div>
       <div>
-        <p className="text-lg font-semibold md:text-xl lg:text-2xl">
+        <p className="text-xl font-semibold md:text-2xl lg:text-3xl">
           {isLoading ? <Loader2 className="animate-spin" /> : totalProducts}
         </p>
         {/* {!isLoading && (

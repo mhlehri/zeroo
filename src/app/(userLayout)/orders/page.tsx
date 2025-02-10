@@ -45,7 +45,9 @@ export default function OrdersPage() {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={4}>loading...</TableCell>
+                <TableCell colSpan={4}>
+                  <div className="loader" />
+                </TableCell>
               </TableRow>
             ) : (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any

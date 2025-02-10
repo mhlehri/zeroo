@@ -6,12 +6,12 @@ import TotalUserOverview from "@/components/chart/TotalUserOverview";
 
 export default function Page() {
   return (
-    <div className="p-4">
+    <div className="container mx-0">
       <h2 className="mb-3 rounded bg-teal-800 p-3 text-lg font-bold text-balance text-slate-200 sm:text-xl md:text-2xl">
         Welcome to Zeroo Admin Dashboard
       </h2>
       <div className="space-y-4">
-        <div className="flex flex-wrap gap-4 *:min-w-56 *:first-of-type:bg-amber-200 *:last-of-type:bg-teal-200 *:nth-of-type-[2]:bg-rose-200">
+        <div className="flex flex-wrap items-center gap-4 *:min-w-56 *:first-of-type:bg-amber-200 *:last-of-type:bg-teal-200 *:nth-of-type-[2]:bg-rose-200">
           <TotalProductsOverview />
           <TotalCategoriesOverview />
           <TotalUserOverview />

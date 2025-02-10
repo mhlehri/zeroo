@@ -101,7 +101,7 @@ const ActionCell = ({ user }: { user: TUser }) => {
         <DropdownMenuItem asChild>
           <Link
             href={`/admin/update-user?id=${user._id}`}
-            className="relative cursor-pointer w-full text-left select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+            className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
           >
             Edit
           </Link>
@@ -119,7 +119,7 @@ const ActionCell = ({ user }: { user: TUser }) => {
 export default function UserList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
@@ -173,7 +173,7 @@ export default function UserList() {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext()
+                            header.getContext(),
                           )}
                     </TableHead>
                   );
@@ -188,7 +188,7 @@ export default function UserList() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  Loading...
+                  <div className="loader mx-auto" />
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows?.length ? (
@@ -201,7 +201,7 @@ export default function UserList() {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

@@ -38,7 +38,7 @@ export default function CardCarousel({ cardArr }: { cardArr: TProduct[] }) {
             </CarouselItem>
           ))
         ) : (
-          <>Loading...</>
+          <div className="loader" />
         )}
       </CarouselContent>
       <div>
