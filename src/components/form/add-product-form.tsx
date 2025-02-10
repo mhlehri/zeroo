@@ -148,7 +148,7 @@ export default function ProductForm() {
   console.log(submitting);
 
   return (
-    <div className="p-6">
+    <div className="">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="mb-4 flex items-center justify-between rounded-lg border p-6 shadow-xs">

@@ -25,7 +25,7 @@
   width: fit-content;
   font-weight: bold;
   font-family: sans-serif;
-  font-size: 30px;
+  font-size: 20px;
   padding: 0 5px 8px 0;
   background: repeating-linear-gradient(90deg, currentColor 0 8%, #0000 0 10%) 200% 100%/200% 3px no-repeat;
   animation: l3 2s steps(6) infinite;
@@ -77,10 +77,21 @@
   padding-inline: 10px;
   @media (width >= --theme(--breakpoint-sm)) {
     max-width: none;
-     
   }
   @media (width >= 1440px) {
     max-width: 1440px;
+  }
+}
+
+@utility container-dashboard {
+  padding-inline: 10px;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;    
+  }
+  @media (width >= 1440px) {
+    max-width: 1440px;
+    padding: 0 20px;
+
   }
 }
 

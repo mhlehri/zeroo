@@ -6,7 +6,7 @@ import TotalUserOverview from "@/components/chart/TotalUserOverview";
 
 export default function Page() {
   return (
-    <div className="container mx-0">
+    <div className="container-dashboard">
       <h2 className="mb-3 rounded bg-teal-800 p-3 text-lg font-bold text-balance text-slate-200 sm:text-xl md:text-2xl">
         Welcome to Zeroo Admin Dashboard
       </h2>

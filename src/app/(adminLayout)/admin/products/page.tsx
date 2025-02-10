@@ -2,7 +2,7 @@ import ProductList from "@/components/data-table/product-list";
 
 export default function page() {
   return (
-    <div className="container my-4">
+    <div className="container-dashboard">
       <ProductList />
     </div>
   );
