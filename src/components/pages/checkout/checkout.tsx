@@ -14,7 +14,7 @@ import { useUser } from "@/context/user-provider";
 import { useUserById } from "@/hooks/use-user";
 import { addOrder } from "@/services/order";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Minus, Plus, ShoppingBag, Trash2, Truck, Wallet2 } from "lucide-react";
+import { ShoppingBag, Truck, Wallet2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -48,8 +48,7 @@ export default function Checkout() {
   const { user: u } = useUserById(user?.id as string);
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
-  const { cart, cartLoading, removeFromCart, updateQuantity, clearCart } =
-    useCart();
+  const { cart, cartLoading, clearCart } = useCart();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
