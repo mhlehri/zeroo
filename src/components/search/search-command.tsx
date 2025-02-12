@@ -117,7 +117,7 @@ export function CommandDialogSearch({
                           <span className="text-muted-foreground text-xs font-medium">
                             {product?.category} •{" "}
                             <span className="font-mono slashed-zero">
-                              TK. {product?.price}
+                              TK {product?.price}
                             </span>
                           </span>
                         </div>

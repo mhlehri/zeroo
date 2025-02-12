@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${roboto.variable} antialiased text-slate-900`}>
+      <body className={` ${roboto.variable} text-slate-900 antialiased`}>
         <Provider>
           <Navbar />
           {children}

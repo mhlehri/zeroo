@@ -124,7 +124,7 @@ export function OrderList() {
       ),
       cell: ({ row }) => {
         const amount = parseFloat(row.getValue("totalAmount"));
-        return <div className="font-medium">{amount.toFixed(2)}TK. </div>;
+        return <div className="font-medium">{amount.toFixed(2)}TK </div>;
       },
     },
     {

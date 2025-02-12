@@ -113,7 +113,7 @@ export default function OrderModal({
                       </span>
                     </div>
                     <span className="text-primary-500 text-sm">
-                      {product.quantity} x TK. 
+                      {product.quantity} x TK
                       {typeof product.product === "object"
                         ? product.product.price.toFixed(2)
                         : "0.00"}
@@ -129,7 +129,7 @@ export default function OrderModal({
               <div className="flex items-center justify-between">
                 <span className="font-medium">Total Amount</span>
                 <span className="text-lg font-bold">
-                  TK. {totalAmount?.toFixed(2)}
+                  TK {totalAmount?.toFixed(2)}
                 </span>
               </div>
               <div className="text-primary-500 flex items-center justify-between text-sm">

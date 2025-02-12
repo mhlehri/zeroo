@@ -111,7 +111,7 @@ export const columns: ColumnDef<TProduct>[] = [
       //   currency: "BDT",
       // }).format(amount);
 
-      return <div className="font-medium">{amount}TK. </div>;
+      return <div className="font-medium">{amount}TK </div>;
     },
   },
   {

@@ -47,9 +47,12 @@ export default function ProductModal({
               </span>
             </div>
             <p className="text-primary-900 text-2xl">
-              TK. <span className="font-bold">{price?.toFixed(2)}</span>
+              TK <span className="font-bold">{price?.toFixed(2)}</span>
             </p>
-            <p className="text-primary-700">{description}</p>
+            <div
+              className="text-primary-700"
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
             <p className={`${stock > 0 ? "text-green-600" : "text-red-600"}`}>
               {stock > 0 ? `In stock (${stock} available)` : "Out of stock"}
             </p>

@@ -86,7 +86,7 @@ export const columns: ColumnDef<TProduct>[] = [
     ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
-      return <div className="font-medium">{amount}TK. </div>;
+      return <div className="font-medium">{amount}TK </div>;
     },
   },
   {

@@ -14,15 +14,8 @@ import { useUser } from "@/context/user-provider";
 import { useUserById } from "@/hooks/use-user";
 import { addOrder } from "@/services/order";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Loader2,
-  Minus,
-  Plus,
-  ShoppingBag,
-  Trash2,
-  Truck,
-  Wallet2,
-} from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash2, Truck, Wallet2 } from "lucide-react";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -133,27 +126,27 @@ export default function Checkout() {
     }
   };
 
-  if (cartLoading) return <Loader2 className="mx-auto my-2 animate-spin" />;
+  if (cartLoading) return <div className="loader mx-auto" />;
 
   if (cart?.length === 0) {
     router.push("/products");
   }
 
   return (
-    <div className="mx-auto max-w-6xl p-3 md:p-6">
-      <h1 className="text-primary-800 mb-8 text-center text-3xl font-bold">
+    <div className="">
+      {/* <h1 className="text-primary-800 mb-8 text-center text-3xl font-bold">
         Checkout
-      </h1>
+      </h1> */}
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitOrder)}
           className="space-y-4"
         >
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
-            <div className="space-y-8">
+          <div className="flex h-full flex-col justify-center md:flex-row">
+            <div className="min-h-full w-full p-3 md:bg-white md:py-10 md:pr-10">
               {/* Shipping Information */}
-              <div className="bg-primary-50 rounded-lg p-3 shadow-md md:p-6">
+              <div className="w-full max-w-xl space-y-3 md:mr-0 md:ml-auto">
                 <h2 className="mb-4 flex items-center text-xl font-semibold md:text-2xl">
                   <Truck className="mr-2" /> Shipping Information
                 </h2>
@@ -226,7 +219,7 @@ export default function Checkout() {
                               onChange={() => field.onChange("Inside Dhaka")}
                               className="form-radio"
                             />
-                            <span>Inside Dhaka (TK. 80.00)</span>
+                            <span>Inside Dhaka (৳80.00)</span>
                           </label>
                           <label className="flex items-center space-x-2">
                             <input
@@ -236,7 +229,7 @@ export default function Checkout() {
                               onChange={() => field.onChange("Outside Dhaka")}
                               className="form-radio"
                             />
-                            <span>Outside Dhaka (TK. 120.00)</span>
+                            <span>Outside Dhaka (৳120.00)</span>
                           </label>
                         </div>
                       </FormControl>
@@ -244,92 +237,95 @@ export default function Checkout() {
                     </FormItem>
                   )}
                 />
-                {/* Payment Information */}
-                {/* <h2 className="text-xl md:text-2xl font-semibold my-4 flex items-center">
-              <Wallet className="mr-2" /> Payment Information
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block mb-2 font-medium">Payment Method</label>
-                <div className="flex gap-2">
-                  <Button
-                    variant={paymentMethod === "stripe" ? "default" : "outline"}
-                    onClick={() => setPaymentMethod("stripe")}
-                    className="flex-1"
-                  >
-                    <CreditCard className="mr-2" /> Stripe
-                    </Button>
-                    <Button
-                    variant={paymentMethod === "cod" ? "default" : "outline"}
-                    onClick={() => setPaymentMethod("cod")}
-                    className="flex-1"
-                  >
-                  Cash on Delivery
-                  </Button>
-                </div>
-              </div>
-              {paymentMethod === "stripe" && (
-                <Elements stripe={stripePromise}>
-                  <StripePaymentForm
-                    shippingInfo={form.getValues()}
-                    user={user?._id || ""}
-                    products={cart.map((item) => ({
-                      product: item.id,
-                      quantity: item.quantity,
-                    }))}
-                    SubmitButton={
-                      <Button
-                        disabled={processing || !form.formState.isValid}
-                        type="submit"
-                        className="w-full md:text-lg"
-                      >
-                        {processing ? "Processing..." : "Pay"}
-                      </Button>
-                    }
-                  />
-                </Elements>
-              )}
-
-              {paymentMethod === "cod" && (
-                <div>
-                  <div className="text-center text-primary-600">
-                    Pay with cash when your order is delivered.
-                  </div>
-                  <Button
-                    onSubmit={form.handleSubmit(handleSubmitOrder)}
-                    disabled={processing}
-                    className="w-full  md:text-lg mt-3"
-                  >
-                    {processing ? "Processing..." : "Place Order"}
-                  </Button>
-                </div>
-              )}
-            </div>
-            */}
+                <FormField
+                  control={form.control}
+                  name="paymentMethod"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Payment Method</FormLabel>
+                      <FormControl>
+                        <div className="space-y-2">
+                          <label className="flex items-center space-x-2">
+                            <input
+                              type="radio"
+                              value="online"
+                              checked={field.value === "online"}
+                              onChange={() => field.onChange("online")}
+                              className="form-radio"
+                            />
+                            <span className="flex items-center gap-2">
+                              <Wallet2 className="h-4 w-4" /> Online Payment
+                            </span>
+                          </label>
+                          <label className="flex items-center space-x-2">
+                            <input
+                              type="radio"
+                              value="cash"
+                              checked={field.value === "cash"}
+                              onChange={() => field.onChange("cash")}
+                              className="form-radio"
+                            />
+                            <span className="flex items-center gap-2">
+                              <ShoppingBag className="h-4 w-4" /> Cash on
+                              Delivery
+                            </span>
+                          </label>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  disabled={processing}
+                  className="mt-3 hidden w-full md:block md:text-lg"
+                >
+                  {processing
+                    ? "Processing..."
+                    : form.getValues("paymentMethod") === "online"
+                      ? "Pay Now"
+                      : "Place Order"}
+                </Button>
               </div>
             </div>
-            <div className="space-y-8">
+            <div className="w-full md:bg-[#f5f5f5] md:pl-10">
               {/* Order Summary */}
-              <div className="bg-primary-50 space-y-2 rounded-lg p-3 shadow-md md:space-y-4 md:p-6">
+              <div className="w-full max-w-xl space-y-2 p-3 md:space-y-4 md:py-10">
                 <h2 className="flex items-center text-xl font-semibold md:text-2xl">
                   <ShoppingBag className="mr-2" /> Cart Items
                 </h2>
-                <ul className="space-y-2">
+                <ul className="space-y-2 overflow-x-auto overflow-y-scroll pt-2 md:max-h-[360px]">
                   {cart.map((item) => (
                     <li
                       key={item.id}
-                      className="flex items-center justify-between border-b pb-2"
+                      className="flex items-center gap-2 border-b pb-2"
                     >
+                      <div className="relative">
+                        <Image
+                          src={
+                            item?.image ||
+                            "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20fill='%23fff'%3E%3Cpath%20fill-rule='evenodd'%20d='M8%208.5V1a1%201%200%200%200-2%200v7.5H1a1%201%200%200%200%200%202h5.5V15a1%201%200%200%200%202%200v-5.5H15a1%201%200%200%200%200-2h-5.5z'%2F%3E%3C%2Fsvg%3E"
+                          }
+                          alt={item?.name}
+                          width={60}
+                          height={60}
+                          className="bg-primary-200 size-14 rounded-md"
+                        />
+                        <div className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 text-xs text-white">
+                          {item.quantity}
+                        </div>
+                      </div>
                       <div>
-                        <h3 className="font-semibold">{item.name}</h3>
-                        <p className="text-primary-600">
-                          ${item.price} x {item.quantity}
+                        <h3 className="text-sm font-semibold">{item.name}</h3>
+                        <p className="text-primary-600 text-sm">
+                          ৳{item.price * item.quantity}
                         </p>
                       </div>
-                      <div className="flex flex-wrap items-center justify-between gap-3 md:flex-nowrap">
-                        <div className="flex w-fit items-center rounded-md border border-slate-300">
+                      {/* <div className="flex flex-wrap items-center justify-between gap-2 md:flex-nowrap">
+                        <div className="flex w-fit items-center rounded-md border">
                           <Button
                             size="sm"
+                            type="button"
                             variant="ghost"
                             className="p-1.5 text-xs md:text-sm"
                             onClick={() =>
@@ -342,10 +338,8 @@ export default function Checkout() {
                             <Minus size={14} />
                           </Button>
                           <Input
-                            type="number"
                             value={item.quantity}
-                            min="1"
-                            className="h-7 w-12 border-0 p-2 text-center"
+                            className="h-full w-12 rounded-none border-x border-y-0 text-center"
                             onChange={(e) =>
                               updateQuantity(
                                 item.id,
@@ -354,6 +348,7 @@ export default function Checkout() {
                             }
                           />
                           <Button
+                            type="button"
                             className="p-1.5 text-xs md:text-sm"
                             size="sm"
                             variant="ghost"
@@ -372,7 +367,7 @@ export default function Checkout() {
                         >
                           <Trash2 size={14} />{" "}
                         </Button>
-                      </div>
+                      </div> */}
                     </li>
                   ))}
                 </ul>
@@ -382,20 +377,20 @@ export default function Checkout() {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>TK. {calculateTotal().toFixed(2)}</span>
+                    <span>৳{calculateTotal().toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Shipping</span>
                     <span>
                       {form.watch("shipping") === "Inside Dhaka"
-                        ? "TK. 80.00"
-                        : "TK. 120.00"}
+                        ? "৳80.00"
+                        : "৳120.00"}
                     </span>
                   </div>
                   <div className="mt-4 flex justify-between text-lg font-bold">
                     <span>Total</span>
                     <span>
-                      TK.
+                      ৳
                       {(
                         calculateTotal() +
                         (form.watch("shipping") === "Inside Dhaka" ? 80 : 120)
@@ -403,45 +398,16 @@ export default function Checkout() {
                     </span>
                   </div>
                 </div>
-                <FormField
-                  control={form.control}
-                  name="paymentMethod"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Payment Method</FormLabel>
-                      <FormControl>
-                        <div className="space-y-2">
-                          <label className="flex items-center space-x-2">
-                            <input
-                              type="radio"
-                              value="online payment"
-                              checked={field.value === "online"}
-                              onChange={() => field.onChange("online")}
-                              className="form-radio"
-                            />
-                            <span>online payment</span>
-                          </label>
-                          <label className="flex items-center space-x-2">
-                            <input
-                              type="radio"
-                              value="cash on delivery"
-                              checked={field.value === "cash"}
-                              onChange={() => field.onChange("cash")}
-                              className="form-radio"
-                            />
-                            <span>cash on delivery</span>
-                          </label>
-                        </div>
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <Button
                   disabled={processing}
-                  className="mt-3 w-full md:text-lg"
+                  className="mt-3 mb-10 block w-full md:hidden md:text-lg"
                 >
-                  {processing ? "Processing..." : "Place Order"}
+                  {processing
+                    ? "Processing..."
+                    : form.getValues("paymentMethod") === "online"
+                      ? "Pay Now"
+                      : "Place Order"}
                 </Button>
               </div>
             </div>

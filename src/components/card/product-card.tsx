@@ -30,7 +30,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
             {product?.name}
           </h4>
           <h6 className="text-sm md:text-base">
-            TK. <span className="font-bold">{product?.price.toFixed(2)}</span>
+            TK <span className="font-bold">{product?.price.toFixed(2)}</span>
           </h6>
         </div>
       </Link>

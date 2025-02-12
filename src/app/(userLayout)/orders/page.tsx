@@ -93,7 +93,7 @@ export default function OrdersPage() {
                     </span>
                   </TableCell>
                   <TableCell className="text-right">
-                    TK. {order.totalAmount.toFixed(2)}
+                    TK {order.totalAmount.toFixed(2)}
                   </TableCell>
                 </TableRow>
               ))

@@ -12,6 +12,8 @@ import EmblaCarousel from "./EmblaCarousel";
 import Reviews from "./reviews";
 import { useCart } from "@/context/cart-provider";
 import { useUser } from "@/context/user-provider";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function ProductDetails({ product }: { product: TProduct }) {
   const slides = product?.images;
@@ -50,43 +52,53 @@ export default function ProductDetails({ product }: { product: TProduct }) {
   };
 
   return (
-    <div className="mb-4 space-y-4 sm:mb-6 md:container md:my-8 md:gap-6">
+    <div className="mt-2 mb-4 space-y-4 sm:mb-6 md:container md:my-8 md:gap-6">
       <div className="flex flex-col justify-center gap-4 md:flex-row md:gap-10">
         <div className="md:w-1/2">
           <EmblaCarousel slides={slides} />
         </div>
-        <div className="space-y-2 px-4 sm:space-y-3 md:w-1/2 md:space-y-4 md:px-0 lg:space-y-6">
+        <div className="space-y-2 px-4 md:w-1/2 md:space-y-3 md:px-0 lg:space-y-4">
           <div>
-            <h1 className="text-primary-900 text-xl font-bold md:text-2xl lg:text-3xl">
+            <h1 className="text-primary-800 mb-2 text-xl font-semibold md:text-2xl lg:text-3xl">
               {name}
             </h1>
-            <p className="text-primary-900 text-lg slashed-zero md:text-xl lg:text-2xl">
-              <span className="font-semibold">TK. {price?.toFixed(2)}</span>
+            <p className="text-primary-900 text-xl slashed-zero md:text-2xl lg:text-3xl">
+              <span className="font-semibold">TK {price?.toFixed(2)}</span>
             </p>
           </div>
           <div
-            className="text-sm text-slate-700"
+            className="text-sm text-slate-700 md:text-base"
             dangerouslySetInnerHTML={{ __html: description }}
           />
 
           <div className="flex items-center space-x-4">
             <span className="text-primary-700">Quantity:</span>
-            <div className="border-primary flex items-center overflow-hidden rounded border">
-              <button
-                className="bg-primary rounded-none p-1.5 text-xs disabled:opacity-50 md:text-sm"
-                onClick={decreaseQuantity}
-                disabled={quantity === 1}
+            <div className="flex w-fit items-center rounded-md border">
+              <Button
+                size="sm"
+                type="button"
+                variant="ghost"
+                className="p-1.5 text-xs md:text-sm"
+                onClick={() => (quantity > 1 ? decreaseQuantity() : null)}
               >
-                <Minus className="h-4 w-4 text-white" />
-              </button>
-              <span className="text-primary-800 h-full px-2">{quantity}</span>
-              <button
-                className="bg-primary rounded-none p-1.5 text-xs disabled:opacity-50 md:text-sm"
-                onClick={increaseQuantity}
-                disabled={quantity === product?.stock}
+                <Minus size={14} />
+              </Button>
+              <Input
+                value={quantity}
+                className="h-full w-12 rounded-none border-x border-y-0 text-center"
+                onChange={(e) =>
+                  setQuantity(Number.parseInt(e.target.value) || 1)
+                }
+              />
+              <Button
+                type="button"
+                className="p-1.5 text-xs md:text-sm"
+                size="sm"
+                variant="ghost"
+                onClick={() => (quantity < stock ? increaseQuantity() : null)}
               >
-                <Plus className="h-4 w-4 text-white" />
-              </button>
+                <Plus size={14} />
+              </Button>
             </div>
           </div>
 
