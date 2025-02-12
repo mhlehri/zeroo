@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+import { MoveLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,12 +15,11 @@ export default function NotFound() {
       />
       <h2 className="text-primary-800 text-4xl font-bold">এনে কি ব্রো?</h2>
       <p className="text-primary-600">ব্যাকে যান মিয়া....</p>
-      <Link
-        href="/products"
-        className="text-slate-500 underline hover:text-slate-700"
-      >
-        Continue Shopping
-      </Link>
+      <Button asChild className="flex w-fit items-center">
+        <Link href="/products" className="">
+          <MoveLeft /> Continue Shopping
+        </Link>
+      </Button>
     </div>
   );
 }
