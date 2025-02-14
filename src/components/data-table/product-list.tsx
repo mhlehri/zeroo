@@ -41,6 +41,7 @@ import ProductModal from "../modal/product-modal";
 import Image from "next/image";
 import ProductDeleteModal from "../modal/product-delete";
 import Link from "next/link";
+import { useDebounce } from "@/lib/use-debounce";
 
 export const columns: ColumnDef<TProduct>[] = [
   {
@@ -147,9 +148,12 @@ export default function ProductList() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
+  const [query, setQuery] = React.useState("");
+  const debouncedQuery = useDebounce(query, 300);
 
   const { products, isLoading } = useGetProducts({
     limit: 0,
+    query: debouncedQuery,
   });
 
   console.log(products);
@@ -173,20 +177,25 @@ export default function ProductList() {
     },
   });
 
+  const handleSearch = (value: string) => {
+    setQuery(value);
+  };
+
   return (
-    <div>
+    <>
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter names..."
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
+          onChange={(event) => {
+            handleSearch(event.target.value);
+            table.getColumn("name")?.setFilterValue(event.target.value);
+          }}
+          className="max-w-sm bg-white"
         />
         <DataTableViewOptions table={table} />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -246,6 +255,6 @@ export default function ProductList() {
         </Table>
       </div>
       <DataTablePagination table={table} />
-    </div>
+    </>
   );
 }
