@@ -65,7 +65,7 @@ export default function AddCategoryForm() {
   const submitting = form.formState.isSubmitting;
   console.log(imageUrl);
   return (
-    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
+    <div className="h-fit w-full max-w-md rounded-lg border bg-white p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
