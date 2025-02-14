@@ -66,6 +66,24 @@ export default function LoginForm() {
           <h3 className="text-primary text-2xl font-semibold md:text-3xl">
             Login
           </h3>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => {
+                form.setValue("email", "lehrimirza101@gmail.com");
+                form.setValue("password", "123456");
+              }}
+            >
+              Login as Guest
+            </Button>
+            <Button
+              onClick={() => {
+                form.setValue("email", "admin@gmail.com");
+                form.setValue("password", "123456");
+              }}
+            >
+              Login as Admin
+            </Button>
+          </div>
           <FormField
             control={form.control}
             name="email"

@@ -55,11 +55,11 @@ const formSchema = z.object({
   category: z.string().min(1, {
     message: "Category is required.",
   }),
-  discountPrice: z.string().optional(),
-  discountType: z.string().optional(),
-  sku: z.string().optional(),
-  variationType: z.string().optional(),
-  skuVariation: z.string().optional(),
+  // discountPrice: z.string().optional(),
+  // discountType: z.string().optional(),
+  // sku: z.string().optional(),
+  // variationType: z.string().optional(),
+  // skuVariation: z.string().optional(),
 });
 
 export default function ProductForm() {
@@ -76,11 +76,11 @@ export default function ProductForm() {
       category: "",
       price: "",
       stock: "",
-      discountPrice: "",
-      discountType: "",
-      sku: "",
-      variationType: "",
-      skuVariation: "",
+      // discountPrice: "",
+      // discountType: "",
+      // sku: "",
+      // variationType: "",
+      // skuVariation: "",
     },
   });
 
@@ -242,7 +242,7 @@ export default function ProductForm() {
                       </FormItem>
                     )}
                   />
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="discountPrice"
@@ -284,13 +284,13 @@ export default function ProductForm() {
                         </FormItem>
                       )}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
               <div className="rounded-lg border p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Inventory</h2>
-
+                {/* 
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -304,29 +304,29 @@ export default function ProductForm() {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
 
-                  <FormField
-                    control={form.control}
-                    name="stock"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Quantity</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="number"
-                            placeholder="Stock Quantity"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="stock"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Quantity</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="Stock Quantity"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* </div> */}
               </div>
 
-              <div className="rounded-lg border p-6 shadow-xs">
+              {/* <div className="rounded-lg border p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Variation</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -356,7 +356,7 @@ export default function ProductForm() {
                     )}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Right Column */}
@@ -457,7 +457,7 @@ export default function ProductForm() {
                     )}
                   />
 
-                  <FormField
+                  {/* <FormField
                     control={form.control}
                     name="category"
                     render={({ field }) => (
@@ -486,7 +486,7 @@ export default function ProductForm() {
                         <FormMessage />
                       </FormItem>
                     )}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
