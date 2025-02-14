@@ -7,7 +7,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { z } from "zod";
 import Image from "next/image";
 import { useState } from "react";
-import { ImagePlus } from "lucide-react";
+import { ImagePlus, PackagePlus } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -148,14 +148,14 @@ export default function ProductForm() {
   console.log(submitting);
 
   return (
-    <div className="">
+    <div className="mb-14 md:container md:mb-0">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="mb-4 flex items-center justify-between rounded-lg border p-6 shadow-xs">
-            <h3 className="text-primary-950 text-lg font-semibold text-balance sm:text-xl md:text-2xl lg:text-3xl">
+          <div className="fixed bottom-0 z-50 w-full border bg-white p-2 shadow-xs md:relative md:mb-4 md:flex md:items-center md:justify-between md:rounded-lg md:p-6">
+            <h3 className="text-primary-950 hidden text-lg font-semibold text-balance sm:text-xl md:block md:text-2xl lg:text-3xl">
               Add Product
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-end gap-2">
               <Button
                 onClick={() => form.reset()}
                 variant="destructive"
@@ -170,14 +170,20 @@ export default function ProductForm() {
                 disabled={submitting}
                 className="capitalize"
               >
-                {submitting ? "Submitting..." : "add product"}
+                {submitting ? (
+                  "Submitting..."
+                ) : (
+                  <span className="flex gap-1">
+                    <PackagePlus /> add product
+                  </span>
+                )}
               </Button>
             </div>
           </div>
-          {/* Left Column */}
-          <div className="grid gap-8 md:grid-cols-2">
+
+          <div className="grid gap-8 p-4 md:grid-cols-2 md:p-0">
             <div className="space-y-6">
-              <div className="rounded-lg border p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">
                   General Information
                 </h2>
@@ -207,7 +213,7 @@ export default function ProductForm() {
                             control={form.control}
                             render={({ field }) => (
                               <div className="relative">
-                                <div className="border-primary-200 bg-primary-100/30 flex min-h-[80px] w-full flex-col rounded-md border">
+                                <div className="border-primary-200 flex min-h-[80px] w-full flex-col rounded-md border">
                                   <MenuBar editor={editor} />
                                   <EditorContent
                                     className="prose prose-h3:m-0 prose-p:m-0 min-h-20 border-none p-2"
@@ -226,7 +232,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="rounded-lg border p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Pricing</h2>
                 <div className="space-y-4">
                   <FormField
@@ -236,7 +242,12 @@ export default function ProductForm() {
                       <FormItem>
                         <FormLabel>Base Price</FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="Price" {...field} />
+                          <Input
+                            min="1"
+                            type="number"
+                            placeholder="Price"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -288,7 +299,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="rounded-lg border p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Inventory</h2>
                 {/* 
                 <div className="grid grid-cols-2 gap-4">
@@ -326,7 +337,7 @@ export default function ProductForm() {
                 {/* </div> */}
               </div>
 
-              {/* <div className="rounded-lg border p-6 shadow-xs">
+              {/* <div className="rounded-lg border p-6 shadow-xs bg-white">
                 <h2 className="mb-4 text-xl font-semibold">Variation</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -361,7 +372,7 @@ export default function ProductForm() {
 
             {/* Right Column */}
             <div className="space-y-6">
-              <div className="rounded-lg border p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Product Media</h2>
                 <div className="rounded-lg border-2 border-dashed p-4">
                   <div className="grid grid-cols-3 gap-4">
@@ -423,7 +434,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="rounded-lg border p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Category</h2>
                 <div className="space-y-4">
                   <FormField

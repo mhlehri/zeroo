@@ -69,7 +69,7 @@ export default function LoginForm() {
           <div className="flex gap-2">
             <Button
               onClick={() => {
-                form.setValue("email", "lehrimirza101@gmail.com");
+                form.setValue("email", "guest@gmail.com");
                 form.setValue("password", "123456");
               }}
             >
