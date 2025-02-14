@@ -139,7 +139,7 @@ export default function CategoryList() {
   });
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto mb-4 max-w-2xl px-2.5">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter names..."
@@ -147,11 +147,11 @@ export default function CategoryList() {
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm bg-white"
         />
         <DataTableViewOptions table={table} />
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -176,7 +176,7 @@ export default function CategoryList() {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-20 text-center"
                 >
                   <div className="loader mx-auto" />
                 </TableCell>
@@ -185,7 +185,7 @@ export default function CategoryList() {
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  // data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -201,7 +201,7 @@ export default function CategoryList() {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-20 text-center"
                 >
                   No results.
                 </TableCell>
