@@ -1,17 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { CldUploadWidget } from "next-cloudinary";
-import { z } from "zod";
+import { Controller, useForm } from "react-hook-form";
+
+import { ImagePlus, PackagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import { ImagePlus, PackagePlus, X } from "lucide-react";
 import { toast } from "sonner";
+import { z } from "zod";
 
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -29,13 +30,14 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { addProduct } from "@/services/product";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TextAlign from "@tiptap/extension-text-align";
+import { CloudinaryUploadWidgetResults } from "@cloudinary-util/types";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { CldUploadWidget } from "next-cloudinary";
 import { MenuBar } from "../Tiptap";
-import { Badge } from "@/components/ui/badge";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -47,11 +49,11 @@ const formSchema = z.object({
       message: "Description must be at least 2 characters.",
     })
     .optional(),
-  price: z.string().min(1, {
-    message: "Price is required.",
+  price: z.number().min(0, {
+    message: "Price must be greater than or equal to 0.",
   }),
-  stock: z.string().min(1, {
-    message: "Stock is required.",
+  stock: z.number().min(0, {
+    message: "Stock must be greater than or equal to 0.",
   }),
   category: z.string().min(1, {
     message: "Category is required.",
@@ -59,7 +61,9 @@ const formSchema = z.object({
   discountPrice: z.string().optional(),
   discountType: z.string().optional(),
   sku: z.string().optional(),
-  isPublished: z.boolean().optional(),
+  images: z
+    .array(z.string())
+    .min(1, { message: "At least one image is required" }),
   variants: z
     .array(
       z.object({
@@ -86,12 +90,12 @@ export default function ProductForm() {
       name: "",
       description: "",
       category: "",
-      price: "",
-      stock: "",
+      price: NaN,
+      stock: NaN,
       discountPrice: "",
       discountType: "",
       sku: "",
-      isPublished: true,
+      images: [],
       variants: [],
       tags: [],
     },
@@ -124,8 +128,8 @@ export default function ProductForm() {
     mutationFn: async (values) => {
       const res = await addProduct({
         ...values,
-        price: Number.parseInt(values.price),
-        stock: Number.parseInt(values.stock),
+        price: Number(values.price),
+        stock: Number(values.stock),
         images: imageUrls,
       });
       if (res.success) {
@@ -143,7 +147,10 @@ export default function ProductForm() {
     },
   });
 
+  console.log(form.formState.errors, "errors");
+
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values, "values");
     if (!imageUrls.length) {
       setErrorImage(true);
       return;
@@ -151,8 +158,8 @@ export default function ProductForm() {
 
     createProduct({
       ...values,
-      price: Number.parseInt(values.price),
-      stock: Number.parseInt(values.stock),
+      price: Number(values.price),
+      stock: Number(values.stock),
       images: imageUrls,
     });
     setErrorImage(false);
@@ -160,6 +167,10 @@ export default function ProductForm() {
 
   function removeImage(index: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
+    form.setValue(
+      "images",
+      imageUrls.filter((_, i) => i !== index),
+    );
   }
 
   const addVariant = () => {
@@ -214,6 +225,22 @@ export default function ProductForm() {
 
   const submitting = form.formState.isSubmitting || isPending;
 
+  function onUploadSuccess(result: CloudinaryUploadWidgetResults) {
+    setErrorImage(false);
+    const info = result?.info;
+    if (
+      info &&
+      typeof info === "object" &&
+      "secure_url" in info &&
+      typeof info.secure_url === "string"
+    ) {
+      // @ts-expect-error: Unreachable code error
+      setImageUrls((prev) => [...prev, result.info.secure_url]);
+      // @ts-expect-error: Unreachable code error
+      form.setValue("images", [...imageUrls, result.info.secure_url]);
+    }
+  }
+
   return (
     <div className="mb-14 md:container md:mb-0">
       <Form {...form}>
@@ -224,7 +251,12 @@ export default function ProductForm() {
             </h3>
             <div className="flex flex-wrap justify-end gap-2">
               <Button
-                onClick={() => form.reset()}
+                onClick={() => {
+                  form.reset();
+                  setImageUrls([]);
+                  setVariantSize("");
+                  setVariantStock("");
+                }}
                 variant="destructive"
                 type="button"
                 disabled={submitting}
@@ -310,7 +342,7 @@ export default function ProductForm() {
                         <FormLabel>Base Price</FormLabel>
                         <FormControl>
                           <Input
-                            min="1"
+                            min="0"
                             type="number"
                             placeholder="Price"
                             {...field}
@@ -368,7 +400,6 @@ export default function ProductForm() {
 
               <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Inventory</h2>
-
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -447,6 +478,7 @@ export default function ProductForm() {
                         setErrorImage(false);
                         widget.close();
                       }
+                      onUploadSuccess(result);
                     }}
                   >
                     {({ open }) => (
@@ -464,6 +496,11 @@ export default function ProductForm() {
                   {errorImage && (
                     <p className="mt-2 text-xs text-red-500">
                       Image is required!
+                    </p>
+                  )}
+                  {form.formState.errors.images && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {form.formState.errors.images.message}
                     </p>
                   )}
                 </div>
