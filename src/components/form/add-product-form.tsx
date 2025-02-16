@@ -55,11 +55,10 @@ const formSchema = z.object({
   category: z.string().min(1, {
     message: "Category is required.",
   }),
-  // discountPrice: z.string().optional(),
-  // discountType: z.string().optional(),
-  // sku: z.string().optional(),
-  // variationType: z.string().optional(),
-  // skuVariation: z.string().optional(),
+  discountPrice: z.string().optional(),
+  discountType: z.string().optional(),
+  sku: z.string().optional(),
+  isPublished: z.boolean().optional(),
 });
 
 export default function ProductForm() {
@@ -76,11 +75,10 @@ export default function ProductForm() {
       category: "",
       price: "",
       stock: "",
-      // discountPrice: "",
-      // discountType: "",
-      // sku: "",
-      // variationType: "",
-      // skuVariation: "",
+      discountPrice: "",
+      discountType: "",
+      sku: "",
+      isPublished: true,
     },
   });
 
@@ -253,7 +251,7 @@ export default function ProductForm() {
                       </FormItem>
                     )}
                   />
-                  {/* <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
                       name="discountPrice"
@@ -295,7 +293,7 @@ export default function ProductForm() {
                         </FormItem>
                       )}
                     />
-                  </div> */}
+                  </div>
                 </div>
               </div>
 
