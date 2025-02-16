@@ -41,9 +41,7 @@ export default function Checkout() {
   const searchParams = useSearchParams();
   const shipping = searchParams.get("shipping");
   console.log(shipping);
-  // const [paymentMethod, setPaymentMethod] = useState<"stripe" | "cod">(
-  //   "stripe"
-  // );
+
   const { user } = useUser();
   const { user: u } = useUserById(user?.id as string);
   const [processing, setProcessing] = useState(false);
@@ -107,7 +105,13 @@ export default function Checkout() {
         clearCart();
       } else {
         if (res.success) {
-          toast.success("Order placed successfully!", { richColors: true });
+          sessionStorage.setItem("zeroo-order", JSON.stringify(res.data));
+
+          router.push("/order-confirmation");
+          toast.success("Order placed successfully!", {
+            richColors: true,
+            duration: 1000,
+          });
           setProcessing(false);
           clearCart();
         } else {

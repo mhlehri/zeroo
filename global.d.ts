@@ -58,12 +58,23 @@ declare global {
     category: string;
     images: string[];
     isDeleted: boolean;
+    discountPrice?: number;
+    discountType?: string;
+    sku?: string;
+    isPublished?: boolean;
+    variants?: {
+      size: string;
+      stock: number;
+    }[];
+    tags?: string[];
   };
   type TCategory = {
     _id: string;
     name: string;
     image: string;
     isDeleted: boolean;
+    createdAt?: string;
+    updatedAt?: string;
   };
 
   type Status = "active" | "inactive" | "suspended";

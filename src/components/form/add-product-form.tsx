@@ -7,7 +7,7 @@ import { CldUploadWidget } from "next-cloudinary";
 import { z } from "zod";
 import Image from "next/image";
 import { useState } from "react";
-import { ImagePlus, PackagePlus } from "lucide-react";
+import { ImagePlus, PackagePlus, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import { MenuBar } from "../Tiptap";
+import { Badge } from "@/components/ui/badge";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -59,6 +60,15 @@ const formSchema = z.object({
   discountType: z.string().optional(),
   sku: z.string().optional(),
   isPublished: z.boolean().optional(),
+  variants: z
+    .array(
+      z.object({
+        size: z.string().min(1, { message: "Size is required" }),
+        stock: z.number().min(0, { message: "Stock must be 0 or greater" }),
+      }),
+    )
+    .optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 export default function ProductForm() {
@@ -66,6 +76,9 @@ export default function ProductForm() {
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const { categories } = useCategories();
   const queryClient = useQueryClient();
+  const [variantSize, setVariantSize] = useState("");
+  const [variantStock, setVariantStock] = useState("");
+  const [tag, setTag] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,6 +92,8 @@ export default function ProductForm() {
       discountType: "",
       sku: "",
       isPublished: true,
+      variants: [],
+      tags: [],
     },
   });
 
@@ -109,8 +124,8 @@ export default function ProductForm() {
     mutationFn: async (values) => {
       const res = await addProduct({
         ...values,
-        price: parseInt(values.price),
-        stock: parseInt(values.stock),
+        price: Number.parseInt(values.price),
+        stock: Number.parseInt(values.stock),
         images: imageUrls,
       });
       if (res.success) {
@@ -134,7 +149,12 @@ export default function ProductForm() {
       return;
     }
 
-    createProduct(values);
+    createProduct({
+      ...values,
+      price: Number.parseInt(values.price),
+      stock: Number.parseInt(values.stock),
+      images: imageUrls,
+    });
     setErrorImage(false);
   }
 
@@ -142,8 +162,57 @@ export default function ProductForm() {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
   }
 
+  const addVariant = () => {
+    if (variantSize && variantStock) {
+      const currentVariants = form.getValues("variants") || [];
+      const isDuplicate = currentVariants.some(
+        (variant) => variant.size.toLowerCase() === variantSize.toLowerCase(),
+      );
+      if (!isDuplicate) {
+        form.setValue("variants", [
+          ...currentVariants,
+          { size: variantSize, stock: Number.parseInt(variantStock) },
+        ]);
+        setVariantSize("");
+        setVariantStock("");
+      } else {
+        toast.error("This variant size already exists.");
+      }
+    }
+  };
+
+  const removeVariant = (index: number) => {
+    const currentVariants = form.getValues("variants") || [];
+    form.setValue(
+      "variants",
+      currentVariants.filter((_, i) => i !== index),
+    );
+  };
+
+  const addTag = () => {
+    if (tag) {
+      const currentTags = form.getValues("tags") || [];
+      const isDuplicate = currentTags.some(
+        (existingTag) => existingTag.toLowerCase() === tag.toLowerCase(),
+      );
+      if (!isDuplicate) {
+        form.setValue("tags", [...currentTags, tag]);
+        setTag("");
+      } else {
+        toast.error("This tag already exists.");
+      }
+    }
+  };
+
+  const removeTag = (index: number) => {
+    const currentTags = form.getValues("tags") || [];
+    form.setValue(
+      "tags",
+      currentTags.filter((_, i) => i !== index),
+    );
+  };
+
   const submitting = form.formState.isSubmitting || isPending;
-  console.log(submitting);
 
   return (
     <div className="mb-14 md:container md:mb-0">
@@ -299,7 +368,7 @@ export default function ProductForm() {
 
               <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Inventory</h2>
-                {/* 
+
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
                     control={form.control}
@@ -313,59 +382,27 @@ export default function ProductForm() {
                         <FormMessage />
                       </FormItem>
                     )}
-                  /> */}
-
-                <FormField
-                  control={form.control}
-                  name="stock"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Quantity</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="number"
-                          placeholder="Stock Quantity"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* </div> */}
-              </div>
-
-              {/* <div className="rounded-lg border p-6 shadow-xs bg-white">
-                <h2 className="mb-4 text-xl font-semibold">Variation</h2>
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="variationType"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Variation Type</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Variation Type" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
                   />
+
                   <FormField
                     control={form.control}
-                    name="skuVariation"
+                    name="stock"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>SKU Variation</FormLabel>
+                        <FormLabel>Quantity</FormLabel>
                         <FormControl>
-                          <Input placeholder="SKU Variation" {...field} />
+                          <Input
+                            type="number"
+                            placeholder="Stock Quantity"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
                 </div>
-              </div> */}
+              </div>
             </div>
 
             {/* Right Column */}
@@ -388,7 +425,7 @@ export default function ProductForm() {
                           onClick={() => removeImage(index)}
                           className="absolute top-1 right-1 size-6 rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
                         >
-                          ×
+                          <X className="h-4 w-4" />
                         </button>
                       </div>
                     ))}
@@ -465,37 +502,88 @@ export default function ProductForm() {
                       </FormItem>
                     )}
                   />
+                </div>
+              </div>
 
-                  {/* <FormField
-                    control={form.control}
-                    name="category"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Product Category</FormLabel>
-                        <Select
-                          onValueChange={field.onChange}
-                          defaultValue={field.value}
+              {/* Add Variants section */}
+              <div className="mt-6 rounded-lg border bg-white p-6 shadow-xs">
+                <h2 className="mb-4 text-xl font-semibold">Variants</h2>
+                <div className="space-y-4">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Size"
+                      value={variantSize}
+                      onChange={(e) => setVariantSize(e.target.value)}
+                    />
+                    <Input
+                      type="number"
+                      placeholder="Stock"
+                      value={variantStock}
+                      onChange={(e) => setVariantStock(e.target.value)}
+                    />
+                    <Button type="button" onClick={addVariant}>
+                      Add Variant
+                    </Button>
+                  </div>
+                  <div className="space-y-2">
+                    {form.watch("variants")?.map((variant, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between"
+                      >
+                        <span>
+                          {variant.size} - Stock: {variant.stock}
+                        </span>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => removeVariant(index)}
                         >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select a category" />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {categories?.map((category) => (
-                              <SelectItem
-                                key={category?.name}
-                                value={category?.name}
-                              >
-                                {category?.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  /> */}
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Add Tags section */}
+              <div className="mt-6 rounded-lg border bg-white p-6 shadow-xs">
+                <h2 className="mb-4 text-xl font-semibold">Tags</h2>
+                <div className="space-y-4">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Add a tag"
+                      value={tag}
+                      onChange={(e) => setTag(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          addTag();
+                        }
+                      }}
+                    />
+                    <Button type="button" onClick={addTag}>
+                      Add Tag
+                    </Button>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {form.watch("tags")?.map((tag, index) => (
+                      <Badge key={index} variant="secondary">
+                        {tag}
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="ml-1 h-auto p-0"
+                          onClick={() => removeTag(index)}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
