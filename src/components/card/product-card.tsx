@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AddToCart from "../button/addToCart";
 import BuyNow from "../button/buyNow";
+import { Badge } from "../ui/badge";
 
 export default function ProductCard({ product }: { product: TProduct }) {
   // console.log(product?.images[0], "Product Image");
@@ -15,7 +16,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
   return (
     <div className="mb-4 w-full max-w-[230px] overflow-hidden rounded-md border-none shadow-none">
       <Link href={`/products/${product?._id}`}>
-        <div className="mb-2">
+        <div className="relative mb-2">
           <Image
             src={product?.images[0]}
             className="h-full w-full rounded-md lg:h-[240px]"
@@ -24,6 +25,12 @@ export default function ProductCard({ product }: { product: TProduct }) {
             alt={product?.name}
             loading="lazy"
           />
+          <Badge
+            variant="destructive"
+            className={`${product?.stock > 0 ? "hidden" : "block"} absolute top-2 right-2`}
+          >
+            Stock Out
+          </Badge>
         </div>
         <div className="mb-2 grid grid-rows-2 gap-0.5 md:gap-2">
           <h4 className="truncate text-sm font-medium capitalize md:text-base">
