@@ -7,17 +7,17 @@ import Title from "@/components/title";
 import { useGetProducts } from "@/hooks/use-product";
 import { Minus, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
-import AddReviewForm from "./AddReviewForm";
+// import AddReviewForm from "./AddReviewForm";
 import EmblaCarousel from "./EmblaCarousel";
-import Reviews from "./reviews";
+// import Reviews from "./reviews";
 import { useCart } from "@/context/cart-provider";
-import { useUser } from "@/context/user-provider";
+// import { useUser } from "@/context/user-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function ProductDetails({ product }: { product: TProduct }) {
   const slides = product?.images;
-  const { user } = useUser();
+  // const { user } = useUser();
   const { name, price, description, stock } = product || {
     name: "",
     price: 0,
@@ -38,12 +38,14 @@ export default function ProductDetails({ product }: { product: TProduct }) {
       cart.find((item) => item.id === product._id)?.quantity || 1;
     setQuantity(defaultQuantity);
   }, [cart, product._id]);
+
   const decreaseQuantity = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
     if (cart.find((item) => item.id === product._id)) {
       updateQuantity(product._id, quantity - 1);
     }
   };
+
   const increaseQuantity = () => {
     setQuantity((prev) => Math.min(stock, prev + 1));
     if (cart.find((item) => item.id === product._id)) {
@@ -57,9 +59,9 @@ export default function ProductDetails({ product }: { product: TProduct }) {
         <div className="md:w-1/2">
           <EmblaCarousel slides={slides} />
         </div>
-        <div className="space-y-2 px-4 md:w-1/2 md:space-y-3 md:px-0 lg:space-y-4">
+        <div className="space-y-3 px-4 md:w-1/2 md:space-y-4 md:px-0 lg:space-y-5">
           <div>
-            <h1 className="text-primary-800 mb-2 text-xl font-semibold md:text-2xl lg:text-3xl">
+            <h1 className="text-primary-700 mb-4 text-lg font-semibold md:text-xl lg:text-2xl">
               {name}
             </h1>
             <p className="text-primary-900 text-xl slashed-zero md:text-2xl lg:text-3xl">
@@ -141,12 +143,12 @@ export default function ProductDetails({ product }: { product: TProduct }) {
       <hr />
 
       <div className="space-y-4 px-4 md:px-0">
-        <div className="my-4 md:my-6">
+        {/* <div className="my-4 md:my-6">
           <Reviews productId={product?._id} />
           {user && user.role == "admin" ? null : !user ? null : (
             <AddReviewForm productId={product?._id} />
           )}
-        </div>
+        </div> */}
         <div>
           <Title className="mb-4 md:mb-6">Similar Products</Title>
           {isLoading ? (
