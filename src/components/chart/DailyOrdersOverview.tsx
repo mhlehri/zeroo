@@ -48,8 +48,8 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function DailyOrdersOverview() {
-  const { orders, isLoading } = useGetOrders({
-    today: "true",
+  const { orders, isOrdersLoading } = useGetOrders({
+    today: "yes",
   });
   const chartData = React.useMemo(() => {
     const status = {
@@ -99,7 +99,7 @@ export function DailyOrdersOverview() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        {isLoading ? (
+        {isOrdersLoading ? (
           <Loader2 className="mx-auto my-2 animate-spin" />
         ) : orders.length ? (
           <ChartContainer

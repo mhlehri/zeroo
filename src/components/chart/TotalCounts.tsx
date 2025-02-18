@@ -13,7 +13,6 @@ export default function TotalCounts({ text, isLoading, count, link }: Props) {
     <div className="rounded border">
       <div className="px-4 pt-4 pb-2">
         <p className="text-lg font-medium text-slate-800 md:text-xl">{text}</p>
-
         <p className="text-xl font-semibold md:text-2xl lg:text-3xl">
           {isLoading ? <Loader2 className="animate-spin" /> : count}
         </p>

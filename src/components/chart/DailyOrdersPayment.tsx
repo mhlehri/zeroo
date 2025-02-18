@@ -40,7 +40,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export function DailyOrderPaymentOverview() {
-  const { orders, isLoading } = useGetOrders({
+  const { orders, isOrdersLoading } = useGetOrders({
     today: "true",
   });
   console.log("Orders =>", orders, "from DailyOrderPaymentOverview.tsx");
@@ -94,7 +94,7 @@ export function DailyOrderPaymentOverview() {
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
-        {isLoading ? (
+        {isOrdersLoading ? (
           <Loader2 className="mx-auto my-2 animate-spin" />
         ) : orders?.length ? (
           <ChartContainer

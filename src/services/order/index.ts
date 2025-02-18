@@ -27,14 +27,14 @@ export async function getMyOrders() {
     throw error;
   }
 }
-export async function getOrders({ today } = { today: "" }) {
+export async function getOrders({ today = "" }: { today: string }) {
   try {
     const { data } = await ax.get(`/orders`, {
       params: {
-        today: today || "",
+        today: today,
       },
     });
-    console.log(data, "data");
+    // console.log(data, "data");
     return data.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {

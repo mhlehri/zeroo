@@ -5,8 +5,12 @@ import { useEffect, useState } from "react";
 export function useGetOrders({ today = "" }: { today?: string }) {
   const [orders, setOrders] = useState([]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["orders"],
+  const {
+    data,
+    isLoading: isOrdersLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["orders", today],
     queryFn: () => getOrders({ today }),
   });
 
@@ -18,5 +22,5 @@ export function useGetOrders({ today = "" }: { today?: string }) {
     }
   }, [data]);
 
-  return { orders, isLoading, isError };
+  return { orders, isOrdersLoading, isError };
 }
