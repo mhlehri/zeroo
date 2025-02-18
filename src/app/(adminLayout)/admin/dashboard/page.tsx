@@ -1,6 +1,8 @@
 import { DailyOrdersOverview } from "@/components/chart/DailyOrdersOverview";
 import { DailyOrderPaymentOverview } from "@/components/chart/DailyOrdersPayment";
 import TotalOverview from "@/components/chart/TotalOverview";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -9,11 +11,13 @@ export default function Page() {
         Welcome to Zeroo Admin Dashboard
       </h2>
       <div className="space-y-4">
+        {/* <Suspense fallback={<Loader2 className="animate-spin" />}> */}
         <TotalOverview />
-        <div className="flex flex-wrap gap-4">
+        {/* </Suspense> */}
+        {/* <div className="flex flex-wrap gap-4">
           <DailyOrdersOverview />
           <DailyOrderPaymentOverview />
-        </div>
+        </div> */}
       </div>
     </div>
   );

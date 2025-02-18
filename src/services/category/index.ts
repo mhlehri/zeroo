@@ -7,7 +7,8 @@ import { FieldValues } from "react-hook-form";
 export const getCategories = async () => {
   try {
     const { data } = await ax.get(`/category`);
-    return data;
+    console.log(data, "categories");
+    return data?.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return error.response.data;

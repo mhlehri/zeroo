@@ -3,12 +3,17 @@ import Link from "next/link";
 
 type Props = {
   text: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   count: number;
   link: string;
 };
 
-export default function TotalCounts({ text, isLoading, count, link }: Props) {
+export default function TotalCounts({
+  text,
+  isLoading = false,
+  count,
+  link,
+}: Props) {
   return (
     <div className="rounded border">
       <div className="px-4 pt-4 pb-2">

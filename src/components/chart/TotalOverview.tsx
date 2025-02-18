@@ -1,56 +1,63 @@
-"use client";
-import { useUsers } from "@/hooks/use-user";
+// "use client";
 import TotalCounts from "./TotalCounts";
-import { useGetProducts } from "@/hooks/use-product";
-import { useCategories } from "@/hooks/use-category";
-import { useEffect, useState } from "react";
-import { useGetOrders } from "@/hooks/use-order";
+// import { useEffect, useState } from "react";
+import { getUsers } from "@/services/auth";
+import { getCategories } from "@/services/category";
+import { getOrders } from "@/services/order";
+import { getProducts } from "@/services/product";
+import { Suspense } from "react";
 
-export default function TotalOverview() {
-  const [pending, setPending] = useState(true);
-  const { users, isUsersLoading } = useUsers();
-  const { totalProducts, isLoading } = useGetProducts({});
-  const { totalCategories, isCategoriesLoading } = useCategories();
-  const { orders, isOrdersLoading } = useGetOrders({});
+export default async function TotalOverview() {
+  //   const [pending, setPending] = useState(true);
+  const orders = await getOrders({});
+  const { data: users } = await getUsers();
+  const totalCategories = await getCategories();
+  const totalProducts = await getProducts({});
 
-  useEffect(() => {
-    if (
-      !isCategoriesLoading &&
-      !isUsersLoading &&
-      !isLoading &&
-      !isOrdersLoading
-    ) {
-      setPending(false);
-    }
-  }, [isCategoriesLoading, isUsersLoading, isLoading, isOrdersLoading]);
+  //   useEffect(() => {
+  //     if (
+  //       !isCategoriesLoading &&
+  //       !isUsersLoading &&
+  //       !isLoading &&
+  //       !isOrdersLoading
+  //     ) {
+  //       setPending(false);
+  //     }
+  //   }, [isCategoriesLoading, isUsersLoading, isLoading, isOrdersLoading]);
 
-  if (pending) {
-    return <div>Loading...</div>;
-  }
+  //   if (pending) {
+  //     return <div>Loading...</div>;
+  //   }
 
   return (
     <div className="flex flex-wrap items-center gap-4 *:min-w-56">
-      <TotalCounts
-        text="Orders"
-        isLoading={isOrdersLoading}
-        count={orders?.length}
-        link="/admin/orders"
-      />
-      <TotalCounts
-        text="Products"
-        isLoading={isLoading}
-        count={totalProducts}
-        link="/admin/products"
-      />
-      <TotalCounts
-        text="Categories"
-        isLoading={isCategoriesLoading}
-        count={totalCategories}
-        link="/admin/categories"
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <TotalCounts
+          text="Orders"
+          // isLoading={isOrdersLoading}
+          count={orders?.length}
+          link="/admin/orders"
+        />
+      </Suspense>{" "}
+      <Suspense fallback={<div>Loading...</div>}>
+        <TotalCounts
+          text="Products"
+          // isLoading={isLoading}
+          count={totalProducts?.data?.total}
+          link="/admin/products"
+        />{" "}
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <TotalCounts
+          text="Categories"
+          // isLoading={isCategoriesLoading}
+          count={totalCategories?.data?.total}
+          link="/admin/categories"
+        />{" "}
+      </Suspense>
       <TotalCounts
         text="Users"
-        isLoading={isUsersLoading}
+        // isLoading={isUsersLoading}
         count={users?.length}
         link="/admin/users"
       />

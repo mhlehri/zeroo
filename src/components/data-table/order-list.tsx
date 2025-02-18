@@ -165,7 +165,7 @@ export function OrderList() {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const { orders, isLoading } = useGetOrders({});
+  const { orders, isOrdersLoading } = useGetOrders({});
 
   console.log(orders, "orders");
 
@@ -247,7 +247,7 @@ export function OrderList() {
             ))}
           </TableHeader>
           <TableBody>
-            {isLoading ? (
+            {isOrdersLoading ? (
               <TableRow>
                 <TableCell
                   colSpan={columns.length}

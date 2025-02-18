@@ -525,7 +525,7 @@ export default function ProductForm() {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {categories?.map((category) => (
+                            {categories?.map((category: TCategory) => (
                               <SelectItem
                                 key={category?.name}
                                 value={category?.name}

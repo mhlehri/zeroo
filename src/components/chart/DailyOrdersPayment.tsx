@@ -41,7 +41,7 @@ const chartConfig = {
 
 export function DailyOrderPaymentOverview() {
   const { orders, isOrdersLoading } = useGetOrders({
-    today: "true",
+    today: "yes",
   });
   console.log("Orders =>", orders, "from DailyOrderPaymentOverview.tsx");
   const chartData = React.useMemo(() => {

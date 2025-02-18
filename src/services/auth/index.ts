@@ -37,7 +37,7 @@ export async function getUsers() {
   try {
     const { data } = await ax.get("/auth/users");
     console.log(data, "users");
-    return data;
+    return data.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return error.response.data;

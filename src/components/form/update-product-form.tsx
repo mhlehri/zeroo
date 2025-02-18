@@ -178,7 +178,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {categories?.map((cat) => (
+                    {categories?.map((cat: TCategory) => (
                       <SelectItem
                         defaultChecked={
                           product?.category === cat ? true : false

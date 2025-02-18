@@ -137,7 +137,7 @@ export default function Product({
                 </div>
               ) : (
                 categories &&
-                categories?.map((category) => (
+                categories?.map((category: TCategory) => (
                   <Button
                     key={category._id}
                     variant="link"

@@ -27,7 +27,7 @@ export async function getMyOrders() {
     throw error;
   }
 }
-export async function getOrders({ today = "" }: { today: string }) {
+export async function getOrders({ today = "" }: { today?: string }) {
   try {
     const { data } = await ax.get(`/orders`, {
       params: {

@@ -1,10 +1,9 @@
 import { getCategories, getCategoryById } from "@/services/category";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 export function useCategories() {
-  const [categories, setCategories] = useState<TCategory[]>([]);
-  const [totalCategories, setTotalCategories] = useState(0);
   const {
     data,
     isLoading: isCategoriesLoading,
@@ -14,16 +13,8 @@ export function useCategories() {
     queryFn: async () => await getCategories(),
   });
 
-  useEffect(() => {
-    if (data?.data?.categories) {
-      setCategories(data.data.categories);
-    } else {
-      setCategories([]);
-    }
-    if (data?.data?.total) {
-      setTotalCategories(data.data.total);
-    }
-  }, [data]);
+  const categories = useMemo(() => data?.categories ?? [], [data]);
+  const totalCategories = useMemo(() => data?.total ?? 0, [data]);
 
   return { totalCategories, categories, isCategoriesLoading, isError };
 }

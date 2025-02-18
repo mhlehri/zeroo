@@ -1,7 +1,7 @@
 import { getProductById, getProducts, updateProduct } from "@/services/product";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
+import { useMemo } from "react";
 
 type TProductParams = {
   query?: string;
@@ -18,8 +18,6 @@ export function useGetProducts({
   category,
   page,
 }: TProductParams) {
-  const [products, setProducts] = useState<TProduct[]>([]);
-  const [totalProducts, setTotalProducts] = useState(0);
   if (query && query?.length > 0) {
     sortOrder = "";
     limit = 12;
@@ -32,16 +30,8 @@ export function useGetProducts({
       getProducts({ searchTerm: query, sortOrder, limit, category, page }),
   });
 
-  useEffect(() => {
-    if (data?.data?.products) {
-      setProducts(data.data.products);
-    } else {
-      setProducts([]);
-    }
-    if (data?.data?.total) {
-      setTotalProducts(data.data.total);
-    }
-  }, [data]);
+  const products = useMemo(() => data?.products ?? [], [data]);
+  const totalProducts = useMemo(() => data?.total ?? 0, [data]);
 
   return { totalProducts, products, isLoading, isError };
 }

@@ -1,10 +1,8 @@
 import { getOrders } from "@/services/order";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 
 export function useGetOrders({ today = "" }: { today?: string }) {
-  const [orders, setOrders] = useState([]);
-
   const {
     data,
     isLoading: isOrdersLoading,
@@ -14,13 +12,8 @@ export function useGetOrders({ today = "" }: { today?: string }) {
     queryFn: () => getOrders({ today }),
   });
 
-  useEffect(() => {
-    if (data) {
-      setOrders(data);
-    } else {
-      setOrders([]);
-    }
-  }, [data]);
+  const orders = useMemo(() => data?.orders ?? [], [data]);
+  const totalOrders = useMemo(() => data?.total ?? 0, [data]);
 
-  return { orders, isOrdersLoading, isError };
+  return { orders, totalOrders, isOrdersLoading, isError };
 }

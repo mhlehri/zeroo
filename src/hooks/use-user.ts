@@ -1,10 +1,8 @@
 import { getUserById, getUsers } from "@/services/auth";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export function useUsers() {
-  const [users, setUsers] = useState<TUser[]>([]);
-
   const {
     data,
     isLoading: isUsersLoading,
@@ -14,15 +12,10 @@ export function useUsers() {
     queryFn: async () => await getUsers(),
   });
 
-  useEffect(() => {
-    if (data?.data) {
-      setUsers(data.data);
-    } else {
-      setUsers([]);
-    }
-  }, [data]);
+  const users = useMemo(() => data?.users ?? [], [data]);
+  const totalUsers = useMemo(() => data?.total ?? 0, [data]);
 
-  return { users, isUsersLoading, isError };
+  return { users, totalUsers, isUsersLoading, isError };
 }
 
 export function useUserById(id: string) {

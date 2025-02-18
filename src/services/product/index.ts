@@ -22,7 +22,7 @@ export async function getProducts({
       params: { searchTerm, limit, sortOrder, category, page },
     });
 
-    return data;
+    return data?.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       return error.response.data;
