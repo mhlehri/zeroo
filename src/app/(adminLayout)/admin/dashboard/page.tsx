@@ -1,8 +1,6 @@
 import { DailyOrdersOverview } from "@/components/chart/DailyOrdersOverview";
 import { DailyOrderPaymentOverview } from "@/components/chart/DailyOrdersPayment";
-import TotalCategoriesOverview from "@/components/chart/TotalCategoriesOverview";
-import TotalProductsOverview from "@/components/chart/TotalProductsOverview";
-import TotalUserOverview from "@/components/chart/TotalUserOverview";
+import TotalOverview from "@/components/chart/TotalOverview";
 
 export default function Page() {
   return (
@@ -11,11 +9,7 @@ export default function Page() {
         Welcome to Zeroo Admin Dashboard
       </h2>
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-4 *:min-w-56">
-          <TotalProductsOverview />
-          <TotalCategoriesOverview />
-          <TotalUserOverview />
-        </div>
+        <TotalOverview />
         <div className="flex flex-wrap gap-4">
           <DailyOrdersOverview />
           <DailyOrderPaymentOverview />
