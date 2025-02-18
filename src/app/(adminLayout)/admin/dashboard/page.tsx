@@ -11,7 +11,7 @@ export default function Page() {
         Welcome to Zeroo Admin Dashboard
       </h2>
       <div className="space-y-4">
-        <div className="flex flex-wrap items-center gap-4 *:min-w-56 *:first-of-type:bg-amber-200 *:last-of-type:bg-teal-200 *:nth-of-type-[2]:bg-rose-200">
+        <div className="flex flex-wrap items-center gap-4 *:min-w-56">
           <TotalProductsOverview />
           <TotalCategoriesOverview />
           <TotalUserOverview />
