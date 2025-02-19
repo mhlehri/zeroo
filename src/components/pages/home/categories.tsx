@@ -10,9 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Categories() {
-  const { data } = await getCategories();
-  console.log(data.categories, data.categories.length, "from categories.tsx");
-  const categories = data.categories;
+  const { categories, total } = await getCategories();
+  console.log(categories, total, "from categories.tsx");
   return (
     <section>
       <Carousel
