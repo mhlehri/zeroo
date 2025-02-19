@@ -3,8 +3,8 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-primary bg-cover bg-fixed pt-10 pb-16 text-slate-50 md:pb-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 md:grid-cols-3 md:px-16 lg:px-32">
+    <footer className="bg-black bg-cover bg-fixed pt-10 pb-16 text-slate-50 md:pb-10">
+      <div className="container grid grid-cols-1 gap-8 px-6 md:grid-cols-3 md:px-16 lg:px-32">
         {/* About Section */}
         <div>
           <Blend />

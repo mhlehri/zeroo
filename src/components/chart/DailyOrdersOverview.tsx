@@ -60,21 +60,49 @@ export function DailyOrdersOverview() {
       delivered: 0,
     };
 
-    if (orders?.length > 0) {
-      orders?.forEach((order: TOrder) => {
-        if (order.orderStatus === "confirmed") {
-          status.confirmed++;
-        } else if (order.orderStatus === "unconfirmed") {
-          status.unconfirmed++;
-        } else if (order.orderStatus === "rejected") {
-          status.rejected++;
-        } else if (order.orderStatus === "cancelled") {
-          status.cancelled++;
-        } else if (order.orderStatus === "delivered") {
-          status.delivered++;
-        }
-      });
+    if (!orders || orders.length === 0) {
+      return [
+        {
+          status: "confirmed",
+          orders: 0,
+          fill: chartConfig.confirmed.color,
+        },
+        {
+          status: "unconfirmed",
+          orders: 0,
+          fill: chartConfig.unconfirmed.color,
+        },
+        {
+          status: "rejected",
+          orders: 0,
+          fill: chartConfig.rejected.color,
+        },
+        {
+          status: "cancelled",
+          orders: 0,
+          fill: chartConfig.cancelled.color,
+        },
+        {
+          status: "delivered",
+          orders: 0,
+          fill: chartConfig.delivered.color,
+        },
+      ];
     }
+
+    orders.forEach((order: TOrder) => {
+      if (order.orderStatus === "confirmed") {
+        status.confirmed++;
+      } else if (order.orderStatus === "unconfirmed") {
+        status.unconfirmed++;
+      } else if (order.orderStatus === "rejected") {
+        status.rejected++;
+      } else if (order.orderStatus === "cancelled") {
+        status.cancelled++;
+      } else if (order.orderStatus === "delivered") {
+        status.delivered++;
+      }
+    });
 
     return Object.entries(status).map(([status, orders]) => ({
       status,
@@ -101,7 +129,7 @@ export function DailyOrdersOverview() {
       <CardContent className="flex-1 pb-0">
         {isOrdersLoading ? (
           <Loader2 className="mx-auto my-2 animate-spin" />
-        ) : orders.length ? (
+        ) : (
           <ChartContainer
             config={chartConfig}
             className="mx-auto aspect-square max-h-[250px]"
@@ -150,8 +178,6 @@ export function DailyOrdersOverview() {
               </Pie>
             </PieChart>
           </ChartContainer>
-        ) : (
-          <div className="py-2 text-center">No orders available for today</div>
         )}
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
