@@ -155,7 +155,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
             <CardCarouselSkeleton />
           ) : products?.length ? (
             <CardCarousel
-              cardArr={products.filter((p) => p._id !== product._id)}
+              cardArr={products.filter((p: TProduct) => p._id !== product._id)}
             />
           ) : null}
         </div>

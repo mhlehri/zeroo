@@ -1,8 +1,8 @@
 import { DailyOrdersOverview } from "@/components/chart/DailyOrdersOverview";
 import { DailyOrderPaymentOverview } from "@/components/chart/DailyOrdersPayment";
 import TotalOverview from "@/components/chart/TotalOverview";
-import { Loader2 } from "lucide-react";
-import { Suspense } from "react";
+// import { Loader2 } from "lucide-react";
+// import { Suspense } from "react";
 
 export default function Page() {
   return (
@@ -14,10 +14,10 @@ export default function Page() {
         {/* <Suspense fallback={<Loader2 className="animate-spin" />}> */}
         <TotalOverview />
         {/* </Suspense> */}
-        {/* <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-4">
           <DailyOrdersOverview />
           <DailyOrderPaymentOverview />
-        </div> */}
+        </div>
       </div>
     </div>
   );
