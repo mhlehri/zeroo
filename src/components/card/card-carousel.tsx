@@ -30,7 +30,7 @@ export default function CardCarousel({ cardArr }: { cardArr: TProduct[] }) {
         {cardArr?.map((_, index) => (
           <CarouselItem
             key={index}
-            className="basis-1/2 pl-2 sm:basis-auto sm:pl-3 md:pl-4"
+            className="max-w-[320px]:basis-40 max-w-[375px]:basis-44 basis-48 pl-2 sm:basis-auto sm:pl-3 md:pl-4"
           >
             <div className="p-1">
               <ProductCard product={_} />
