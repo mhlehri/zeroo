@@ -66,7 +66,7 @@ export default function Navbar() {
   // console.log(pathname, isProductPage);
 
   return (
-    <div>
+    <>
       <div className="bg-primary-50 sticky top-0 z-50 md:relative">
         <div className="border-b-primary-200 container flex items-center justify-between gap-4 border-b py-2 md:gap-6 md:py-4">
           {/* <MobileMenu className="h-fit md:hidden" textHidden={true}/> */}
@@ -150,7 +150,7 @@ export default function Navbar() {
         </div>
       </div>
       <BottomNavigation />
-    </div>
+    </>
   );
 }
 
