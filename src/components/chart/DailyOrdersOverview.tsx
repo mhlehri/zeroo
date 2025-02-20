@@ -12,13 +12,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useGetOrders } from "@/hooks/use-order";
 import { Loader2 } from "lucide-react";
+
+// Define the TOrder type
+type TOrder = {
+  orderStatus: string;
+};
 
 const chartConfig = {
   orders: {
@@ -51,6 +56,7 @@ export function DailyOrdersOverview() {
   const { orders, isOrdersLoading } = useGetOrders({
     today: "yes",
   });
+
   const chartData = React.useMemo(() => {
     const status = {
       confirmed: 0,
@@ -60,50 +66,28 @@ export function DailyOrdersOverview() {
       delivered: 0,
     };
 
-    if (!orders || orders.length === 0) {
+    // Count orders by status
+    orders.forEach((order: TOrder) => {
+      if (order.orderStatus in status) {
+        status[order.orderStatus as keyof typeof status]++;
+      }
+    });
+
+    // Check if all values are 0
+    const allZero = Object.values(status).every((value) => value === 0);
+
+    if (allZero) {
+      // Return single entry with muted color for zero data
       return [
         {
-          status: "confirmed",
-          orders: 0,
-          fill: chartConfig.confirmed.color,
-        },
-        {
-          status: "unconfirmed",
-          orders: 0,
-          fill: chartConfig.unconfirmed.color,
-        },
-        {
-          status: "rejected",
-          orders: 0,
-          fill: chartConfig.rejected.color,
-        },
-        {
-          status: "cancelled",
-          orders: 0,
-          fill: chartConfig.cancelled.color,
-        },
-        {
-          status: "delivered",
-          orders: 0,
-          fill: chartConfig.delivered.color,
+          status: "no-order",
+          orders: 1,
+          fill: "#000000",
         },
       ];
     }
 
-    orders.forEach((order: TOrder) => {
-      if (order.orderStatus === "confirmed") {
-        status.confirmed++;
-      } else if (order.orderStatus === "unconfirmed") {
-        status.unconfirmed++;
-      } else if (order.orderStatus === "rejected") {
-        status.rejected++;
-      } else if (order.orderStatus === "cancelled") {
-        status.cancelled++;
-      } else if (order.orderStatus === "delivered") {
-        status.delivered++;
-      }
-    });
-
+    // Return normal data
     return Object.entries(status).map(([status, orders]) => ({
       status,
       orders,
@@ -112,18 +96,18 @@ export function DailyOrdersOverview() {
   }, [orders]);
 
   const totalOrders = React.useMemo(() => {
+    if (!orders || orders.length === 0) return 0;
     return chartData.reduce((acc, curr) => acc + curr.orders, 0);
-  }, [chartData]);
-
-  console.log(chartData);
+  }, [chartData, orders]);
 
   const d = new Date();
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>Today&apos;s orders status</CardTitle>
         <CardDescription>
-          {d.getDate() + "-" + d.getMonth() + 1 + "-" + d.getFullYear()}
+          {d.getDate() + "-" + (d.getMonth() + 1) + "-" + d.getFullYear()}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -182,7 +166,9 @@ export function DailyOrdersOverview() {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="text-muted-foreground leading-none">
-          Showing total orders status for the last 24 hours.
+          {!orders || orders.length === 0
+            ? "No orders data available"
+            : "Showing total orders status for the last 24 hours."}
         </div>
       </CardFooter>
     </Card>
