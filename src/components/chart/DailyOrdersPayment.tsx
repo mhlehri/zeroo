@@ -49,26 +49,25 @@ export function DailyOrderPaymentOverview() {
       paid: 0,
       pending: 0,
       failed: 0,
-      //   rejected: 0,
-      //   cancelled: 0,
-      //   delivered: 0,
     };
 
-    if (orders?.length > 0) {
-      orders?.forEach((order: TOrder) => {
-        if (order.paymentStatus === "paid") {
-          status.paid++;
-        } else if (order.paymentStatus === "pending") {
-          status.pending++;
-        } else if (order.paymentStatus === "failed") {
-          status.failed++;
-        }
-      });
-    } else {
-      // Handle the case when there are no orders
-      status.paid = 0;
-      status.pending = 0;
-      status.failed = 0;
+    orders.forEach((order: TOrder) => {
+      if (order.paymentStatus in status) {
+        status[order.paymentStatus as keyof typeof status]++;
+      }
+    });
+
+    const allZero = Object.values(status).every((value) => value === 0);
+
+    if (allZero) {
+      // Return single entry with muted color for zero data
+      return [
+        {
+          status: "no-order",
+          orders: 1,
+          fill: "#000000",
+        },
+      ];
     }
 
     return Object?.entries(status).map(([status, orders]) => ({
@@ -79,10 +78,9 @@ export function DailyOrderPaymentOverview() {
   }, [orders]);
 
   const totalOrders = React.useMemo(() => {
+    if (!orders || orders.length === 0) return 0;
     return chartData.reduce((acc, curr) => acc + curr.orders, 0);
-  }, [chartData]);
-
-  console.log(chartData);
+  }, [chartData, orders]);
 
   const d = new Date();
   return (
@@ -96,7 +94,7 @@ export function DailyOrderPaymentOverview() {
       <CardContent className="flex-1 pb-0">
         {isOrdersLoading ? (
           <Loader2 className="mx-auto my-2 animate-spin" />
-        ) : orders?.length ? (
+        ) : (
           <ChartContainer
             config={chartConfig}
             className="mx-auto aspect-square max-h-[250px]"
@@ -145,13 +143,13 @@ export function DailyOrderPaymentOverview() {
               </Pie>
             </PieChart>
           </ChartContainer>
-        ) : (
-          <div className="py-2 text-center">No orders available for today</div>
         )}
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="text-muted-foreground leading-none">
-          Showing total orders payment status for the last 24 hours.
+          {!orders || orders.length === 0
+            ? "No orders data available"
+            : "Showing total orders status for the last 24 hours."}
         </div>
       </CardFooter>
     </Card>
