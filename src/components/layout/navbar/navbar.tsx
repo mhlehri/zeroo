@@ -47,7 +47,6 @@ const links: TLink[] = [
 ];
 
 export default function Navbar() {
-  // const [open, setOpen] = useState(false);
   const { categories, isCategoriesLoading } = useCategories();
   const router = useRouter();
   const [isDetailsPage, setIsDetailsPage] = useState(false);
@@ -62,8 +61,6 @@ export default function Navbar() {
     );
     setIsCartPage(pathname === "/cart");
   }, [pathname]);
-
-  // console.log(pathname, isProductPage);
 
   return (
     <>
