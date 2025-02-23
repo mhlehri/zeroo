@@ -57,7 +57,7 @@ export default function AddToCart({
         className={cn(
           "rounded text-xs md:text-sm",
           textVisible ? "w-full" : "w-fit",
-          isAdded ? "text-primary bg-black/5" : "bg-transparent",
+          isAdded ? "text-primary bg-primary-100" : "bg-transparent",
           className,
         )}
         size="sm"
