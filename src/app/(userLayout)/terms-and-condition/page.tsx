@@ -6,8 +6,8 @@ export default function TermsAndConditions() {
           Terms and Conditions
         </h1>
         <p className="text-primary-600 mb-8 text-center text-lg leading-relaxed">
-          Welcome to Zeroo! These terms and conditions outline the rules and
-          regulations for the use of our e-commerce platform.
+          Welcome to Rongberong! These terms and conditions outline the rules
+          and regulations for the use of our e-commerce platform.
         </p>
 
         <section className="mb-10">
@@ -15,9 +15,9 @@ export default function TermsAndConditions() {
             1. Acceptance of Terms
           </h2>
           <p className="text-primary-700 leading-relaxed">
-            By accessing or using Zeroo, you agree to be bound by these terms
-            and conditions. If you do not agree with any part of these terms,
-            you must not use our platform.
+            By accessing or using Rongberong, you agree to be bound by these
+            terms and conditions. If you do not agree with any part of these
+            terms, you must not use our platform.
           </p>
         </section>
 
@@ -59,9 +59,9 @@ export default function TermsAndConditions() {
             4. Intellectual Property
           </h2>
           <p className="text-primary-700 leading-relaxed">
-            All content on Zeroo, including logos, text, images, and designs, is
-            the intellectual property of Zeroo and protected by copyright laws.
-            Unauthorized use is strictly prohibited.
+            All content on Rongberong, including logos, text, images, and
+            designs, is the intellectual property of Rongberong and protected by
+            copyright laws. Unauthorized use is strictly prohibited.
           </p>
         </section>
 
@@ -70,8 +70,8 @@ export default function TermsAndConditions() {
             5. Limitation of Liability
           </h2>
           <p className="text-primary-700 leading-relaxed">
-            Zeroo will not be liable for any direct, indirect, incidental, or
-            consequential damages arising from your use of the platform.
+            Rongberong will not be liable for any direct, indirect, incidental,
+            or consequential damages arising from your use of the platform.
           </p>
         </section>
 
@@ -80,8 +80,9 @@ export default function TermsAndConditions() {
             6. Termination
           </h2>
           <p className="text-primary-700 leading-relaxed">
-            We reserve the right to terminate or suspend your access to Zeroo at
-            any time, without notice, for any violation of these terms.
+            We reserve the right to terminate or suspend your access to
+            Rongberong at any time, without notice, for any violation of these
+            terms.
           </p>
         </section>
 
@@ -108,10 +109,10 @@ export default function TermsAndConditions() {
             <li>
               Email:{" "}
               <a
-                href="mailto:support@zeroo.com"
+                href="mailto:support@Rongberong.com"
                 className="text-blue-600 underline"
               >
-                support@zeroo.com
+                support@Rongberong.com
               </a>
             </li>
             <li>

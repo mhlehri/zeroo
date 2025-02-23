@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div className="container">
       <h2 className="mb-3 rounded bg-teal-800 p-3 text-lg font-bold text-balance text-slate-200 sm:text-xl md:text-2xl">
-        Welcome to Zeroo Admin Dashboard
+        Welcome to Rongberong Admin Dashboard
       </h2>
       <div className="space-y-4">
         {/* <Suspense fallback={<Loader2 className="animate-spin" />}> */}

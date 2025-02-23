@@ -465,7 +465,7 @@ export default function ProductForm() {
                     signatureEndpoint={
                       process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
                     }
-                    uploadPreset="zeroo_products"
+                    uploadPreset="Rongberong_products"
                     onSuccess={(result, { widget }) => {
                       const info = result?.info;
                       if (

@@ -105,7 +105,7 @@ export default function Checkout() {
         clearCart();
       } else {
         if (res.success) {
-          sessionStorage.setItem("zeroo-order", JSON.stringify(res.data));
+          sessionStorage.setItem("Rongberong-order", JSON.stringify(res.data));
 
           router.push("/order-confirmation");
           toast.success("Order placed successfully!", {

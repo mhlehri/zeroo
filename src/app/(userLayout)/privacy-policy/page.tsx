@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
           Privacy Policy
         </h1>
         <p className="text-primary-600 mb-8 text-center text-lg leading-relaxed">
-          At Zeroo, your privacy is our top priority. This Privacy Policy
+          At Rongberong, your privacy is our top priority. This Privacy Policy
           explains how we collect, use, and protect your personal information
           when you interact with our e-commerce platform.
         </p>
@@ -109,10 +109,10 @@ export default function PrivacyPolicy() {
             <li>
               Email:{" "}
               <a
-                href="mailto:support@zeroo.com"
+                href="mailto:support@Rongberong.com"
                 className="text-blue-600 underline"
               >
-                support@zeroo.com
+                support@Rongberong.com
               </a>
             </li>
             <li>

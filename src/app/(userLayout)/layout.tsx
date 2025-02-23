@@ -14,7 +14,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  title: "Zeroo - Start from zero",
+  title: "Rongberong - Start from zero",
   description: "e-commerce, clothing store",
 };
 

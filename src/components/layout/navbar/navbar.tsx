@@ -20,6 +20,7 @@ import RightSideNotSticky from "./right-side-not-sticky";
 import { ArrowLeft, Blend } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
+import RightSide from "./right-side";
 
 type TLink = {
   href: string;
@@ -28,18 +29,18 @@ type TLink = {
 };
 
 const links: TLink[] = [
-  {
-    href: "/",
-    label: "Home",
-  },
+  // {
+  //   href: "/",
+  //   label: "Home",
+  // },
   {
     href: "/products",
     label: "Shop",
   },
-  {
-    href: "/categories",
-    label: "Categories",
-  },
+  // {
+  //   href: "/categories",
+  //   label: "Categories",
+  // },
   {
     href: "/products?sort=new",
     label: "New Arrivals",
@@ -64,8 +65,8 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="bg-primary-50 sticky top-0 z-50 md:relative">
-        <div className="border-b-primary-200 container flex items-center justify-between gap-4 border-b py-2 md:gap-6 md:py-4">
+      <div className="sticky top-0 z-50 bg-[#FFBF00]">
+        <div className="container flex items-center justify-between gap-4 py-2 md:gap-6 md:py-4">
           {/* <MobileMenu className="h-fit md:hidden" textHidden={true}/> */}
           {(isMobile && isProductPage) ||
           (isMobile && isCartPage) ||
@@ -86,66 +87,19 @@ export default function Navbar() {
               </div> */}
               <Link
                 href="/"
-                className="text-primary flex items-center gap-2 pl-2 text-2xl font-bold md:text-3xl"
+                className="flex items-center gap-2 pl-2 text-2xl font-bold text-black md:text-2xl"
               >
-                <Blend /> <span className="">Zeroo</span>
+                {/* <Blend /> */}
+                <span className="text-teal-700">Rong</span>
+                <span className="text-rose-400">berong</span>
               </Link>
             </>
           )}
-          <RightSideNotSticky />
+
+          <RightSide />
         </div>
       </div>
-      <div className="bg-primary-50 sticky top-0 z-50 hidden shadow-md md:block">
-        <div className="container flex items-center justify-between gap-4 px-4 py-2">
-          <ul className="text-primary flex items-center gap-6 font-medium lg:gap-10">
-            {links?.map((link, index) =>
-              link.label !== "Categories" ? (
-                <li
-                  key={`nav-item-${index}`}
-                  className={`text-center text-sm whitespace-nowrap uppercase hover:underline hover:opacity-70 ${pathname === link.href ? "font-semibold" : ""}`}
-                >
-                  <Link href={link.href}>{link.label}</Link>
-                </li>
-              ) : (
-                <NavigationMenu key={`nav-item-${index}`}>
-                  <NavigationMenuList>
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger className="bg-none p-0 text-center text-sm uppercase hover:underline hover:opacity-70">
-                        {link.label}
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        {isCategoriesLoading ? (
-                          <div className="grid w-[360px] gap-3 p-4 md:grid-cols-2">
-                            <CategoryMenuSkeleton />
-                            <CategoryMenuSkeleton />
-                            <CategoryMenuSkeleton />
-                            <CategoryMenuSkeleton />
-                            <CategoryMenuSkeleton />
-                          </div>
-                        ) : (
-                          <ul className="grid w-[360px] gap-3 p-2 md:grid-cols-2">
-                            {categories?.length > 0
-                              ? categories?.map((category: TCategory) => (
-                                  <ListItem
-                                    key={category.name}
-                                    title={category.name}
-                                    image={category?.image}
-                                  />
-                                ))
-                              : null}
-                          </ul>
-                        )}
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-              ),
-            )}
-          </ul>
-          {/* search */}
-          <RightSideSticky />
-        </div>
-      </div>
+      {/* <div className="bg-primary-50 sticky top-0 z-50 hidden shadow-md md:block"></div> */}
       <BottomNavigation />
     </>
   );

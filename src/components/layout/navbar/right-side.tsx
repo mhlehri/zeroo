@@ -37,15 +37,13 @@ export default function RightSide() {
         <CommandDialogSearch isProductPage={isProductPage} />
       )}
       <Link href="/cart" className="relative">
-        <ShoppingBag className="text-primary hover:text-primary/80 size-5 md:size-6" />
-        <span className="absolute -top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] text-white">
+        <ShoppingBag className="size-5 text-black hover:text-black/80 md:size-6" />
+        <span className="absolute -top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#D10363] text-[10px] text-white">
           {cart.length}
         </span>
       </Link>
       <UserDropdown mainClass="hidden md:block">
-        <CircleUser
-          className={"text-primary size-5 cursor-pointer md:size-6"}
-        />
+        <CircleUser className={"size-5 cursor-pointer text-black md:size-6"} />
       </UserDropdown>
     </div>
   );

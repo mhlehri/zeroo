@@ -93,7 +93,7 @@ export default function AddCategoryForm() {
               signatureEndpoint={
                 process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
               }
-              uploadPreset="zeroo_products"
+              uploadPreset="Rongberong_products"
               options={{
                 multiple: false,
                 context: {

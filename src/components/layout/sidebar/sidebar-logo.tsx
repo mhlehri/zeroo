@@ -24,7 +24,7 @@ export function SidebarLogo() {
           >
             <Blend />
             <div className="grid flex-1 text-left text-sm leading-tight">
-              Zeroo
+              Rongberong
             </div>
           </Link>
         </SidebarMenuButton>

@@ -9,12 +9,12 @@ export default function Footer() {
         <div>
           <Blend />
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
-            About Zeroo
+            About Rongberong
           </h3>
           <p className="text-sm leading-relaxed text-slate-100">
-            Zeroo is your go-to destination for high-quality kids&apos; items
-            and accessories. We strive to provide the best products for your
-            little ones, ensuring safety, comfort, and style.
+            Rongberong is your go-to destination for high-quality kids&apos;
+            items and accessories. We strive to provide the best products for
+            your little ones, ensuring safety, comfort, and style.
           </p>
         </div>
 
@@ -52,10 +52,10 @@ export default function Footer() {
             <li>
               Email:{" "}
               <Link
-                href="mailto:support@zeroo.com"
+                href="mailto:support@Rongberong.com"
                 className="text-blue-400 hover:underline"
               >
-                support@zeroo.com
+                support@Rongberong.com
               </Link>
             </li>
             <li>
@@ -67,7 +67,9 @@ export default function Footer() {
                 +1 234 567 890
               </Link>
             </li>
-            <li>Address: 123 Zeroo Lane, Suite 456, Commerce City, ZZ 78901</li>
+            <li>
+              Address: 123 Rongberong Lane, Suite 456, Commerce City, ZZ 78901
+            </li>
           </ul>
         </div>
       </div>
@@ -75,7 +77,7 @@ export default function Footer() {
       {/* Bottom Section */}
       <div className="border-primary-700 mt-8 border-t pt-6 text-center">
         <p className="text-sm text-slate-300">
-          © {new Date().getFullYear()} Zeroo. All rights reserved.
+          © {new Date().getFullYear()} Rongberong. All rights reserved.
         </p>
         <div className="mt-4 flex justify-center space-x-4">
           <Link href="#" className="text-slate-200 hover:text-slate-200">
