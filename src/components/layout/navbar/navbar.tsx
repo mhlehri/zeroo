@@ -66,7 +66,7 @@ export default function Navbar() {
   return (
     <>
       <div className="sticky top-0 z-50 bg-[#FFBF00]">
-        <div className="container flex items-center justify-between gap-4 py-2 md:gap-6 md:py-4">
+        <div className="container flex items-center justify-between gap-4 py-2 md:gap-6 md:py-4 xl:px-0">
           {/* <MobileMenu className="h-fit md:hidden" textHidden={true}/> */}
           {(isMobile && isProductPage) ||
           (isMobile && isCartPage) ||
