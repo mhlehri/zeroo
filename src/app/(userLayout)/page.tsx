@@ -32,14 +32,14 @@ export default function Home() {
             <Categories />
           </Suspense>
         </section>
-        {/* <section>
+        <section>
           <Title>Featured Products</Title>
           <Suspense fallback={<CardCarouselSkeleton />}>
             <FeaturedProducts />
           </Suspense>
         </section>
         <NewArrivalProducts />
-        <BestSellingProducts /> */}
+        <BestSellingProducts />
       </div>
     </div>
   );

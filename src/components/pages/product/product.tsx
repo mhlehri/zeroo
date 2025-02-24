@@ -107,7 +107,7 @@ export default function Product({
         </Button>
         <Select value={sortOrder} onValueChange={setSortOrder}>
           <SelectTrigger
-            className="text-primary h-9 w-fit rounded-md px-3 text-xs md:text-sm"
+            className="h-9 w-fit rounded-md px-3 text-xs md:text-sm"
             icon={<ListFilter className="size-4 opacity-70" />}
           >
             <SelectValue placeholder="Sort by" />
