@@ -53,13 +53,13 @@ export default function AddCategoryForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const formData = { ...values, image: "imageUrl" };
-    // if (!imageUrl?.length) {
-    //   // setErrorImage(true);
-    // } else {
-    setErrorImage(false);
-    createCategory(formData);
-    // }
+    const formData = { ...values, image: imageUrl };
+    if (!imageUrl?.length) {
+      setErrorImage(true);
+    } else {
+      setErrorImage(false);
+      createCategory(formData);
+    }
   }
 
   const submitting = form.formState.isSubmitting;
@@ -93,7 +93,7 @@ export default function AddCategoryForm() {
               signatureEndpoint={
                 process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
               }
-              uploadPreset="Rongberong_products"
+              uploadPreset="Zeroo_products"
               options={{
                 multiple: false,
                 context: {
@@ -124,7 +124,7 @@ export default function AddCategoryForm() {
                       ? "border-red-500 text-red-500"
                       : "border-slate-300"
                   } w-full`}
-                  variant="outline"
+                  variant="outlineSecondary"
                   onClick={() => open()}
                 >
                   Upload Image

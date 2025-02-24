@@ -54,18 +54,19 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
+
   --color-primary-50: #fdf5d4;
-  --color-primary-100: #fdf2c1;
-  --color-primary-200: #fce5b4;
-  --color-primary-300: #f9d894;
-  --color-primary-400: #f7d06a;
-  --color-primary-500: #ffb100;
-  --color-primary-600: #ffaa00;
-  --color-primary-700: #ff9900;
-  --color-primary-800: #ff9400;
-  --color-primary-900: #ff8c00;
-  --color-primary-950: #ff7f00;
-  --color-primary: #ffb100;
+    --color-primary-100: #fdf2c1;
+    --color-primary-200: #fce5b4;
+    --color-primary-300: #f9d894;
+    --color-primary-400: #f7d06a;
+    --color-primary-500: #ffb100;
+    --color-primary-600: #ffaa00;
+    --color-primary-700: #ff9900;
+    --color-primary-800: #ff9400;
+    --color-primary-900: #ff8c00;
+    --color-primary-950: #ff7f00;
+    --color-primary: #ffb100;
 
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);

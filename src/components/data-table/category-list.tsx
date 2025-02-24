@@ -42,19 +42,19 @@ import { DataTablePagination } from "./data-table-pagination";
 import { DataTableViewOptions } from "./view-options";
 
 export const columns: ColumnDef<TCategory>[] = [
-  {
-    accessorKey: "image",
-    header: "Image",
-    cell: ({ row }) => (
-      <Image
-        src={row.getValue("image")}
-        alt={row.getValue("name")}
-        width={30}
-        height={30}
-        className="rounded-md"
-      />
-    ),
-  },
+  // {
+  //   accessorKey: "image",
+  //   header: "Image",
+  //   cell: ({ row }) => (
+  //     <Image
+  //       src={row.getValue("image")}
+  //       alt={row.getValue("name")}
+  //       width={30}
+  //       height={30}
+  //       className="rounded-md"
+  //     />
+  //   ),
+  // },
   {
     accessorKey: "name",
     header: ({ column }) => (

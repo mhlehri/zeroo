@@ -19,15 +19,9 @@ export default function Home() {
       />
       <div className="container my-8 space-y-6 px-2 md:my-12 md:space-y-10 lg:space-y-12">
         <section>
-          <Title>Shop by category</Title>
           <Suspense
             fallback={
               <div className="flex gap-4 overflow-hidden *:size-16 *:min-w-16 *:flex-1 *:rounded-full *:bg-slate-200 *:md:size-[70px] *:lg:size-[140px] *:lg:rounded *:xl:size-[180px] *:2xl:size-[200px]">
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
-                <Skeleton />
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />
@@ -38,14 +32,14 @@ export default function Home() {
             <Categories />
           </Suspense>
         </section>
-        <section>
+        {/* <section>
           <Title>Featured Products</Title>
           <Suspense fallback={<CardCarouselSkeleton />}>
             <FeaturedProducts />
           </Suspense>
         </section>
         <NewArrivalProducts />
-        <BestSellingProducts />
+        <BestSellingProducts /> */}
       </div>
     </div>
   );

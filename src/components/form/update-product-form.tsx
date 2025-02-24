@@ -212,7 +212,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
                   tags: [`${form.getValues("category")}`],
                 },
               }}
-              uploadPreset="Rongberong_products"
+              uploadPreset="Zeroo_products"
               onSuccess={(result) => {
                 if (typeof result.info !== "string" && result.info) {
                   const url = result.info.secure_url;

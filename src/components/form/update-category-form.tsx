@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "../ui/button";
+import skeletonImage from "../../../public/1.jpg";
 import {
   Form,
   FormControl,
@@ -30,7 +31,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
   const { category, isCategoryLoading } = useCategoryById(id);
 
   // ✅ State for Image Upload
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [imageUrl, setImageUrl] = useState<string | null>();
   const [errorImage, setErrorImage] = useState(false);
 
   // ✅ React Hook Form Setup
@@ -46,9 +47,11 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
       form.reset({
         name: category?.name || "",
       });
-      setImageUrl(category?.image || null);
+      setImageUrl(category?.image ?? skeletonImage);
     }
   }, [category, form]);
+
+  console.log(category?.image);
 
   // ✅ Mutation for updating category
   const { mutate: updateCategoryMutation, isPending } = useMutation({
@@ -109,7 +112,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               signatureEndpoint={
                 process.env.NEXT_PUBLIC_CLOUDINARY_SIGNATURE_ENDPOINT!
               }
-              uploadPreset="Rongberong_products"
+              uploadPreset="Zeroo_products"
               options={{
                 multiple: false,
                 context: {
