@@ -61,10 +61,10 @@ export default function ProductDetails({ product }: { product: TProduct }) {
         </div>
         <div className="space-y-3 px-4 md:w-1/2 md:space-y-4 md:px-0 lg:space-y-5">
           <div>
-            <h1 className="text-primary-700 mb-4 text-lg font-semibold md:text-xl lg:text-2xl">
+            <h1 className="mb-4 text-lg font-semibold text-slate-700 md:text-xl lg:text-2xl">
               {name}
             </h1>
-            <p className="text-primary-900 text-xl slashed-zero md:text-2xl lg:text-3xl">
+            <p className="text-xl text-slate-900 slashed-zero md:text-2xl lg:text-3xl">
               <span className="font-semibold">TK {price?.toFixed(2)}</span>
             </p>
           </div>
@@ -74,7 +74,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
           />
 
           <div className="flex items-center space-x-4">
-            <span className="text-primary-700">Quantity:</span>
+            <span className="text-slate-700">Quantity:</span>
             <div className="flex w-fit items-center rounded-md border">
               <Button
                 size="sm"
