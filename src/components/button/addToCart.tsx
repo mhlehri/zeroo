@@ -55,7 +55,7 @@ export default function AddToCart({
         onClick={handleAddToCart}
         variant={variant || "outlineSecondary"}
         className={cn(
-          "rounded border-slate-950 text-xs md:text-sm",
+          "rounded text-xs md:text-sm",
           textVisible ? "w-full" : "w-fit",
           isAdded ? "bg-slate-200 text-slate-700" : "bg-transparent",
           className,
