@@ -143,3 +143,53 @@ const ListItem = forwardRef<React.ElementRef<"a">, ListItemProps>(
   },
 );
 ListItem.displayName = "ListItem";
+
+// <div className="mx-auto flex flex-1 items-center justify-between gap-4">
+//         <ul className="text-primary flex items-center gap-6 font-medium lg:gap-10">
+//           {links?.map((link, index) =>
+//             link.label !== "Categories" ? (
+//               <li
+//                 key={`nav-item-${index}`}
+//                 className={`text-center text-sm whitespace-nowrap uppercase hover:underline hover:opacity-70 ${pathname === link.href ? "font-semibold" : ""}`}
+//               >
+//                 <Link href={link.href}>{link.label}</Link>
+//               </li>
+//             ) : (
+//               <NavigationMenu key={`nav-item-${index}`}>
+//                 <NavigationMenuList>
+//                   <NavigationMenuItem className="py-0">
+//                     <NavigationMenuTrigger className="bg-none p-0 text-center text-sm uppercase hover:underline hover:opacity-70">
+//                       {link.label}
+//                     </NavigationMenuTrigger>
+//                     <NavigationMenuContent>
+//                       {isCategoriesLoading ? (
+//                         <div className="grid w-[360px] gap-3 md:grid-cols-2">
+//                           <CategoryMenuSkeleton />
+//                           <CategoryMenuSkeleton />
+//                           <CategoryMenuSkeleton />
+//                           <CategoryMenuSkeleton />
+//                           <CategoryMenuSkeleton />
+//                         </div>
+//                       ) : (
+//                         <ul className="grid w-[360px] gap-3 p-2 md:grid-cols-2">
+//                           {categories?.length > 0
+//                             ? categories?.map((category: TCategory) => (
+//                                 <ListItem
+//                                   key={category.name}
+//                                   title={category.name}
+//                                   image={category?.image}
+//                                 />
+//                               ))
+//                             : null}
+//                         </ul>
+//                       )}
+//                     </NavigationMenuContent>
+//                   </NavigationMenuItem>
+//                 </NavigationMenuList>
+//               </NavigationMenu>
+//             ),
+//           )}
+//         </ul>
+
+//         <RightSideSticky />
+//       </div>

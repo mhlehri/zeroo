@@ -1,13 +1,12 @@
-import { Blend } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-black bg-cover bg-fixed pt-10 pb-16 text-slate-50 md:pb-10">
-      <div className="container grid grid-cols-1 gap-8 px-6 md:grid-cols-3 md:px-16 lg:px-32">
+    <footer className="bg-[#131010] bg-[url(/footer.svg)] bg-contain pt-10 pb-16 text-slate-50 md:pb-10">
+      <div className="container grid grid-cols-1 gap-8 px-6 md:grid-cols-3 md:px-10 xl:px-0">
         {/* About Section */}
         <div>
-          <Blend />
+          {/* <Blend /> */}
           <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold">
             About Rongberong
           </h3>
@@ -75,18 +74,18 @@ export default function Footer() {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-primary-700 mt-8 border-t pt-6 text-center">
+      <div className="mt-8 border-t border-slate-200 pt-6 text-center">
         <p className="text-sm text-slate-300">
           © {new Date().getFullYear()} Rongberong. All rights reserved.
         </p>
         <div className="mt-4 flex justify-center space-x-4">
-          <Link href="#" className="text-slate-200 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-300">
             <i className="fab fa-facebook-f"></i> Facebook
           </Link>
-          <Link href="#" className="text-slate-200 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-300">
             <i className="fab fa-twitter"></i> Twitter
           </Link>
-          <Link href="#" className="text-slate-200 hover:text-slate-200">
+          <Link href="#" className="text-slate-200 hover:text-slate-300">
             <i className="fab fa-instagram"></i> Instagram
           </Link>
         </div>

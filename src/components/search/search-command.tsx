@@ -62,7 +62,7 @@ export function CommandDialogSearch({
           <>
             <Input
               placeholder="Search by products..."
-              className={`border-primary-200 hover:placeholder:text-primary-700 w-full bg-white ${
+              className={`border-primary-200 hover:placeholder:text-primary-700 bg-white ${
                 isMobile && isProductPage
                   ? "block h-8 w-full pl-7"
                   : "hidden pl-10"
