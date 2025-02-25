@@ -21,7 +21,7 @@ export default function NavLinks({ links }: NavLinksProps) {
 
   return (
     <>
-      <ul className="container flex items-center justify-center gap-6 py-2 font-medium text-black lg:gap-10 xl:px-0">
+      <ul className="container flex items-center justify-center gap-6 py-3 font-medium text-black lg:gap-10 xl:px-0">
         {links?.map((link, index) => (
           <li
             key={`nav-item-${index}`}
@@ -33,7 +33,7 @@ export default function NavLinks({ links }: NavLinksProps) {
           </li>
         ))}
       </ul>
-      <div className="fixed top-1.5 right-2">
+      <div className="fixed top-2 right-2">
         <RightSideSticky />
       </div>
     </>

@@ -18,6 +18,7 @@ import { type KeyboardEvent, useState } from "react";
 
 export function CommandDialogSearch({
   children,
+  isSearchInputHidden,
   isProductPage,
 }: {
   isProductPage?: boolean;
@@ -57,11 +58,12 @@ export function CommandDialogSearch({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        className={`relative block max-w-2xl outline-hidden md:w-full`}
+        className={`relative block max-w-2xl outline-hidden ${isProductPage ? "w-full" : "md:w-full"} `}
       >
         {!children ? (
           <>
             <Input
+              hidden={isSearchInputHidden}
               placeholder="Search by products..."
               className={`border-primary-200 hover:placeholder:text-primary-700 bg-white ${
                 isMobile && isProductPage
@@ -71,7 +73,7 @@ export function CommandDialogSearch({
               onFocus={() => setOpen(true)}
             />
             <Search
-              className={`z-50 text-black md:text-slate-800 ${isMobile && isProductPage ? "text-primary-400 absolute top-[25%] left-2 size-4" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
+              className={`z-50 text-black md:text-slate-800 ${isSearchInputHidden ? "" : isMobile && isProductPage ? "text-primary-400 absolute top-[25%] left-2 size-4" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
             />
           </>
         ) : (
