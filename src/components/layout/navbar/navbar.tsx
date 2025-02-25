@@ -3,11 +3,6 @@ import RightSide from "./right-side";
 import MobileNav from "./mobile-nav";
 import NavLinks from "./nav-links";
 import BottomNavigation from "./bottom-navigation";
-type TCategory = {
-  id: string;
-  name: string;
-  slug: string;
-};
 
 export default async function Navbar() {
   const { categories } = await getCategories();
@@ -31,6 +26,10 @@ export default async function Navbar() {
     categories?.map((category: TCategory) => ({
       href: `/products?category=${category.name}`,
       label: category.name,
+      subCategory: category.subCategories.map((subCategory) => ({
+        href: `/products?category=${category.name}&subCategory=${subCategory.name}`,
+        label: subCategory.name,
+      })),
     })) || [];
 
   const links = [...initialLinks, ...categoryLinks];

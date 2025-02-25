@@ -1,5 +1,6 @@
 "use client";
-import { addCategory } from "@/services/category";
+import { useCategories } from "@/hooks/use-category";
+import { addSubCategory } from "@/services/category";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { FieldValues, useForm } from "react-hook-form";
@@ -22,12 +23,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { useCategories } from "@/hooks/use-category";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  category: z.string().min(1, {
+  categoryId: z.string().min(1, {
     message: "Category is required.",
   }),
 });
@@ -38,19 +38,24 @@ export default function AddSubCategoryForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      category: "",
+      categoryId: "",
     },
   });
-  const { mutate: createCategory } = useMutation<unknown, Error, FieldValues>({
+  const { mutate: createCategory, isPending } = useMutation<
+    unknown,
+    Error,
+    FieldValues
+  >({
     mutationKey: ["categories"],
     mutationFn: async (values: FieldValues) => {
-      const res = await addCategory(values);
+      const res = await addSubCategory(values);
+
       console.log(res, "res category");
       if (res.success) {
         toast.success(res.message, {
           richColors: true,
         });
-        form.reset();
+        form.setValue("name", "");
       } else {
         toast.error(res.message, {
           richColors: true,
@@ -63,7 +68,7 @@ export default function AddSubCategoryForm() {
     createCategory(values);
   }
 
-  const submitting = form.formState.isSubmitting;
+  const submitting = isPending;
   return (
     <div className="h-fit w-full max-w-md rounded-lg border bg-white p-6 shadow-lg md:p-8">
       <Form {...form}>
@@ -76,7 +81,7 @@ export default function AddSubCategoryForm() {
           </h3>
           <FormField
             control={form.control}
-            name="category"
+            name="categoryId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Category</FormLabel>
@@ -91,7 +96,7 @@ export default function AddSubCategoryForm() {
                   </FormControl>
                   <SelectContent>
                     {categories?.map((category: TCategory) => (
-                      <SelectItem key={category?.name} value={category?.name}>
+                      <SelectItem key={category?.name} value={category?._id}>
                         {category?.name}
                       </SelectItem>
                     ))}
