@@ -56,6 +56,10 @@ export const items = [
         title: "Add Category",
         url: "/admin/add-category",
       },
+      {
+        title: "Add Sub-category",
+        url: "/admin/add-sub-category",
+      },
     ],
   },
   {
