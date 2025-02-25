@@ -25,7 +25,9 @@ export default function RightSide() {
   console.log(pathname, isProductPage);
   const { cart } = useCart();
   return (
-    <div className="flex w-full items-center justify-end gap-4 md:gap-6 lg:gap-10">
+    <div
+      className={`flex w-full items-center justify-end gap-4 md:gap-6 lg:gap-10`}
+    >
       {/* search */}
       {isDetailsPage && isMobile ? (
         <p className="w-full text-center text-xl font-semibold">
@@ -42,7 +44,7 @@ export default function RightSide() {
           {cart.length}
         </span>
       </Link>
-      <UserDropdown mainClass="hidden md:block">
+      <UserDropdown mainClass={`hidden md:block`}>
         <CircleUser className={"size-5 cursor-pointer text-black md:size-6"} />
       </UserDropdown>
     </div>

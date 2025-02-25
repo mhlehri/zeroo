@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RightSide from "./right-side";
+import Link from "next/link";
+import { Search, ShoppingBag } from "lucide-react";
+import { useCart } from "@/context/cart-provider";
 
 export default function RightSideSticky() {
   const [isSticky, setIsSticky] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const { cart } = useCart();
   useEffect(() => {
     const toggleVisibility = () => {
       if (isMobile) return; // Prevent sticky behavior for mobile devices
@@ -37,6 +40,18 @@ export default function RightSideSticky() {
     };
   }, [isMobile]);
 
-  if (isSticky) return <RightSide />;
+  if (isSticky)
+    return (
+      <div className="flex gap-2">
+        {" "}
+        <Search className={`text-black`} />
+        <Link href="/cart" className="relative">
+          <ShoppingBag className="size-5 text-black hover:text-black/80 md:size-6" />
+          <span className="absolute -top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#D10363] text-[10px] text-white">
+            {cart.length}
+          </span>
+        </Link>
+      </div>
+    );
   return;
 }

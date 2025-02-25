@@ -21,6 +21,7 @@ export function CommandDialogSearch({
   isProductPage,
 }: {
   isProductPage?: boolean;
+  isSearchInputHidden?: boolean;
   children?: React.ReactNode;
 }) {
   const router = useRouter();
@@ -56,7 +57,7 @@ export function CommandDialogSearch({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        className={`relative block ${isMobile && isProductPage ? "w-full" : ""} outline-hidden md:max-w-lg`}
+        className={`relative block max-w-2xl outline-hidden md:w-full`}
       >
         {!children ? (
           <>
@@ -66,11 +67,11 @@ export function CommandDialogSearch({
                 isMobile && isProductPage
                   ? "block h-8 w-full pl-7"
                   : "hidden pl-10"
-              } rounded-lg py-0 text-sm ring-0 outline-hidden placeholder:text-black/50 md:block`}
+              } rounded py-0 text-sm ring-0 outline-hidden placeholder:text-black/50 md:block`}
               onFocus={() => setOpen(true)}
             />
             <Search
-              className={`md:text-primary-400 z-50 text-[#FFBF00] ${isMobile && isProductPage ? "text-primary-400 absolute top-[25%] left-2 size-4" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
+              className={`z-50 text-black md:text-slate-800 ${isMobile && isProductPage ? "text-primary-400 absolute top-[25%] left-2 size-4" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
             />
           </>
         ) : (
