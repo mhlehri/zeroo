@@ -41,6 +41,19 @@ export async function addCategory(formData: FieldValues) {
   }
 }
 
+export async function addSubCategory(formData: FieldValues) {
+  try {
+    const { data } = await ax.post(`/category/sub-categories`, formData);
+    revalidatePath("/");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
+
 export async function updateCategory({
   id,
   formData,
