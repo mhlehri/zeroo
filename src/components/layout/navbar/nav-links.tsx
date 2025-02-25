@@ -4,7 +4,7 @@ import type React from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import RightSideSticky from "./righ-side-sticky";
+import RightSideSticky from "./right-side-sticky";
 
 type TLink = {
   href: string;
