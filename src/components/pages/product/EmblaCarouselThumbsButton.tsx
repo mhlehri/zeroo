@@ -21,7 +21,7 @@ export const Thumb: React.FC<PropType> = (props) => {
     >
       <Image
         src={img}
-        className="bg-primary-300 h-full w-full object-cover"
+        className="bg-gray-200 h-full w-full object-cover"
         width={150}
         height={150}
         alt="Thumb"

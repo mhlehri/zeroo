@@ -88,7 +88,7 @@ export default function CartPage() {
                       <Image
                         src={
                           item?.image ||
-                          "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20fill='%23fff'%3E%3Cpath%20fill-rule='evenodd'%20d='M8%208.5V1a1%201%200%200%200-2%200v7.5H1a1%201%200%200%200%200%202h5.5V15a1%201%200%200%200%202%200v-5.5H15a1%201%200%200%200%200-2h-5.5z'%2F%3E%3C%2Fsvg%3E"
+                          "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
                         }
                         alt={item?.name}
                         width={60}

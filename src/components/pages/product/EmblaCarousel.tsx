@@ -77,7 +77,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     width={400}
                     height={400}
                     src={img || "/placeholder.svg"}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full bg-gray-200 object-cover"
                     alt="Product Image"
                   />
                 </div>
