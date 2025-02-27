@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowLeft } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { usePage } from "@/hooks/use-page";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import MobileMenu from "./mobile-menu";
 
 export default function MobileNav({
@@ -13,19 +13,8 @@ export default function MobileNav({
   categories: { label: string; href: string }[];
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const isMobile = useIsMobile();
-  const [isDetailsPage, setIsDetailsPage] = useState(false);
-  const [isProductPage, setIsProductPage] = useState(false);
-  const [isCartPage, setIsCartPage] = useState(false);
-
-  useEffect(() => {
-    setIsProductPage(pathname === "/products");
-    setIsDetailsPage(
-      pathname.startsWith("/products/") && pathname.split("/").length === 3,
-    );
-    setIsCartPage(pathname === "/cart");
-  }, [pathname]);
+  const { isProductPage, isCartPage, isDetailsPage } = usePage();
 
   if (!isMobile)
     return (

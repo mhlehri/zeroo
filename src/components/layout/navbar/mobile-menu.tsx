@@ -41,16 +41,6 @@ export default function MobileMenu({
           <SheetTitle hidden>Menu</SheetTitle>
         </SheetHeader>
         <nav className="max-h-[50vh] space-y-2 overflow-y-auto">
-          {/* {isLoading ? (
-                <>
-                  <CategoryMenuSkeleton />
-                  <CategoryMenuSkeleton />
-                  <CategoryMenuSkeleton />
-                  <CategoryMenuSkeleton />
-                  <CategoryMenuSkeleton />
-                  <CategoryMenuSkeleton />
-                </>
-              ) : ( */}
           {categories?.length > 0 &&
             categories?.map((category) => (
               <Link
@@ -59,15 +49,6 @@ export default function MobileMenu({
                 className="hover:bg-muted flex items-center gap-2 px-4 py-2 text-black transition-colors"
                 onClick={() => setOpen(false)}
               >
-                {/* {category.image && (
-                      <Image
-                        src={category.image}
-                        width={30}
-                        height={30}
-                        alt=""
-                        className="size-8 rounded"
-                      />
-                    )}{" "} */}
                 {category?.label}
               </Link>
             ))}

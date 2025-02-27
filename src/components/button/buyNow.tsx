@@ -47,7 +47,7 @@ export default function BuyNow({
       asChild
     >
       {!product.stock ? (
-        <Link href={`/product/${product.id}`}>View Details</Link>
+        <Link href={`/products/${product.id}`}>View Details</Link>
       ) : (
         <Link href="/checkout">Buy Now</Link>
       )}

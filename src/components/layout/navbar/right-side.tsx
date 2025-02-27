@@ -3,28 +3,16 @@ import { CommandDialogSearch } from "@/components/search/search-command";
 import { useCart } from "@/context/cart-provider";
 import { CircleUser, ShoppingBag } from "lucide-react";
 import UserDropdown from "./user-dropdown";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CartSheet from "@/components/cart/cart-sheet";
+import { usePage } from "@/hooks/use-page";
 
 export default function RightSide() {
-  const [isProductPage, setIsProductPage] = useState(false);
-  const [isDetailsPage, setIsDetailsPage] = useState(false);
-  const [isCartPage, setIsCartPage] = useState(false);
   const isMobile = useIsMobile();
-  const pathname = usePathname();
-  useEffect(() => {
-    setIsProductPage(pathname === "/products");
-    setIsDetailsPage(
-      pathname.startsWith("/products/") && pathname.split("/").length === 3,
-    );
-    setIsCartPage(pathname === "/cart");
-  }, [pathname]);
-
-  console.log(pathname, isProductPage);
+  const { isProductPage, isCartPage, isDetailsPage } = usePage();
   const { cart } = useCart();
+
   return (
     <div
       className={`flex w-full items-center justify-end gap-4 md:gap-6 lg:gap-10`}
