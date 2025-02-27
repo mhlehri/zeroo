@@ -36,10 +36,7 @@ export default function AddToCart({
   }, [cart, product.id]);
 
   const handleAddToCart = () => {
-    if (isAdded) {
-      // Open the cart sheet instead of showing a toast
-      setIsSheetOpen(true);
-    } else {
+    if (!isAdded) {
       addToCart({ ...product, quantity: quantity || 1 });
       toast.success(`Product : ${product.name}, Added to cart`, {
         richColors: true,
@@ -70,7 +67,10 @@ export default function AddToCart({
           {!product.stock ? "Out of Stock" : textVisible && "Add to Cart"}
         </Button>
       ) : (
-        <Sheet>
+        <Sheet
+          open={isSheetOpen}
+          onOpenChange={() => setIsSheetOpen(!isSheetOpen)}
+        >
           <SheetTrigger asChild>
             <Button
               disabled={!product.stock}
@@ -96,7 +96,7 @@ export default function AddToCart({
             </Button>
           </SheetTrigger>
           <SheetContent className="w-full sm:max-w-md">
-            <CartSheet onClose={() => setIsSheetOpen(false)} />
+            <CartSheet />
           </SheetContent>
         </Sheet>
       )}

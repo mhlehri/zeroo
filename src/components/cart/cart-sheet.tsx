@@ -6,8 +6,9 @@ import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { SheetClose } from "../ui/sheet";
 
-export default function CartSheet({ onClose }: { onClose: () => void }) {
+export default function CartSheet() {
   const { cart, removeFromCart, updateQuantity } = useCart();
 
   const calculateTotal = () => {
@@ -27,9 +28,11 @@ export default function CartSheet({ onClose }: { onClose: () => void }) {
         <p className="text-muted-foreground text-center text-sm">
           Add items to your cart to see them here
         </p>
-        <Button asChild className="mt-2" onClick={onClose}>
-          <Link href="/products">Browse Products</Link>
-        </Button>
+        <SheetClose className="mt-2" asChild>
+          <Button variant="default" asChild size="sm">
+            <Link href="/products">Browse Products</Link>
+          </Button>
+        </SheetClose>
       </div>
     );
   }
@@ -111,20 +114,22 @@ export default function CartSheet({ onClose }: { onClose: () => void }) {
           <span>TK {calculateTotal().toFixed(2)}</span>
         </div>
         <div className="flex gap-3">
-          <Button variant="outline" className="flex-1" onClick={onClose}>
-            Continue Shopping
-          </Button>
-          <Button asChild className="flex-1">
-            <Link href="/cart" onClick={onClose}>
-              View Cart
-            </Link>
-          </Button>
+          <SheetClose className="flex-1" asChild>
+            <Button asChild variant="outline">
+              <Link href="/products">Continue Shopping </Link>
+            </Button>
+          </SheetClose>
+          <SheetClose className="flex-1" asChild>
+            <Button asChild>
+              <Link href="/cart">View Cart</Link>
+            </Button>
+          </SheetClose>
         </div>
-        <Button asChild className="mt-3 w-full" variant="default">
-          <Link href="/checkout" onClick={onClose}>
-            Checkout
-          </Link>
-        </Button>
+        <SheetClose asChild>
+          <Button asChild className="mt-3 w-full" variant="default">
+            <Link href="/checkout">Checkout</Link>
+          </Button>
+        </SheetClose>
       </div>
     </div>
   );
