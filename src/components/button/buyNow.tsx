@@ -32,7 +32,7 @@ export default function BuyNow({
   );
 
   const handleAddToCart = () => {
-    if (!isAdded) {
+    if (!isAdded && product.stock) {
       addToCart({ ...product, quantity: quantity || 1 });
       setIsAdded(true);
     }
@@ -41,12 +41,16 @@ export default function BuyNow({
     <Button
       onClick={handleAddToCart}
       {...props}
-      variant={variant || "default"}
+      variant={!product.stock ? "secondary" : variant || "default"}
       className={cn("w-full rounded", className)}
       size="sm"
       asChild
     >
-      <Link href="/checkout">Buy Now</Link>
+      {!product.stock ? (
+        <Link href={`/product/${product.id}`}>View Details</Link>
+      ) : (
+        <Link href="/checkout">Buy Now</Link>
+      )}
     </Button>
   );
 }

@@ -62,7 +62,7 @@ export default function CartPage() {
                   Continue Shopping
                 </Link>
               </Button>
-              <Button asChild variant="outlineSecondary" size="lg">
+              <Button asChild variant="outline" size="lg">
                 <Link href="/products?sort=new">Explore New Arrivals</Link>
               </Button>
             </div>

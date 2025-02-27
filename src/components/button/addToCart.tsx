@@ -8,15 +8,6 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CartSheet from "../cart/cart-sheet";
 
-type TCartProduct = {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  quantity?: number;
-};
-
 export default function AddToCart({
   className,
   product,
@@ -39,6 +30,8 @@ export default function AddToCart({
     const isItemInCart = cart.find((item) => item.id === product.id);
     if (isItemInCart) {
       setIsAdded(true);
+    } else {
+      setIsAdded(false);
     }
   }, [cart, product.id]);
 
@@ -60,19 +53,26 @@ export default function AddToCart({
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
           <Button
+            disabled={!product.stock}
             {...props}
             onClick={handleAddToCart}
-            variant={variant || "outlineSecondary"}
+            variant={!product.stock ? "destructive" : variant || "outline"}
             className={cn(
               "rounded text-xs md:text-sm",
               textVisible ? "w-full" : "w-fit",
-              isAdded ? "bg-slate-200 text-slate-700" : "bg-transparent",
+              isAdded ? "bg-slate-200 text-slate-700" : "",
               className,
             )}
             size="sm"
           >
-            {isAdded ? <CheckSquareIcon /> : <ShoppingBag />}{" "}
-            {textVisible && (isAdded ? "View Cart" : "Add to Cart")}
+            {!product.stock ? null : isAdded ? (
+              <CheckSquareIcon />
+            ) : (
+              <ShoppingBag />
+            )}{" "}
+            {!product.stock
+              ? "Out of Stock"
+              : textVisible && (isAdded ? "View Cart" : "Add to Cart")}
           </Button>
         </SheetTrigger>
         <SheetContent className="w-full sm:max-w-md">

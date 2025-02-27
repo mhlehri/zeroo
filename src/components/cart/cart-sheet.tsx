@@ -18,9 +18,9 @@ export default function CartSheet({ onClose }: { onClose: () => void }) {
     return (
       <div className="flex h-full flex-col items-center justify-center space-y-4 px-2 py-8">
         <div className="relative mb-4">
-          <div className="bg-primary/10 absolute inset-0 scale-150 rounded-full opacity-50 blur-xl" />
+          <div className="bg-primary/50 absolute inset-0 scale-150 rounded-full opacity-50 blur-xl" />
           <div className="bg-background relative rounded-full p-4">
-            <ShoppingBag className="text-primary size-12" strokeWidth={1.5} />
+            <ShoppingBag className="size-12 text-slate-600" strokeWidth={1.5} />
           </div>
         </div>
         <h3 className="text-xl font-semibold">Your cart is empty</h3>
@@ -59,11 +59,11 @@ export default function CartSheet({ onClose }: { onClose: () => void }) {
                   alt={item?.name}
                   width={60}
                   height={60}
-                  className="bg-primary-200 size-14 rounded-md object-cover"
+                  className="size-14 rounded-md bg-slate-600 object-cover"
                 />
                 <div>
                   <h3 className="line-clamp-2 font-medium">{item?.name}</h3>
-                  <p className="text-primary-600 text-sm">TK {item.price}</p>
+                  <p className="text-sm text-slate-600">TK {item.price}</p>
                   <div className="mt-1 flex items-center gap-2">
                     <Button
                       size="icon"

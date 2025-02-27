@@ -124,7 +124,7 @@ export default function AddCategoryForm() {
                       ? "border-red-500 text-red-500"
                       : "border-slate-300"
                   } w-full`}
-                  variant="outlineSecondary"
+                  variant="outline"
                   onClick={() => open()}
                 >
                   Upload Image

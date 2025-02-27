@@ -2,14 +2,12 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-// Define Cart Item Type with Stock Information
 export interface CartItem {
   id: string;
   name: string;
   price: number;
   quantity: number;
   image?: string;
-  stock: number; // Add stock to the CartItem
 }
 
 // Cart Context Type
@@ -51,14 +49,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
       if (existingItem) {
         // Update quantity if already in cart, but respect stock limits
-        const newQuantity = Math.min(
-          existingItem.quantity + item.quantity,
-          item.stock
-        );
+        const newQuantity = Math.min(existingItem.quantity + item.quantity);
         return prevCart.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: newQuantity }
-            : cartItem
+            : cartItem,
         );
       }
       return [...prevCart, item];
@@ -75,9 +70,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart((prevCart) => {
       const cartItem = prevCart.find((item) => item.id === id);
       if (cartItem) {
-        const newQuantity = Math.min(quantity, cartItem.stock); // Limit quantity by stock
+        const newQuantity = Math.min(quantity);
         return prevCart.map((item) =>
-          item.id === id ? { ...item, quantity: newQuantity } : item
+          item.id === id ? { ...item, quantity: newQuantity } : item,
         );
       }
       return prevCart;
