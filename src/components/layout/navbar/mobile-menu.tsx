@@ -1,6 +1,9 @@
 "use client";
 
-// import CategoryMenuSkeleton from "@/components/skeleton/category-menu-skeleton";
+import { useState } from "react";
+import Link from "next/link";
+import { ChevronDown, Menu } from "lucide-react";
+import { cn } from "@/lib/utils";
 import {
   Sheet,
   SheetContent,
@@ -8,9 +11,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
-import Link from "next/link";
-import { useState } from "react";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
+interface Category {
+  label: string;
+  href: string;
+  subCategory?: { label: string; href: string }[];
+}
 
 export default function MobileMenu({
   textHidden,
@@ -19,9 +30,20 @@ export default function MobileMenu({
 }: {
   textHidden?: boolean;
   className?: string;
-  categories: { label: string; href: string }[];
+  categories: Category[];
 }) {
   const [open, setOpen] = useState(false);
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
+
+  const toggleCategory = (category: string) => {
+    setOpenCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
+    );
+  };
+
+  console.log(categories, "categories from mobile menu");
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -36,21 +58,54 @@ export default function MobileMenu({
           </span>
         </>
       </SheetTrigger>
-      <SheetContent className="" side="left">
-        <SheetHeader>
-          <SheetTitle hidden>Menu</SheetTitle>
+      <SheetContent className="p-0" side="left">
+        <SheetHeader className="border-b px-4 py-3">
+          <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <nav className="max-h-[50vh] space-y-2 overflow-y-auto">
+        <nav className="max-h-[calc(100vh-5rem)] overflow-y-auto">
           {categories?.length > 0 &&
             categories?.map((category) => (
-              <Link
-                key={category?.label}
-                href={category?.href}
-                className="hover:bg-muted flex items-center gap-2 px-4 py-2 text-black transition-colors"
-                onClick={() => setOpen(false)}
-              >
-                {category?.label}
-              </Link>
+              <div key={category.label} className="border-b last:border-b-0">
+                {category.subCategory ? (
+                  <Collapsible
+                    open={openCategories.includes(category.label)}
+                    onOpenChange={() => toggleCategory(category.label)}
+                  >
+                    <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 transition-colors outline-none hover:bg-gray-100">
+                      <span className="font-medium">{category.label}</span>
+                      <ChevronDown
+                        className={cn(
+                          "size-4 border-l text-gray-900 transition-transform duration-200",
+                          openCategories.includes(category.label) &&
+                            "rotate-180",
+                        )}
+                      />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <div className="border-t bg-gray-100">
+                        {category.subCategory.map((sub) => (
+                          <Link
+                            key={sub.label}
+                            href={sub.href}
+                            className="flex items-center border-b px-6 py-2.5 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                            onClick={() => setOpen(false)}
+                          >
+                            {sub.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </CollapsibleContent>
+                  </Collapsible>
+                ) : (
+                  <Link
+                    href={category.href}
+                    className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
+                    onClick={() => setOpen(false)}
+                  >
+                    <span className="font-medium">{category.label}</span>
+                  </Link>
+                )}
+              </div>
             ))}
         </nav>
       </SheetContent>

@@ -36,8 +36,10 @@
 
 @keyframes l3 {
   to {
-    background-position: 80% 100%
+    background-position: 80% 100%;
+    color: ;
   }
+
 }
 
 @theme {
@@ -53,7 +55,6 @@
   --color-sidebar-border: hsl(var(--sidebar-border));
   --color-sidebar-ring: hsl(var(--sidebar-ring));
 
-
   --color-primary-50: #fdf5d4;
     --color-primary-100: #fdf2c1;
     --color-primary-200: #fce5b4;
@@ -67,6 +68,7 @@
     --color-primary-950: #ff7f00;
     --color-primary: #ffb100;
     --color-destructive: #ff4d4f;
+
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);

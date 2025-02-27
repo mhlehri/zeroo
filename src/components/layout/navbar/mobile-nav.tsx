@@ -7,11 +7,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MobileMenu from "./mobile-menu";
 
-export default function MobileNav({
-  categories,
-}: {
-  categories: { label: string; href: string }[];
-}) {
+interface Category {
+  label: string;
+  href: string;
+  subCategory?: { label: string; href: string }[];
+}
+
+export default function MobileNav({ categories }: { categories: Category[] }) {
   const router = useRouter();
   const isMobile = useIsMobile();
   const { isProductPage, isCartPage, isDetailsPage } = usePage();
@@ -38,7 +40,11 @@ export default function MobileNav({
   } else {
     return (
       <>
-        <MobileMenu categories={categories} textHidden className="w-full" />
+        <MobileMenu
+          categories={categories}
+          textHidden
+          className="w-full outline-none"
+        />
         <Link href="/" className="w-full text-center text-xl font-bold">
           <span className="text-teal-700">
             Rong<span className="text-rose-400">berong</span>
