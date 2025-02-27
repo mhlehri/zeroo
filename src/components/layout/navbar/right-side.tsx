@@ -34,7 +34,7 @@ export default function RightSide() {
             {cart.length}
           </span>
         </SheetTrigger>
-        <SheetContent className="w-full sm:max-w-md">
+        <SheetContent className="p-2 sm:p-4">
           <CartSheet />
         </SheetContent>
       </Sheet>
