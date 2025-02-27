@@ -4,6 +4,7 @@ import axios from "axios";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
+
 export async function loginAction(formData: FieldValues) {
   try {
     const { data } = await ax.post("/auth/login", formData);
