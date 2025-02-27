@@ -88,7 +88,7 @@ export default function CartSheet({ onClose }: { onClose: () => void }) {
                 </div>
               </div>
               <div className="flex flex-col items-end gap-2">
-                <span className="font-medium">
+                <span className="font-medium whitespace-nowrap">
                   TK {(item.price * item.quantity).toFixed(2)}
                 </span>
                 <Button

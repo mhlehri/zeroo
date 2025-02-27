@@ -41,7 +41,6 @@ export default function AddToCart({
       setIsSheetOpen(true);
     } else {
       addToCart({ ...product, quantity: quantity || 1 });
-      setIsAdded(true);
       toast.success(`Product : ${product.name}, Added to cart`, {
         richColors: true,
       });
@@ -50,35 +49,57 @@ export default function AddToCart({
 
   return (
     <>
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetTrigger asChild>
-          <Button
-            disabled={!product.stock}
-            {...props}
-            onClick={handleAddToCart}
-            variant={!product.stock ? "destructive" : variant || "outline"}
-            className={cn(
-              "rounded text-xs md:text-sm",
-              textVisible ? "w-full" : "w-fit",
-              isAdded ? "bg-slate-200 text-slate-700" : "",
-              className,
-            )}
-            size="sm"
-          >
-            {!product.stock ? null : isAdded ? (
-              <CheckSquareIcon />
-            ) : (
-              <ShoppingBag />
-            )}{" "}
-            {!product.stock
-              ? "Out of Stock"
-              : textVisible && (isAdded ? "View Cart" : "Add to Cart")}
-          </Button>
-        </SheetTrigger>
-        <SheetContent className="w-full sm:max-w-md">
-          <CartSheet onClose={() => setIsSheetOpen(false)} />
-        </SheetContent>
-      </Sheet>
+      {!isAdded ? (
+        <Button
+          disabled={!product.stock}
+          {...props}
+          onClick={handleAddToCart}
+          variant={!product.stock ? "destructive" : variant || "outline"}
+          className={cn(
+            "rounded text-xs md:text-sm",
+            textVisible ? "w-full" : "w-fit",
+            className,
+          )}
+          size="sm"
+        >
+          {!product.stock ? null : isAdded ? (
+            <CheckSquareIcon />
+          ) : (
+            <ShoppingBag />
+          )}{" "}
+          {!product.stock ? "Out of Stock" : textVisible && "Add to Cart"}
+        </Button>
+      ) : (
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              disabled={!product.stock}
+              {...props}
+              onClick={handleAddToCart}
+              variant={!product.stock ? "destructive" : variant || "outline"}
+              className={cn(
+                "rounded text-xs md:text-sm",
+                textVisible ? "w-full" : "w-fit",
+                isAdded ? "bg-slate-200 text-slate-700" : "",
+                className,
+              )}
+              size="sm"
+            >
+              {!product.stock ? null : isAdded ? (
+                <CheckSquareIcon />
+              ) : (
+                <ShoppingBag />
+              )}{" "}
+              {!product.stock
+                ? "Out of Stock"
+                : textVisible && (isAdded ? "View Cart" : "Add to Cart")}
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="w-full sm:max-w-md">
+            <CartSheet onClose={() => setIsSheetOpen(false)} />
+          </SheetContent>
+        </Sheet>
+      )}
     </>
   );
 }
