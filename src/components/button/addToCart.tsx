@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CartSheet from "../cart/cart-sheet";
+import { usePage } from "@/hooks/use-page";
 
 export default function AddToCart({
   className,
@@ -25,6 +26,7 @@ export default function AddToCart({
   const { cart, addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false); // Track if item is already added
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { isDetailsPage } = usePage();
 
   useEffect(() => {
     const isItemInCart = cart.find((item) => item.id === product.id);
@@ -64,7 +66,9 @@ export default function AddToCart({
           ) : (
             <ShoppingBag />
           )}{" "}
-          {!product.stock ? "Out of Stock" : textVisible && "Add to Cart"}
+          {!product.stock && !isDetailsPage
+            ? "Out of Stock"
+            : textVisible && "Add to Cart"}
         </Button>
       ) : (
         <Sheet

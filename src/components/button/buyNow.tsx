@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { useCart } from "@/context/cart-provider";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { usePage } from "@/hooks/use-page";
 
 export default function BuyNow({
   product,
@@ -19,7 +20,7 @@ export default function BuyNow({
 }) {
   const { cart, addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
-
+  const { isDetailsPage } = usePage();
   useEffect(
     () => {
       const isItemInCart = cart.find((item) => item.id === product.id);
@@ -39,14 +40,17 @@ export default function BuyNow({
   };
   return (
     <Button
+      disabled={!product.stock && isDetailsPage}
       onClick={handleAddToCart}
       {...props}
-      variant={!product.stock ? "secondary" : variant || "default"}
+      variant={
+        !isDetailsPage && !product.stock ? "secondary" : variant || "default"
+      }
       className={cn("w-full rounded", className)}
       size="sm"
-      asChild
+      asChild={!isDetailsPage}
     >
-      {!product.stock ? (
+      {!isDetailsPage && !product.stock ? (
         <Link href={`/products/${product.id}`}>View Details</Link>
       ) : (
         <Link href="/checkout">Buy Now</Link>
