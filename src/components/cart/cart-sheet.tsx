@@ -1,0 +1,131 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { useCart } from "@/context/cart-provider";
+import { Minus, Plus, ShoppingBag, Trash2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+export default function CartSheet({ onClose }: { onClose: () => void }) {
+  const { cart, removeFromCart, updateQuantity } = useCart();
+
+  const calculateTotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
+  if (cart.length === 0) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center space-y-4 px-2 py-8">
+        <div className="relative mb-4">
+          <div className="bg-primary/10 absolute inset-0 scale-150 rounded-full opacity-50 blur-xl" />
+          <div className="bg-background relative rounded-full p-4">
+            <ShoppingBag className="text-primary size-12" strokeWidth={1.5} />
+          </div>
+        </div>
+        <h3 className="text-xl font-semibold">Your cart is empty</h3>
+        <p className="text-muted-foreground text-center text-sm">
+          Add items to your cart to see them here
+        </p>
+        <Button asChild className="mt-2" onClick={onClose}>
+          <Link href="/products">Browse Products</Link>
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex h-full flex-col">
+      <div className="flex items-center justify-between pb-4">
+        <h2 className="text-lg font-semibold">
+          Your Cart ({cart.length} {cart.length === 1 ? "item" : "items"})
+        </h2>
+      </div>
+
+      <ScrollArea className="-mx-6 flex-1 px-6">
+        <ul className="space-y-4">
+          {cart.map((item) => (
+            <li
+              key={item.id}
+              className="flex items-start justify-between gap-3 border-b pb-4"
+            >
+              <div className="flex gap-3">
+                <Image
+                  src={
+                    item?.image ||
+                    "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" ||
+                    "/placeholder.svg"
+                  }
+                  alt={item?.name}
+                  width={60}
+                  height={60}
+                  className="bg-primary-200 size-14 rounded-md object-cover"
+                />
+                <div>
+                  <h3 className="line-clamp-2 font-medium">{item?.name}</h3>
+                  <p className="text-primary-600 text-sm">TK {item.price}</p>
+                  <div className="mt-1 flex items-center gap-2">
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="h-6 w-6"
+                      onClick={() =>
+                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
+                      }
+                    >
+                      <Minus size={12} />
+                    </Button>
+                    <span className="w-6 text-center">{item.quantity}</span>
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="h-6 w-6"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <Plus size={12} />
+                    </Button>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col items-end gap-2">
+                <span className="font-medium">
+                  TK {(item.price * item.quantity).toFixed(2)}
+                </span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-destructive hover:bg-destructive/10 hover:text-destructive h-7 px-2 text-xs"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  <Trash2 size={14} />
+                </Button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </ScrollArea>
+
+      <div className="mt-auto pt-4">
+        <div className="mb-4 flex justify-between border-t pt-4 text-lg font-bold">
+          <span>Subtotal:</span>
+          <span>TK {calculateTotal().toFixed(2)}</span>
+        </div>
+        <div className="flex gap-3">
+          <Button variant="outline" className="flex-1" onClick={onClose}>
+            Continue Shopping
+          </Button>
+          <Button asChild className="flex-1">
+            <Link href="/cart" onClick={onClose}>
+              View Cart
+            </Link>
+          </Button>
+        </div>
+        <Button asChild className="mt-3 w-full" variant="default">
+          <Link href="/checkout" onClick={onClose}>
+            Checkout
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
+}

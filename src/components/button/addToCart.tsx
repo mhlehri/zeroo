@@ -5,6 +5,17 @@ import { CheckSquareIcon, ShoppingBag } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import CartSheet from "../cart/cart-sheet";
+
+type TCartProduct = {
+  id: string;
+  name: string;
+  price: number;
+  description: string;
+  images: string[];
+  quantity?: number;
+};
 
 export default function AddToCart({
   className,
@@ -22,23 +33,19 @@ export default function AddToCart({
 }) {
   const { cart, addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false); // Track if item is already added
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
-  useEffect(
-    () => {
-      const isItemInCart = cart.find((item) => item.id === product.id);
-      if (isItemInCart) {
-        setIsAdded(true);
-      }
-    },
-    // eslint-disable-next-line
-    [cart],
-  );
+  useEffect(() => {
+    const isItemInCart = cart.find((item) => item.id === product.id);
+    if (isItemInCart) {
+      setIsAdded(true);
+    }
+  }, [cart, product.id]);
 
   const handleAddToCart = () => {
     if (isAdded) {
-      toast.warning("Item already added to cart. Please visit your cart.", {
-        richColors: true,
-      });
+      // Open the cart sheet instead of showing a toast
+      setIsSheetOpen(true);
     } else {
       addToCart({ ...product, quantity: quantity || 1 });
       setIsAdded(true);
@@ -50,21 +57,28 @@ export default function AddToCart({
 
   return (
     <>
-      <Button
-        {...props}
-        onClick={handleAddToCart}
-        variant={variant || "outlineSecondary"}
-        className={cn(
-          "rounded text-xs md:text-sm",
-          textVisible ? "w-full" : "w-fit",
-          isAdded ? "bg-slate-200 text-slate-700" : "bg-transparent",
-          className,
-        )}
-        size="sm"
-      >
-        {isAdded ? <CheckSquareIcon /> : <ShoppingBag />}{" "}
-        {textVisible && (isAdded ? "Added to Cart" : "Add to Cart")}
-      </Button>
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetTrigger asChild>
+          <Button
+            {...props}
+            onClick={handleAddToCart}
+            variant={variant || "outlineSecondary"}
+            className={cn(
+              "rounded text-xs md:text-sm",
+              textVisible ? "w-full" : "w-fit",
+              isAdded ? "bg-slate-200 text-slate-700" : "bg-transparent",
+              className,
+            )}
+            size="sm"
+          >
+            {isAdded ? <CheckSquareIcon /> : <ShoppingBag />}{" "}
+            {textVisible && (isAdded ? "View Cart" : "Add to Cart")}
+          </Button>
+        </SheetTrigger>
+        <SheetContent className="w-full sm:max-w-md">
+          <CartSheet onClose={() => setIsSheetOpen(false)} />
+        </SheetContent>
+      </Sheet>
     </>
   );
 }

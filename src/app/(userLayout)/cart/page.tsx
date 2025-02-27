@@ -38,7 +38,7 @@ export default function CartPage() {
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
             <div className="relative mb-6">
-              <div className="bg-primary/10 absolute inset-0 scale-[1.8] rounded-full opacity-50 blur-xl" />
+              <div className="bg-primary/50 absolute inset-0 scale-[1.8] rounded-full opacity-50 blur-xl" />
               <div className="bg-background relative rounded-full p-6">
                 <ShoppingBag
                   className="mx-auto size-16 md:size-20"
