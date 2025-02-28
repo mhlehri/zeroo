@@ -75,7 +75,7 @@ export default function MobileMenu({
                       <span className="font-medium">{category.label}</span>
                       <ChevronDown
                         className={cn(
-                          "size-4 border-l text-gray-900 transition-transform duration-200",
+                          "size-4 text-gray-900 transition-transform duration-200",
                           openCategories.includes(category.label) &&
                             "rotate-180",
                         )}

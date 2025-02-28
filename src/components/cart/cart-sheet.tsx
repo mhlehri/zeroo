@@ -41,7 +41,7 @@ export default function CartSheet() {
     <div className="flex h-full flex-col">
       <div className="flex items-center justify-between pb-4">
         <h2 className="text-lg font-semibold">
-          Your Cart ({cart.length} {cart.length === 1 ? "item" : "items"})
+          My Cart ({cart.length} {cart.length === 1 ? "item" : "items"})
         </h2>
       </div>
 
