@@ -39,6 +39,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
     setQuantity(defaultQuantity);
   }, [cart, product._id]);
 
+  console.log(products);
   const decreaseQuantity = () => {
     setQuantity((prev) => Math.max(1, prev - 1));
     if (cart.find((item) => item.id === product._id)) {
@@ -150,13 +151,17 @@ export default function ProductDetails({ product }: { product: TProduct }) {
           )}
         </div> */}
         <div>
-          <Title className="mb-4 md:mb-6">Similar Products</Title>
           {isLoading ? (
             <CardCarouselSkeleton />
-          ) : products?.length ? (
-            <CardCarousel
-              cardArr={products.filter((p: TProduct) => p._id !== product._id)}
-            />
+          ) : products?.length > 1 ? (
+            <>
+              <Title className="mb-4 md:mb-6">Similar Products</Title>
+              <CardCarousel
+                cardArr={products.filter(
+                  (p: TProduct) => p._id !== product._id,
+                )}
+              />
+            </>
           ) : null}
         </div>
       </div>
