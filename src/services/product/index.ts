@@ -45,6 +45,7 @@ export async function getProductById(id: string) {
 
 export async function addProduct(formData: FieldValues) {
   try {
+    console.log(formData);
     const { data } = await ax.post(`/products`, formData);
     return data;
   } catch (error) {

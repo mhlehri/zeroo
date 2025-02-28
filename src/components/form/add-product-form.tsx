@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FieldValues, useForm } from "react-hook-form";
 
 import { ImagePlus, PackagePlus, X } from "lucide-react";
 import Image from "next/image";
@@ -49,10 +49,10 @@ const formSchema = z.object({
       message: "Description must be at least 2 characters.",
     })
     .optional(),
-  price: z.number().min(0, {
+  price: z.string().min(1, {
     message: "Price must be greater than or equal to 0.",
   }),
-  stock: z.number().min(0, {
+  stock: z.string().min(1, {
     message: "Stock must be greater than or equal to 0.",
   }),
   category: z.string().min(1, {
@@ -68,7 +68,7 @@ const formSchema = z.object({
     .array(
       z.object({
         size: z.string().min(1, { message: "Size is required" }),
-        stock: z.number().min(0, { message: "Stock must be 0 or greater" }),
+        stock: z.number().min(1, { message: "Stock must be 0 or greater" }),
       }),
     )
     .optional(),
@@ -90,8 +90,8 @@ export default function ProductForm() {
       name: "",
       description: "",
       category: "",
-      price: NaN,
-      stock: NaN,
+      price: "",
+      stock: "",
       discountPrice: "",
       discountType: "",
       sku: "",
@@ -122,16 +122,13 @@ export default function ProductForm() {
   const { mutate: createProduct, isPending } = useMutation<
     unknown,
     Error,
-    z.infer<typeof formSchema>
+    FieldValues
   >({
     mutationKey: ["products"],
     mutationFn: async (values) => {
-      const res = await addProduct({
-        ...values,
-        price: Number(values.price),
-        stock: Number(values.stock),
-        images: imageUrls,
-      });
+      const res = await addProduct(values);
+      console.log(values, "values");
+      console.log(res, "res");
       if (res.success) {
         toast.success(res.message, {
           richColors: true,
@@ -155,11 +152,17 @@ export default function ProductForm() {
       setErrorImage(true);
       return;
     }
-
-    createProduct({
+    const formData = {
       ...values,
       price: Number(values.price),
       stock: Number(values.stock),
+      discountPrice: values.discountPrice ? Number(values.discountPrice) : 0,
+      images: imageUrls,
+    };
+    console.log(formData, "formData");
+
+    createProduct({
+      ...formData,
       images: imageUrls,
     });
     setErrorImage(false);
@@ -246,7 +249,7 @@ export default function ProductForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="fixed bottom-0 z-50 w-full border bg-white p-2 shadow-xs md:relative md:mb-4 md:flex md:items-center md:justify-between md:rounded-lg md:p-6">
-            <h3 className="text-primary-950 hidden text-lg font-semibold text-balance sm:text-xl md:block md:text-2xl lg:text-3xl">
+            <h3 className="hidden text-lg font-semibold text-balance text-slate-950 sm:text-xl md:block md:text-2xl lg:text-3xl">
               Add Product
             </h3>
             <div className="flex flex-wrap justify-end gap-2">
@@ -266,6 +269,7 @@ export default function ProductForm() {
               </Button>
               <Button
                 type="submit"
+                variant="secondary"
                 disabled={submitting}
                 className="capitalize"
               >
@@ -312,7 +316,7 @@ export default function ProductForm() {
                             control={form.control}
                             render={({ field }) => (
                               <div className="relative">
-                                <div className="border-primary-200 flex min-h-[80px] w-full flex-col rounded-md border">
+                                <div className="flex min-h-[80px] w-full flex-col rounded-md border border-slate-200">
                                   <MenuBar editor={editor} />
                                   <EditorContent
                                     className="prose prose-h3:m-0 prose-p:m-0 min-h-20 border-none p-2"
@@ -558,7 +562,11 @@ export default function ProductForm() {
                       value={variantStock}
                       onChange={(e) => setVariantStock(e.target.value)}
                     />
-                    <Button type="button" onClick={addVariant}>
+                    <Button
+                      type="button"
+                      onClick={addVariant}
+                      variant="secondary"
+                    >
                       Add Variant
                     </Button>
                   </div>
@@ -601,7 +609,7 @@ export default function ProductForm() {
                         }
                       }}
                     />
-                    <Button type="button" onClick={addTag}>
+                    <Button type="button" onClick={addTag} variant="secondary">
                       Add Tag
                     </Button>
                   </div>
