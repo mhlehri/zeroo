@@ -240,7 +240,7 @@ export default function ProductForm() {
       // @ts-expect-error: Unreachable code error
       setImageUrls((prev) => [...prev, result.info.secure_url]);
       // @ts-expect-error: Unreachable code error
-      form.setValue("images", [...imageUrls, result.info.secure_url]);
+      form.setValue("images", [imageUrls]);
     }
   }
 
