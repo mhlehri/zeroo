@@ -36,7 +36,7 @@ export default async function Navbar() {
 
   return (
     <>
-      <div className="bg-primary sticky top-0 z-50 md:relative">
+      <div className="sticky top-0 z-50 bg-white/70 shadow-2xl backdrop-blur-3xl md:relative">
         <div className="container flex items-center justify-between gap-4 py-3 md:gap-6 md:py-4 xl:px-0">
           <MobileNav categories={links} />
           <RightSide />
@@ -44,7 +44,7 @@ export default async function Navbar() {
       </div>
       <BottomNavigation />
 
-      <div className="bg-primary-400 sticky top-0 z-50 hidden items-center md:flex">
+      <div className="sticky top-0 z-50 hidden items-center bg-white/70 shadow backdrop-blur-3xl md:flex">
         <NavLinks links={links} />
       </div>
     </>
