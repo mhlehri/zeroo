@@ -25,7 +25,7 @@ export default function BottomNavigation() {
   return (
     <div
       hidden={isProductPage}
-      className="bg-primary fixed bottom-0 left-0 z-50 w-full py-2 md:hidden"
+      className="fixed bottom-0 left-0 z-50 w-full bg-white/70 py-2 backdrop-blur-3xl md:hidden"
     >
       <div className={`mx-auto grid h-full max-w-lg grid-cols-4`}>
         <Link

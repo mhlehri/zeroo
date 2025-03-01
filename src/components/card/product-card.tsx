@@ -19,7 +19,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
         <div className="relative mb-2">
           <Image
             src={product?.images[0]}
-            className="h-full w-full rounded-md bg-gray-200 lg:h-[240px]"
+            className="h-[200px] w-full rounded-md bg-gray-200 lg:h-[240px]"
             width={240}
             height={240}
             alt={product?.name}
