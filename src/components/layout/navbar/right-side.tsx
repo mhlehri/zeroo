@@ -1,12 +1,11 @@
 "use client";
+import CartModal from "@/components/modal/cart";
 import { CommandDialogSearch } from "@/components/search/search-command";
 import { useCart } from "@/context/cart-provider";
-import { CircleUser, ShoppingBag } from "lucide-react";
-import UserDropdown from "./user-dropdown";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import CartSheet from "@/components/cart/cart-sheet";
 import { usePage } from "@/hooks/use-page";
+import { CircleUser } from "lucide-react";
+import UserDropdown from "./user-dropdown";
 
 export default function RightSide() {
   const isMobile = useIsMobile();
@@ -27,17 +26,7 @@ export default function RightSide() {
       ) : (
         <CommandDialogSearch isProductPage={isProductPage} />
       )}
-      <Sheet>
-        <SheetTrigger className="relative">
-          <ShoppingBag className="size-5 text-black hover:text-black/80 md:size-6" />
-          <span className="absolute -top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#D10363] text-[10px] text-white">
-            {cart.length}
-          </span>
-        </SheetTrigger>
-        <SheetContent className="p-2 sm:p-4">
-          <CartSheet />
-        </SheetContent>
-      </Sheet>
+      <CartModal cart={cart} />
       <UserDropdown mainClass={`hidden md:block`}>
         <CircleUser className={"size-5 cursor-pointer text-black md:size-6"} />
       </UserDropdown>
