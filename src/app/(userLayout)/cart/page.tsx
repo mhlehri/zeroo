@@ -30,10 +30,6 @@ export default function CartPage() {
 
   return (
     <div className="my-4 h-full min-h-[60vh]">
-      {/* <h1 className="text-primary-800 mb-4 text-center text-3xl font-bold md:mb-6">
-        My Cart
-      </h1> */}
-
       {cart.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
@@ -100,13 +96,13 @@ export default function CartPage() {
                         alt={item?.name}
                         width={60}
                         height={60}
-                        className="bg-primary-200 size-16 rounded-md"
+                        className="size-16 rounded-md bg-gray-200"
                       />
                       <div>
                         <h3 className="text-md font-semibold md:text-base">
                           {item?.name}
                         </h3>
-                        <p className="md:text-md text-primary-600 text-sm">
+                        <p className="md:text-md text-sm text-slate-600">
                           TK {item.price} x {item.quantity}
                         </p>
                       </div>
