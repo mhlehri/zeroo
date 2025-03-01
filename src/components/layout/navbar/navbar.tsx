@@ -36,7 +36,7 @@ export default async function Navbar() {
 
   return (
     <>
-      <div className="sticky top-0 z-50 bg-white/70 shadow-2xl backdrop-blur-3xl md:relative">
+      <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-3xl md:relative md:shadow-xl">
         <div className="container flex items-center justify-between gap-4 py-3 md:gap-6 md:py-4 xl:px-0">
           <MobileNav categories={links} />
           <RightSide />
