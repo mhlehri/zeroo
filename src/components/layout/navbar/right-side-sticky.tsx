@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ShoppingBag } from "lucide-react";
-import { useCart } from "@/context/cart-provider";
+import CartModal from "@/components/modal/cart";
 import { CommandDialogSearch } from "@/components/search/search-command";
+import { useCart } from "@/context/cart-provider";
+import { useEffect, useState } from "react";
 
 export default function RightSideSticky() {
   const [isSticky, setIsSticky] = useState(false);
@@ -45,12 +44,7 @@ export default function RightSideSticky() {
     return (
       <div className="flex gap-2">
         <CommandDialogSearch isSearchInputHidden={true} />
-        <Link href="/cart" className="relative">
-          <ShoppingBag className="size-5 text-black hover:text-black/80 md:size-6" />
-          <span className="absolute -top-1 left-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#D10363] text-[10px] text-white">
-            {cart.length}
-          </span>
-        </Link>
+        <CartModal cart={cart} />
       </div>
     );
   return;
