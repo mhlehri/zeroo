@@ -1,5 +1,6 @@
 "use client";
 
+import CartSkeleton from "@/components/skeleton/cart-skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCart } from "@/context/cart-provider";
@@ -17,7 +18,8 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { cart, removeFromCart, updateQuantity, clearCart, cartLoading } =
+    useCart();
   const form = useForm({
     defaultValues: {
       shipping: "Inside Dhaka", // Default shipping method
@@ -30,7 +32,9 @@ export default function CartPage() {
 
   return (
     <div className="my-4 h-full min-h-[60vh]">
-      {cart.length === 0 ? (
+      {cartLoading ? (
+        <CartSkeleton />
+      ) : cart.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
             <div className="relative mb-6">
