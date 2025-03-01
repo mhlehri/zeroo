@@ -4,6 +4,7 @@ import type React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import RightSideSticky from "./right-side-sticky";
+import { ChevronDown } from "lucide-react";
 
 type TLink = {
   href: string;
@@ -22,19 +23,23 @@ export default function NavLinks({ links }: NavLinksProps) {
   return (
     <>
       <nav className="container py-0 font-medium text-black xl:px-0">
-        <ul className="flex items-center justify-center gap-6 *:h-full *:hover:cursor-pointer *:hover:underline lg:gap-10 xl:gap-14 xl:px-0">
+        <ul className="*:hover:bg-primary flex items-center justify-center *:h-full *:px-4 *:hover:cursor-pointer *:lg:px-7 xl:px-0 *:xl:px-8">
           {links?.map((link, index) =>
             link.subCategory ? (
               <li key={`nav-item-${index}`} className="group relative py-3">
-                <div className="text-md cursor-pointer p-0 uppercase hover:opacity-70">
-                  {link.label}
+                <div className="text-md flex cursor-pointer items-center gap-2 p-0 uppercase hover:opacity-70">
+                  {link.label}{" "}
+                  <ChevronDown
+                    size={16}
+                    className="text-slate-600 group-hover:text-slate-900"
+                  />
                 </div>
-                <ul className="invisible absolute top-full left-0 z-50 min-w-[200px] rounded-md border bg-white opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:opacity-100">
+                <ul className="bg-primary-400 invisible absolute top-full left-0 z-50 min-w-[200px] opacity-0 shadow-lg transition-all duration-200 ease-in-out group-hover:visible group-hover:opacity-100">
                   {link.subCategory.map((sub, subIndex) => (
                     <li key={`sub-nav-${subIndex}`}>
                       <Link
                         href={sub.href}
-                        className={`hover:bg-accent hover:text-accent-foreground text-md block w-full px-4 py-2 transition-colors hover:underline ${
+                        className={`hover:bg-accent hover:text-accent-foreground text-md hover:bg-primary block w-full px-4 py-2 transition-colors ${
                           pathname === sub.href ? "font-semibold" : ""
                         }`}
                       >
@@ -48,7 +53,7 @@ export default function NavLinks({ links }: NavLinksProps) {
               <li key={`nav-item-${index}`}>
                 <Link
                   href={link.href}
-                  className={`text-md block h-full py-3 whitespace-nowrap uppercase hover:underline hover:opacity-70 ${
+                  className={`text-md hover:bg-primary block h-full py-3 whitespace-nowrap uppercase hover:opacity-70 ${
                     pathname === link.href ? "font-semibold" : ""
                   }`}
                 >
