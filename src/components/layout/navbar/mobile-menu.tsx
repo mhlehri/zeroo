@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronDown, Menu } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,11 +10,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
 
 interface Category {
   label: string;
@@ -33,17 +27,17 @@ export default function MobileMenu({
   categories: Category[];
 }) {
   const [open, setOpen] = useState(false);
-  const [openCategories, setOpenCategories] = useState<string[]>([]);
+  // const [openCategories, setOpenCategories] = useState<string[]>([]);
+  // const { isProductPage } = usePage();
+  // const toggleCategory = (category: string) => {
+  //   setOpenCategories((prev) =>
+  //     prev.includes(category)
+  //       ? prev.filter((c) => c !== category)
+  //       : [...prev, category],
+  //   );
+  // };
 
-  const toggleCategory = (category: string) => {
-    setOpenCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category],
-    );
-  };
-
-  console.log(categories, "categories from mobile menu");
+  // console.log(categories, "categories from mobile menu");
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -62,17 +56,19 @@ export default function MobileMenu({
         <SheetHeader className="border-b px-4 py-3">
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <nav className="max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <nav className="h-full max-h-[calc(100vh-5rem)] overflow-y-auto">
           {categories?.length > 0 &&
             categories?.map((category) => (
               <div key={category.label} className="border-b last:border-b-0">
-                {category.subCategory ? (
+                {/* {category.subCategory ? (
                   <Collapsible
                     open={openCategories.includes(category.label)}
                     onOpenChange={() => toggleCategory(category.label)}
                   >
                     <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 transition-colors outline-none hover:bg-gray-100">
-                      <span className="font-medium">{category.label}</span>
+                      <Link href={category.href}>
+                        <span className="font-medium">{category.label}</span>
+                      </Link>
                       <ChevronDown
                         className={cn(
                           "size-4 text-gray-900 transition-transform duration-200",
@@ -96,15 +92,15 @@ export default function MobileMenu({
                       </div>
                     </CollapsibleContent>
                   </Collapsible>
-                ) : (
-                  <Link
-                    href={category.href}
-                    className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
-                    onClick={() => setOpen(false)}
-                  >
-                    <span className="font-medium">{category.label}</span>
-                  </Link>
-                )}
+                ) : ( */}
+                <Link
+                  href={category.href}
+                  className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="font-medium">{category.label}</span>
+                </Link>
+                {/* )} */}
               </div>
             ))}
         </nav>
