@@ -31,13 +31,13 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Filter,
   ListFilter,
   MoveLeft,
   Search,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import FilterMenu from "./FilterMenu";
 
 export default function Product({
   query,
@@ -102,8 +102,8 @@ export default function Product({
   };
 
   return (
-    <div className="my-2 min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
-      <div className="flex items-center justify-between">
+    <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
+      <div className="flex items-center justify-between py-2">
         <Breadcrumb className="hidden md:block">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -115,13 +115,7 @@ export default function Product({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <Button
-          size="sm"
-          variant="light"
-          className="flex text-xs md:hidden md:text-sm"
-        >
-          <Filter /> Filters
-        </Button>
+        <FilterMenu categories={categoryLinks} />
         <Select value={sortOrder} onValueChange={setSortOrder}>
           <SelectTrigger
             className="h-9 w-fit rounded-md px-3 text-xs md:text-sm"
@@ -143,7 +137,7 @@ export default function Product({
           {/* <div>
             <h4 className="text-lg uppercase font-medium">Filter by price</h4>
           </div> */}
-          <div className="sticky top-14">
+          <div className="sticky top-20">
             <h4 className="mb-2 text-lg font-medium uppercase">Categories</h4>
             <div className="flex flex-col">
               {isCategoriesLoading ? (
