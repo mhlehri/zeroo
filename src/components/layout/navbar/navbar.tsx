@@ -1,8 +1,8 @@
 import { getCategories } from "@/services/category";
-import RightSide from "./right-side";
-import MobileNav from "./mobile-nav";
 import NavLinks from "./nav-links";
 import BottomNavigation from "./bottom-navigation";
+import TopNavigation from "./top-navigation";
+import { Category } from "./mobile-menu";
 
 export default async function Navbar() {
   const { categories } = await getCategories();
@@ -32,16 +32,11 @@ export default async function Navbar() {
       })),
     })) || [];
 
-  const links = [...initialLinks, ...categoryLinks];
+  const links: Category[] = [...initialLinks, ...categoryLinks];
 
   return (
     <>
-      <div className="sticky top-0 z-50 bg-white/70 backdrop-blur-3xl md:relative md:shadow-xl">
-        <div className="container flex items-center justify-between gap-4 py-3 md:gap-6 md:py-4 xl:px-0">
-          <MobileNav categories={links} />
-          <RightSide />
-        </div>
-      </div>
+      <TopNavigation {...links} />
       <BottomNavigation />
 
       <div className="sticky top-0 z-50 hidden items-center bg-white/70 shadow backdrop-blur-3xl md:flex">

@@ -20,6 +20,7 @@ interface NavLinksProps {
 export default function NavLinks({ links }: NavLinksProps) {
   const pathname = usePathname();
   const { isProductPage } = usePage();
+  if (isProductPage) return null;
 
   return (
     <>

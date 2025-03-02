@@ -6,6 +6,7 @@ export const usePage = () => {
   const [isDetailsPage, setIsDetailsPage] = useState(false);
   const [isProductPage, setIsProductPage] = useState(false);
   const [isCartPage, setIsCartPage] = useState(false);
+  // const [isHomePage, setHomePage] = useState(false);
 
   useEffect(() => {
     setIsProductPage(pathname === "/products");
