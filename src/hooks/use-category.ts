@@ -39,3 +39,16 @@ export function useCategoryById(id: string) {
 
   return { category, isCategoryLoading, isError };
 }
+
+export function useCategoryLinks(categories: TCategory[]) {
+  const categoryLinks =
+    categories?.map((category: TCategory) => ({
+      href: `/products?category=${category.name}`,
+      label: category.name,
+      subCategory: category.subCategories.map((subCategory) => ({
+        href: `/products?category=${category.name}&subCategory=${subCategory.name}`,
+        label: subCategory.name,
+      })),
+    })) || [];
+  return categoryLinks;
+}

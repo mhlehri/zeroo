@@ -11,11 +11,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-interface Category {
+export type Category = {
   label: string;
   href: string;
   subCategory?: { label: string; href: string }[];
-}
+};
 
 export default function MobileMenu({
   textHidden,

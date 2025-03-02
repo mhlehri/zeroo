@@ -1,5 +1,6 @@
 "use client";
 import ProductCard from "@/components/card/product-card";
+import { Category } from "@/components/layout/navbar/mobile-menu";
 import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import ProductCardSkeleton from "@/components/skeleton/product-card-skeleton";
 import {
@@ -12,6 +13,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -20,7 +26,9 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { useGetProducts } from "@/hooks/use-product";
+import { cn } from "@/lib/utils";
 import {
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Filter,
@@ -56,13 +64,21 @@ export default function Product({
     page: currentPage,
     limit: itemsPerPage,
   });
+  const { categories, isCategoriesLoading } = useCategories();
+  const [openCategories, setOpenCategories] = useState<string[]>([]);
+  const toggleCategory = (category: string) => {
+    setOpenCategories((prev) =>
+      prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category],
+    );
+  };
 
   const totalItems = totalProducts || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const { categories, isCategoriesLoading } = useCategories();
   // console.log("products =>", products, "from product.tsx");
-  // console.log("categories =>", categories, "from product.tsx");
+  console.log("categories =>", categories, "from product.tsx");
   // console.log(
   //   "isCategoriesLoading =>",
   //   isCategoriesLoading,
@@ -128,7 +144,7 @@ export default function Product({
           </div> */}
           <div>
             <h4 className="mb-2 text-lg font-medium uppercase">Categories</h4>
-            <ul className="flex flex-col">
+            <div className="flex flex-col">
               {isCategoriesLoading ? (
                 <div className="mt-4 flex flex-col gap-6">
                   {Array.from({ length: 8 }).map((_, index) => (
@@ -136,20 +152,53 @@ export default function Product({
                   ))}
                 </div>
               ) : (
-                categories &&
-                categories?.map((category: TCategory) => (
-                  <Button
-                    key={category._id}
-                    variant="link"
-                    onClick={() => setSelectedCategory(category?.name)}
-                    asChild
-                    className="inline-block cursor-pointer pl-0 font-normal"
+                categories?.length &&
+                categories?.map((category: Category) => (
+                  <div
+                    key={category.label}
+                    className="border-b text-black last:border-b-0"
                   >
-                    <li>{category.name}</li>
-                  </Button>
+                    {category.subCategory ? (
+                      <Collapsible
+                        open={openCategories.includes(category.label)}
+                        onOpenChange={() => toggleCategory(category.label)}
+                      >
+                        <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 transition-colors outline-none hover:bg-gray-100">
+                          <span className="font-medium">{category.label}</span>
+                          <ChevronDown
+                            className={cn(
+                              "size-4 text-gray-900 transition-transform duration-200",
+                              openCategories.includes(category.label) &&
+                                "rotate-180",
+                            )}
+                          />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent>
+                          <div className="border-t bg-gray-100">
+                            {category.subCategory.map((sub) => (
+                              <Link
+                                key={sub.label}
+                                href={sub.href}
+                                className="flex items-center border-b px-6 py-2.5 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
+                    ) : (
+                      <Link
+                        href={category.href}
+                        className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
+                      >
+                        <span className="font-medium">{category.label}</span>
+                      </Link>
+                    )}
+                  </div>
                 ))
               )}
-            </ul>
+            </div>
           </div>
         </div>
         <div className="w-full lg:pl-4">
