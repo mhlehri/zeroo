@@ -15,13 +15,13 @@ export default function Home() {
       <Image
         src={banner}
         alt=""
-        className="max-h-[500px] w-full bg-cover bg-fixed"
+        className="max-h-[500px] w-full bg-slate-100 bg-cover bg-fixed"
       />
       <div className="container my-8 space-y-6 px-2 md:my-12 md:space-y-10 lg:space-y-12">
         <section>
           <Suspense
             fallback={
-              <div className="flex gap-4 overflow-hidden *:size-16 *:min-w-16 *:flex-1 *:rounded-full *:bg-slate-200 *:md:size-[70px] *:lg:size-[140px] *:lg:rounded *:xl:size-[180px] *:2xl:size-[200px]">
+              <div className="flex gap-4 overflow-hidden *:size-16 *:min-w-16 *:flex-1 *:rounded-md *:bg-slate-200 *:md:size-[90px] *:lg:size-[140px] *:lg:rounded *:xl:size-[180px] *:2xl:size-[200px]">
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />

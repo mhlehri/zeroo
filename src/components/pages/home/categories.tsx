@@ -29,7 +29,7 @@ export default async function Categories() {
                 alt={category?.name}
                 width={600}
                 height={400}
-                className="bg-primary-50 relative z-10 h-full max-h-52 w-full max-w-3xl transform rounded-lg duration-700 group-hover:scale-110"
+                className="bg-primary-100 relative z-10 h-full max-h-52 w-full max-w-3xl transform rounded-lg duration-700 group-hover:scale-110"
               />
             </Link>
           ))}
