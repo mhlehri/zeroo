@@ -36,7 +36,7 @@ export default async function Navbar() {
 
   return (
     <>
-      <TopNavigation {...links} />
+      <TopNavigation links={links} />
       <BottomNavigation />
 
       <div className="sticky top-0 z-50 hidden items-center bg-white/70 shadow backdrop-blur-3xl md:flex">
