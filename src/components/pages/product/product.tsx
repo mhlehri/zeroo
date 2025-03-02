@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCategories } from "@/hooks/use-category";
+import { useCategories, useCategoryLinks } from "@/hooks/use-category";
 import { useGetProducts } from "@/hooks/use-product";
 import { cn } from "@/lib/utils";
 import {
@@ -32,11 +32,11 @@ import {
   ChevronLeft,
   ChevronRight,
   Filter,
-  Link,
   ListFilter,
   MoveLeft,
   Search,
 } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Product({
@@ -73,7 +73,8 @@ export default function Product({
         : [...prev, category],
     );
   };
-
+  const categoryLinks = useCategoryLinks(categories);
+  console.log(categoryLinks, "categoryLinks from product.tsx");
   const totalItems = totalProducts || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -142,28 +143,27 @@ export default function Product({
           {/* <div>
             <h4 className="text-lg uppercase font-medium">Filter by price</h4>
           </div> */}
-          <div>
+          <div className="sticky top-14">
             <h4 className="mb-2 text-lg font-medium uppercase">Categories</h4>
             <div className="flex flex-col">
               {isCategoriesLoading ? (
                 <div className="mt-4 flex flex-col gap-6">
-                  {Array.from({ length: 8 }).map((_, index) => (
+                  {Array.from({ length: 4 }).map((_, index) => (
                     <CategorySkeleton key={`${index}-category-skeleton`} />
                   ))}
                 </div>
               ) : (
-                categories?.length &&
-                categories?.map((category: Category) => (
-                  <div
-                    key={category.label}
-                    className="border-b text-black last:border-b-0"
-                  >
+                categoryLinks?.length &&
+                categoryLinks?.map((category: Category) => (
+                  <div key={category.label} className="">
                     {category.subCategory ? (
                       <Collapsible
                         open={openCategories.includes(category.label)}
                         onOpenChange={() => toggleCategory(category.label)}
                       >
-                        <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 transition-colors outline-none hover:bg-gray-100">
+                        <CollapsibleTrigger
+                          className={`flex w-full cursor-pointer items-center justify-between px-2 py-3 transition-colors outline-none hover:bg-gray-100`}
+                        >
                           <span className="font-medium">{category.label}</span>
                           <ChevronDown
                             className={cn(
@@ -174,12 +174,12 @@ export default function Product({
                           />
                         </CollapsibleTrigger>
                         <CollapsibleContent>
-                          <div className="border-t bg-gray-100">
+                          <div className="ml-2 border-l">
                             {category.subCategory.map((sub) => (
                               <Link
                                 key={sub.label}
                                 href={sub.href}
-                                className="flex items-center border-b px-6 py-2.5 text-sm transition-colors last:border-b-0 hover:bg-gray-50"
+                                className="flex items-center px-3 py-2.5 text-sm transition-colors hover:bg-gray-100"
                               >
                                 {sub.label}
                               </Link>

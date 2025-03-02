@@ -56,7 +56,7 @@ export default function MobileMenu({
         <SheetHeader className="border-b px-4 py-3">
           <SheetTitle>Menu</SheetTitle>
         </SheetHeader>
-        <nav className="h-full max-h-[calc(100vh-5rem)] overflow-y-auto">
+        <nav className="max-h-[calc(100vh-5rem)] overflow-y-auto">
           {categories?.length > 0 &&
             categories?.map((category) => (
               <div key={category.label} className="border-b last:border-b-0">
