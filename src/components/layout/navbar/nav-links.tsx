@@ -4,7 +4,7 @@ import type React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import RightSideSticky from "./right-side-sticky";
-import { ChevronDown } from "lucide-react";
+import { usePage } from "@/hooks/use-page";
 
 type TLink = {
   href: string;
@@ -19,21 +19,24 @@ interface NavLinksProps {
 
 export default function NavLinks({ links }: NavLinksProps) {
   const pathname = usePathname();
+  const { isProductPage } = usePage();
 
   return (
     <>
-      <nav className="container py-0 font-medium text-black xl:px-0">
+      <nav className="container py-0 font-medium text-black uppercase xl:px-0">
         <ul className="flex items-center justify-center *:h-full *:px-4 *:hover:cursor-pointer *:hover:bg-black/10 *:lg:px-7 xl:px-0 *:xl:px-8">
           {links?.map((link, index) =>
             link.subCategory ? (
-              <li key={`nav-item-${index}`} className="group relative py-3">
-                <div className="text-md flex cursor-pointer items-center gap-2 p-0 uppercase">
-                  {link.label}{" "}
-                  <ChevronDown
-                    size={16}
-                    className="text-slate-600 group-hover:text-slate-900"
-                  />
-                </div>
+              <li key={`nav-item-${index}`} className="group relative">
+                {!isProductPage ? (
+                  <Link href={link.href} className="inline-block h-full py-3">
+                    {link.label}
+                  </Link>
+                ) : (
+                  <div className="text-md cursor-pointer p-0 py-3">
+                    {link.label}{" "}
+                  </div>
+                )}
                 <ul className="invisible absolute top-full left-0 z-50 min-w-[200px] bg-white/95 opacity-0 shadow-lg backdrop-blur-3xl transition-all duration-200 ease-in-out group-hover:visible group-hover:opacity-100">
                   {link.subCategory.map((sub, subIndex) => (
                     <li key={`sub-nav-${subIndex}`}>
@@ -53,7 +56,7 @@ export default function NavLinks({ links }: NavLinksProps) {
               <li key={`nav-item-${index}`}>
                 <Link
                   href={link.href}
-                  className={`text-md block h-full py-3 whitespace-nowrap uppercase ${
+                  className={`text-md block h-full py-3 whitespace-nowrap ${
                     pathname === link.href ? "font-semibold" : ""
                   }`}
                 >
