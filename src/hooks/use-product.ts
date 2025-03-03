@@ -11,6 +11,7 @@ type TProductParams = {
   maxPrice?: number;
   category?: string;
   page?: number;
+  isPublished?: boolean;
 };
 
 export function useGetProducts({
@@ -21,6 +22,7 @@ export function useGetProducts({
   maxPrice,
   category,
   page,
+  isPublished,
 }: TProductParams) {
   if (query && query?.length > 0) {
     sortOrder = "";
@@ -38,6 +40,7 @@ export function useGetProducts({
       limit,
       category,
       page,
+      isPublished,
     ],
     queryFn: () =>
       getProducts({
@@ -48,6 +51,7 @@ export function useGetProducts({
         page,
         minPrice,
         maxPrice,
+        isPublished,
       }),
   });
 

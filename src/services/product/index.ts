@@ -12,6 +12,7 @@ export async function getProducts({
   page = 1,
   minPrice,
   maxPrice,
+  isPublished,
 }: {
   searchTerm?: string;
   limit?: number;
@@ -20,6 +21,7 @@ export async function getProducts({
   page?: number;
   minPrice?: number;
   maxPrice?: number;
+  isPublished?: boolean;
 }) {
   try {
     const { data } = await ax.get(`/products`, {
@@ -31,6 +33,7 @@ export async function getProducts({
         page,
         minPrice,
         maxPrice,
+        isPublished,
       },
     });
 
