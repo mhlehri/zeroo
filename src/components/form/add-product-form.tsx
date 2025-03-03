@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Controller, FieldValues, useForm } from "react-hook-form";
+import { Controller, type FieldValues, useForm } from "react-hook-form";
 
 import { ImagePlus, PackagePlus, X } from "lucide-react";
 import Image from "next/image";
@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { addProduct } from "@/services/product";
-import { CloudinaryUploadWidgetResults } from "@cloudinary-util/types";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
@@ -228,21 +227,9 @@ export default function ProductForm() {
 
   const submitting = form.formState.isSubmitting || isPending;
 
-  function onUploadSuccess(result: CloudinaryUploadWidgetResults) {
-    setErrorImage(false);
-    const info = result?.info;
-    if (
-      info &&
-      typeof info === "object" &&
-      "secure_url" in info &&
-      typeof info.secure_url === "string"
-    ) {
-      // @ts-expect-error: Unreachable code error
-      setImageUrls((prev) => [...prev, result.info.secure_url]);
-      // @ts-expect-error: Unreachable code error
-      form.setValue("images", [imageUrls]);
-    }
-  }
+  type TCategory = {
+    name: string;
+  };
 
   return (
     <div className="mb-14 md:container md:mb-0">
@@ -482,7 +469,8 @@ export default function ProductForm() {
                         setErrorImage(false);
                         widget.close();
                       }
-                      onUploadSuccess(result);
+                      // Remove this line to prevent duplicate uploads
+                      // onUploadSuccess(result);
                     }}
                   >
                     {({ open }) => (
