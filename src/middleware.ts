@@ -20,11 +20,17 @@ export async function middleware(request: NextRequest) {
       );
     }
   }
+
+  if (pathname === "/login" && user?.role === "admin") {
+    return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+  }
+
   if (adminPaths.some((path) => path.test(pathname))) {
     if (user?.role && user?.role === "admin") {
       return NextResponse.next();
     }
   }
+
   if (protectedPaths.includes(pathname)) {
     return NextResponse.next();
   }
