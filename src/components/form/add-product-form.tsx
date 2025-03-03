@@ -152,6 +152,10 @@ export default function ProductForm() {
       price: Number(values.price),
       stock: Number(values.stock),
       discountPrice: values.discountPrice ? Number(values.discountPrice) : 0,
+      discountType:
+        values.discountPrice && !values.discountType
+          ? "percentage"
+          : values.discountType || "",
       images: imageUrls,
     };
     console.log(formData, "formData");
