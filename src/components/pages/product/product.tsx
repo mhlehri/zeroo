@@ -55,16 +55,24 @@ export default function Product({
   // console.log("Query =>", query, "from product.tsx");
   // console.log("Category =>", category, "from product.tsx");
   // console.log("selectedCategory =>", selectedCategory, "from product.tsx");
-  const { products, isLoading, isError, totalProducts } = useGetProducts({
-    sortOrder,
-    category: selectedCategory,
-    query,
-    page: currentPage,
-    limit: itemsPerPage,
-    minPrice: priceRange[0],
-    maxPrice: priceRange[1],
-  });
+  const { products, isLoading, isError, totalProducts, maximumPrice } =
+    useGetProducts({
+      sortOrder,
+      category: selectedCategory,
+      query,
+      page: currentPage,
+      limit: itemsPerPage,
+      minPrice: priceRange[0],
+      maxPrice: priceRange[1],
+    });
   const { categories, isCategoriesLoading } = useCategories();
+
+  useEffect(() => {
+    if (maximumPrice) {
+      setPriceRange([0, maximumPrice]);
+      setMaxPrice(maximumPrice.toString());
+    }
+  }, [maximumPrice]);
 
   const categoryLinks = useCategoryLinks(categories);
   console.log(categoryLinks, "categoryLinks from product.tsx");
@@ -118,7 +126,17 @@ export default function Product({
       setCurrentPage(1);
     }
   };
-
+  const filterProps = {
+    categoryLinks,
+    isCategoriesLoading,
+    minPrice,
+    maxPrice,
+    priceRange,
+    handleMinPriceChange,
+    handleMaxPriceChange,
+    handlePriceChange,
+    maximumPrice,
+  };
   return (
     <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
       <div className="flex items-center justify-between">
@@ -133,16 +151,7 @@ export default function Product({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <FilterMenu
-          categoryLinks={categoryLinks}
-          isCategoriesLoading={isCategoriesLoading}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          priceRange={priceRange}
-          handlePriceChange={handlePriceChange}
-          handleMinPriceChange={handleMinPriceChange}
-          handleMaxPriceChange={handleMaxPriceChange}
-        />
+        <FilterMenu {...filterProps} />
         <Select value={sortOrder} onValueChange={setSortOrder}>
           <SelectTrigger
             className="h-9 w-fit rounded-md px-3 text-xs md:text-sm"
@@ -161,16 +170,7 @@ export default function Product({
       <hr />
       <div className="lg:flex lg:divide-x">
         <div className="sticky top-20 hidden w-1/6 lg:block">
-          <FilterBy
-            categoryLinks={categoryLinks}
-            isCategoriesLoading={isCategoriesLoading}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            priceRange={priceRange}
-            handlePriceChange={handlePriceChange}
-            handleMinPriceChange={handleMinPriceChange}
-            handleMaxPriceChange={handleMaxPriceChange}
-          />
+          <FilterBy {...filterProps} />
         </div>
         <div className="w-full lg:pl-4">
           {isError && <p>Something went wrong please try again later.</p>}
@@ -201,9 +201,9 @@ export default function Product({
                     onClick={() => {
                       setSortOrder("");
                       setSelectedCategory("");
-                      setPriceRange([0, 2000]);
+                      setPriceRange(priceRange);
                       setMinPrice("0");
-                      setMaxPrice("2000");
+                      setMaxPrice(maximumPrice.toString());
                       setCurrentPage(1);
                     }}
                   >

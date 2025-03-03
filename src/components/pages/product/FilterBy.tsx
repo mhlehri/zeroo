@@ -12,6 +12,19 @@ import {
 } from "@/components/ui/collapsible";
 import { cn } from "@/lib/utils";
 
+export type filterPropsType = {
+  categoryLinks: Category[];
+  isCategoriesLoading: boolean;
+  minPrice: string;
+  maxPrice: string;
+  priceRange: number[];
+  handleMinPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleMaxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handlePriceChange: (value: [number, number]) => void;
+  setOpen?: (open: boolean) => void;
+  maximumPrice: number;
+};
+
 export default function FilterBy({
   categoryLinks,
   isCategoriesLoading,
@@ -22,17 +35,8 @@ export default function FilterBy({
   handleMaxPriceChange,
   handlePriceChange,
   setOpen,
-}: {
-  categoryLinks: Category[];
-  isCategoriesLoading: boolean;
-  minPrice: string;
-  maxPrice: string;
-  priceRange: number[];
-  handleMinPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleMaxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePriceChange: (value: [number, number]) => void;
-  setOpen?: (open: boolean) => void;
-}) {
+  maximumPrice,
+}: filterPropsType) {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const toggleCategory = (category: string) => {
     setOpenCategories((prev) =>
@@ -47,8 +51,8 @@ export default function FilterBy({
         <h4 className="mb-4 text-lg font-medium uppercase">Filter by price</h4>
         <div className="space-y-4">
           <Slider
-            defaultValue={[0, 2000]}
-            max={2000}
+            defaultValue={[0, maximumPrice]}
+            max={maximumPrice}
             step={10}
             value={priceRange}
             onValueChange={handlePriceChange}
