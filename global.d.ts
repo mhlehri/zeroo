@@ -57,7 +57,6 @@ declare global {
     stock: number;
     category: string;
     images: string[];
-    isDeleted: boolean;
     discountPrice?: number;
     discountType?: string;
     sku?: string;
