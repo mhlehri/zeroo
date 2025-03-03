@@ -51,7 +51,9 @@ export default function Product({
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [minPrice, setMinPrice] = useState<string>("0");
   const [maxPrice, setMaxPrice] = useState<string>("2000");
-
+  const [debouncedPriceRange, setDebouncedPriceRange] = useState<
+    [number, number]
+  >([0, 0]);
   // console.log("Query =>", query, "from product.tsx");
   // console.log("Category =>", category, "from product.tsx");
   // console.log("selectedCategory =>", selectedCategory, "from product.tsx");
@@ -62,25 +64,41 @@ export default function Product({
       query,
       page: currentPage,
       limit: itemsPerPage,
-      minPrice: priceRange[0],
-      maxPrice: priceRange[1],
+      minPrice: debouncedPriceRange[0],
+      maxPrice: debouncedPriceRange[1],
     });
-  const { categories, isCategoriesLoading } = useCategories();
 
   useEffect(() => {
     if (maximumPrice) {
       setPriceRange([0, maximumPrice]);
       setMaxPrice(maximumPrice.toString());
     }
-  }, [maximumPrice]);
+  }, []);
+
+  console.log("maximumPrice =>", maximumPrice, "from product.tsx");
+  console.log(
+    "debouncedPriceRange =>",
+    debouncedPriceRange,
+    "from product.tsx",
+  );
+  console.log("priceRange =>", priceRange, "from product.tsx");
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedPriceRange(priceRange);
+    }, 500); // 500ms delay
+
+    return () => clearTimeout(timer);
+  }, [priceRange]);
+  const { categories, isCategoriesLoading } = useCategories();
 
   const categoryLinks = useCategoryLinks(categories);
-  console.log(categoryLinks, "categoryLinks from product.tsx");
+  // console.log(categoryLinks, "categoryLinks from product.tsx");
   const totalItems = totalProducts || 0;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   // console.log("products =>", products, "from product.tsx");
-  console.log("categories =>", categories, "from product.tsx");
+  // console.log("categories =>", categories, "from product.tsx");
   // console.log(
   //   "isCategoriesLoading =>",
   //   isCategoriesLoading,
@@ -132,11 +150,12 @@ export default function Product({
     minPrice,
     maxPrice,
     priceRange,
+    handlePriceChange,
     handleMinPriceChange,
     handleMaxPriceChange,
-    handlePriceChange,
     maximumPrice,
   };
+
   return (
     <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
       <div className="flex items-center justify-between">
@@ -201,9 +220,9 @@ export default function Product({
                     onClick={() => {
                       setSortOrder("");
                       setSelectedCategory("");
-                      setPriceRange(priceRange);
+                      setPriceRange([0, 2000]);
                       setMinPrice("0");
-                      setMaxPrice(maximumPrice.toString());
+                      setMaxPrice("2000");
                       setCurrentPage(1);
                     }}
                   >

@@ -21,7 +21,6 @@ export type filterPropsType = {
   handleMinPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleMaxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handlePriceChange: (value: [number, number]) => void;
-  setOpen?: (open: boolean) => void;
   maximumPrice: number;
 };
 
@@ -36,7 +35,7 @@ export default function FilterBy({
   handlePriceChange,
   setOpen,
   maximumPrice,
-}: filterPropsType) {
+}: filterPropsType & { setOpen?: (open: boolean) => void }) {
   const [openCategories, setOpenCategories] = useState<string[]>([]);
   const toggleCategory = (category: string) => {
     setOpenCategories((prev) =>
@@ -45,6 +44,7 @@ export default function FilterBy({
         : [...prev, category],
     );
   };
+  const maxPriceValue = maximumPrice > 2000 ? maximumPrice : 2000;
   return (
     <div className="max-h-[calc(100vh-5rem)] overflow-y-auto px-2 lg:max-h-[calc(100vh-15rem)]">
       <div className="mb-6">
@@ -52,7 +52,7 @@ export default function FilterBy({
         <div className="space-y-4">
           <Slider
             defaultValue={[0, maximumPrice]}
-            max={maximumPrice}
+            max={maxPriceValue}
             step={10}
             value={priceRange}
             onValueChange={handlePriceChange}

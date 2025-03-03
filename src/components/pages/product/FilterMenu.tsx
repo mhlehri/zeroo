@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { FilterIcon } from "lucide-react";
 import { useState } from "react";
-import FilterBy from "./FilterBy";
+import FilterBy, { filterPropsType } from "./FilterBy";
 
 export type Category = {
   label: string;
@@ -27,16 +27,8 @@ export default function FilterMenu({
   handleMinPriceChange,
   handleMaxPriceChange,
   handlePriceChange,
-}: {
-  categoryLinks: Category[];
-  isCategoriesLoading: boolean;
-  minPrice: string;
-  maxPrice: string;
-  priceRange: number[];
-  handleMinPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleMaxPriceChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handlePriceChange: (value: [number, number]) => void;
-}) {
+  maximumPrice,
+}: filterPropsType) {
   const [open, setOpen] = useState(false);
 
   // console.log(categories, "categories from mobile menu");
@@ -58,6 +50,7 @@ export default function FilterMenu({
             <SheetTitle>Filter</SheetTitle>
           </SheetHeader>
           <FilterBy
+            maximumPrice={maximumPrice}
             categoryLinks={categoryLinks}
             isCategoriesLoading={isCategoriesLoading}
             minPrice={minPrice}
