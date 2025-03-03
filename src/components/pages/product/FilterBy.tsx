@@ -42,7 +42,7 @@ export default function FilterBy({
     );
   };
   return (
-    <div className="max-h-[calc(100vh-5rem)] overflow-y-auto px-2 md:max-h-[calc(100vh-15rem)]">
+    <div className="max-h-[calc(100vh-5rem)] overflow-y-auto px-2 lg:max-h-[calc(100vh-15rem)]">
       <div className="mb-6">
         <h4 className="mb-4 text-lg font-medium uppercase">Filter by price</h4>
         <div className="space-y-4">

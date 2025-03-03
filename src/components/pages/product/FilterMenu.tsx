@@ -48,7 +48,7 @@ export default function FilterMenu({
           <Button
             size="sm"
             variant="light"
-            className="flex text-xs md:hidden md:text-sm"
+            className="flex text-xs md:text-sm lg:hidden"
           >
             <FilterIcon /> Filters
           </Button>

@@ -122,7 +122,7 @@ export default function Product({
   return (
     <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
       <div className="flex items-center justify-between">
-        <Breadcrumb className="hidden md:block">
+        <Breadcrumb className="hidden lg:block">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -160,7 +160,7 @@ export default function Product({
       </div>
       <hr />
       <div className="lg:flex lg:divide-x">
-        <div className="sticky top-20 hidden w-1/6 md:block">
+        <div className="sticky top-20 hidden w-1/6 lg:block">
           <FilterBy
             categoryLinks={categoryLinks}
             isCategoriesLoading={isCategoriesLoading}
