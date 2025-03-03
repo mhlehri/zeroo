@@ -4,7 +4,7 @@ import { CommandDialogSearch } from "@/components/search/search-command";
 import { useCart } from "@/context/cart-provider";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { usePage } from "@/hooks/use-page";
-import { CircleUser } from "lucide-react";
+import { SquareUser } from "lucide-react";
 import UserDropdown from "./user-dropdown";
 
 export default function RightSide() {
@@ -28,7 +28,7 @@ export default function RightSide() {
       )}
       <CartModal cart={cart} />
       <UserDropdown mainClass={`hidden md:block`}>
-        <CircleUser className={"size-5 cursor-pointer text-black md:size-6"} />
+        <SquareUser className={"size-5 cursor-pointer text-black md:size-6"} />
       </UserDropdown>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { CommandDialogSearch } from "@/components/search/search-command";
-import { CircleUser, Home, Search, Store } from "lucide-react";
+import { Home, Search, SquareUser, Store } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -62,7 +62,7 @@ export default function BottomNavigation() {
         </Link> */}
 
         <UserDropdown mainClass="inline-flex flex-col items-center justify-center px-5 hover:bg-primary-50 gap-1 text-black">
-          <CircleUser
+          <SquareUser
             className={`${pathname === "/orders" || pathname === "/profile" ? "text-primary font-semibold" : ""} size-5`}
           />
           <span
