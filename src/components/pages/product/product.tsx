@@ -2,8 +2,6 @@
 import ProductCard from "@/components/card/product-card";
 import type React from "react";
 
-import type { Category } from "@/components/layout/navbar/mobile-menu";
-import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import ProductCardSkeleton from "@/components/skeleton/product-card-skeleton";
 import {
   Breadcrumb,
@@ -15,11 +13,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -28,9 +21,7 @@ import {
 } from "@/components/ui/select";
 import { useCategories, useCategoryLinks } from "@/hooks/use-category";
 import { useGetProducts } from "@/hooks/use-product";
-import { cn } from "@/lib/utils";
 import {
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   ListFilter,
@@ -39,9 +30,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import FilterBy from "./FilterBy";
 import FilterMenu from "./FilterMenu";
-import { Slider } from "@/components/ui/slider";
-import { Input } from "@/components/ui/input";
 
 export default function Product({
   query,
@@ -75,14 +65,7 @@ export default function Product({
     maxPrice: priceRange[1],
   });
   const { categories, isCategoriesLoading } = useCategories();
-  const [openCategories, setOpenCategories] = useState<string[]>([]);
-  const toggleCategory = (category: string) => {
-    setOpenCategories((prev) =>
-      prev.includes(category)
-        ? prev.filter((c) => c !== category)
-        : [...prev, category],
-    );
-  };
+
   const categoryLinks = useCategoryLinks(categories);
   console.log(categoryLinks, "categoryLinks from product.tsx");
   const totalItems = totalProducts || 0;
@@ -150,7 +133,16 @@ export default function Product({
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <FilterMenu categories={categoryLinks} />
+        <FilterMenu
+          categoryLinks={categoryLinks}
+          isCategoriesLoading={isCategoriesLoading}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          priceRange={priceRange}
+          handlePriceChange={handlePriceChange}
+          handleMinPriceChange={handleMinPriceChange}
+          handleMaxPriceChange={handleMaxPriceChange}
+        />
         <Select value={sortOrder} onValueChange={setSortOrder}>
           <SelectTrigger
             className="h-9 w-fit rounded-md px-3 text-xs md:text-sm"
@@ -168,98 +160,17 @@ export default function Product({
       </div>
       <hr />
       <div className="lg:flex lg:divide-x">
-        <div className="sticky top-20 hidden max-h-[calc(100vh-15rem)] w-1/6 flex-col gap-2 overflow-y-auto pr-2 lg:flex">
-          <div className="mb-6">
-            <h4 className="mb-4 text-lg font-medium uppercase">
-              Filter by price
-            </h4>
-            <div className="space-y-4">
-              <Slider
-                defaultValue={[0, 2000]}
-                max={2000}
-                step={10}
-                value={priceRange}
-                onValueChange={handlePriceChange}
-                className="py-4"
-              />
-              <div className="flex items-center gap-2">
-                <div className="flex-1">
-                  <Input
-                    type="number"
-                    placeholder="Min"
-                    value={minPrice}
-                    onChange={handleMinPriceChange}
-                    className="h-9"
-                  />
-                </div>
-                <span className="text-sm">to</span>
-                <div className="flex-1">
-                  <Input
-                    type="number"
-                    placeholder="Max"
-                    value={maxPrice}
-                    onChange={handleMaxPriceChange}
-                    className="h-9"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <h4 className="mb-4 text-lg font-medium uppercase">Categories</h4>
-          <div className="flex flex-col">
-            {isCategoriesLoading ? (
-              <div className="mt-4 flex flex-col gap-6">
-                {Array.from({ length: 4 }).map((_, index) => (
-                  <CategorySkeleton key={`${index}-category-skeleton`} />
-                ))}
-              </div>
-            ) : (
-              categoryLinks?.length &&
-              categoryLinks?.map((category: Category) => (
-                <div key={category.label} className="">
-                  {category.subCategory ? (
-                    <Collapsible
-                      open={openCategories.includes(category.label)}
-                      onOpenChange={() => toggleCategory(category.label)}
-                    >
-                      <CollapsibleTrigger
-                        className={`flex w-full cursor-pointer items-center justify-between px-2 py-3 transition-colors outline-none hover:bg-gray-100`}
-                      >
-                        <span className="font-medium">{category.label}</span>
-                        <ChevronDown
-                          className={cn(
-                            "size-4 text-gray-900 transition-transform duration-200",
-                            openCategories.includes(category.label) &&
-                              "rotate-180",
-                          )}
-                        />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <div className="ml-2 border-l">
-                          {category.subCategory.map((sub) => (
-                            <Link
-                              key={sub.label}
-                              href={sub.href}
-                              className="flex items-center px-3 py-2.5 text-sm transition-colors hover:bg-gray-100"
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
-                        </div>
-                      </CollapsibleContent>
-                    </Collapsible>
-                  ) : (
-                    <Link
-                      href={category.href}
-                      className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
-                    >
-                      <span className="font-medium">{category.label}</span>
-                    </Link>
-                  )}
-                </div>
-              ))
-            )}
-          </div>
+        <div className="sticky top-20 hidden w-1/6 md:block">
+          <FilterBy
+            categoryLinks={categoryLinks}
+            isCategoriesLoading={isCategoriesLoading}
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            priceRange={priceRange}
+            handlePriceChange={handlePriceChange}
+            handleMinPriceChange={handleMinPriceChange}
+            handleMaxPriceChange={handleMaxPriceChange}
+          />
         </div>
         <div className="w-full lg:pl-4">
           {isError && <p>Something went wrong please try again later.</p>}
