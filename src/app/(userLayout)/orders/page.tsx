@@ -49,9 +49,9 @@ export default function OrdersPage() {
                   <div className="loader" />
                 </TableCell>
               </TableRow>
-            ) : (
+            ) : data.length ? (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              data.map((order: any, index: number) => (
+              data?.map((order: any, index: number) => (
                 <TableRow key={order._id}>
                   <TableCell className="font-medium">{index + 1}.</TableCell>
                   <TableCell className="text-nowrap">
@@ -97,6 +97,12 @@ export default function OrdersPage() {
                   </TableCell>
                 </TableRow>
               ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={5}>
+                  <div className="py-4 text-center">No orders found</div>
+                </TableCell>
+              </TableRow>
             )}
           </TableBody>
         </Table>
