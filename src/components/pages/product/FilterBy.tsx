@@ -46,7 +46,7 @@ export default function FilterBy({
   };
   const maxPriceValue = maximumPrice > 2000 ? maximumPrice : 2000;
   return (
-    <div className="max-h-[calc(100vh-5rem)] overflow-y-auto px-2 lg:max-h-[calc(100vh-15rem)]">
+    <div className="max-h-[calc(100vh-10rem)] overflow-y-auto px-2 lg:max-h-[calc(100vh-15rem)]">
       <div className="mb-6">
         <h4 className="mb-4 text-lg font-medium uppercase">Filter by price</h4>
         <div className="space-y-4">

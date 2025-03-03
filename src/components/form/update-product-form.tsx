@@ -100,7 +100,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
   if (isLoading) return <Loader2 className="mx-auto my-2 animate-spin" />;
 
   return (
-    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
+    <div className="roundeddd-lg mx-auto h-fit w-full max-w-md border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
@@ -239,7 +239,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
               {imageUrls.map((image, index) => (
                 <div key={index} className="group relative">
                   <Image
-                    className="size-24 rounded border border-dashed p-1"
+                    className="roundeddd size-24 border border-dashed p-1"
                     width={100}
                     height={100}
                     src={image}
@@ -248,7 +248,7 @@ export default function UpdateProductForm({ id }: { id: string }) {
                   <button
                     type="button"
                     onClick={() => removeImage(index)}
-                    className="absolute top-0 right-0 size-4 rounded-full bg-red-500 text-xs text-white"
+                    className="roundeddd-full absolute top-0 right-0 size-4 bg-red-500 text-xs text-white"
                   >
                     X
                   </button>

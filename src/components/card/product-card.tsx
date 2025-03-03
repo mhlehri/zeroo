@@ -14,12 +14,12 @@ export default function ProductCard({ product }: { product: TProduct }) {
     stock: product?.stock,
   };
   return (
-    <div className="mb-4 w-full max-w-[230px] overflow-hidden rounded-md border-none shadow-none">
+    <div className="roundeddd-md mb-4 w-full max-w-[230px] overflow-hidden border-none shadow-none">
       <Link href={`/products/${product?._id}`}>
         <div className="relative mb-2">
           <Image
             src={product?.images[0]}
-            className="h-[200px] w-full rounded-md bg-gray-100 lg:h-[240px]"
+            className="roundeddd-md h-[200px] w-full bg-gray-100 lg:h-[240px]"
             width={240}
             height={240}
             alt={product?.name}

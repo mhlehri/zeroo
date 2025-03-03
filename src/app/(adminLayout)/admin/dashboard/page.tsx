@@ -7,7 +7,7 @@ import TotalOverview from "@/components/chart/TotalOverview";
 export default function Page() {
   return (
     <div className="container">
-      <h2 className="mb-3 rounded bg-teal-800 p-3 text-lg font-bold text-balance text-slate-200 sm:text-xl md:text-2xl">
+      <h2 className="roundeddd mb-3 bg-teal-800 p-3 text-lg font-bold text-balance text-slate-200 sm:text-xl md:text-2xl">
         Welcome to Rongberong Admin Dashboard
       </h2>
       <div className="space-y-4">

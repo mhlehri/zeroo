@@ -65,7 +65,7 @@ export default function AddCategoryForm() {
   const submitting = form.formState.isSubmitting;
   console.log(imageUrl);
   return (
-    <div className="h-fit w-full max-w-md rounded-lg border bg-white p-6 shadow-lg md:p-8">
+    <div className="roundeddd-lg h-fit w-full max-w-md border bg-white p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -137,7 +137,7 @@ export default function AddCategoryForm() {
 
             {imageUrl && (
               <Image
-                className="mt-2 size-32 rounded border border-dashed border-slate-300 p-2"
+                className="roundeddd mt-2 size-32 border border-dashed border-slate-300 p-2"
                 width={100}
                 height={100}
                 src={imageUrl}

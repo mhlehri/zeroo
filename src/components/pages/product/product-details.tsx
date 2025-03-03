@@ -76,7 +76,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
 
           <div className="flex items-center space-x-4">
             <span className="text-slate-700">Quantity:</span>
-            <div className="flex w-fit items-center rounded-md border">
+            <div className="roundeddd-md flex w-fit items-center border">
               <Button
                 size="sm"
                 type="button"
@@ -88,7 +88,7 @@ export default function ProductDetails({ product }: { product: TProduct }) {
               </Button>
               <Input
                 value={quantity}
-                className="h-full w-12 rounded-none border-x border-y-0 text-center"
+                className="roundeddd-none h-full w-12 border-x border-y-0 text-center"
                 onChange={(e) =>
                   setQuantity(Number.parseInt(e.target.value) || 1)
                 }

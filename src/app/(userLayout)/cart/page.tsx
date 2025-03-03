@@ -38,8 +38,8 @@ export default function CartPage() {
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
             <div className="relative mb-6">
-              <div className="bg-primary/50 absolute inset-0 scale-[1.8] rounded-full opacity-50 blur-xl" />
-              <div className="bg-background relative rounded-full p-6">
+              <div className="bg-primary/50 roundeddd-full absolute inset-0 scale-[1.8] opacity-50 blur-xl" />
+              <div className="bg-background roundeddd-full relative p-6">
                 <ShoppingBag
                   className="mx-auto size-16 md:size-20"
                   strokeWidth={1.5}
@@ -72,7 +72,7 @@ export default function CartPage() {
         <div className="mx-auto grid h-full max-w-6xl grid-cols-1 gap-6 px-4 md:my-6 md:gap-8 lg:min-h-[50vh] lg:grid-cols-3 lg:gap-12">
           <div className="lg:col-span-2">
             {/* Cart Items */}
-            <div className="rounded-lg bg-white p-3 shadow-md md:p-6">
+            <div className="roundeddd-lg bg-white p-3 shadow-md md:p-6">
               <div className="mb-4 flex items-center justify-between">
                 <h2 className="flex items-start text-2xl font-semibold">
                   <ShoppingBag className="mr-2" /> Items
@@ -100,7 +100,7 @@ export default function CartPage() {
                         alt={item?.name}
                         width={60}
                         height={60}
-                        className="size-16 rounded-md bg-gray-200"
+                        className="roundeddd-md size-16 bg-gray-200"
                       />
                       <div>
                         <h3 className="text-md font-semibold md:text-base">
@@ -112,7 +112,7 @@ export default function CartPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-1 md:gap-2">
-                      <div className="flex w-fit rounded-md border">
+                      <div className="roundeddd-md flex w-fit border">
                         <Button
                           size="sm"
                           type="button"
@@ -129,7 +129,7 @@ export default function CartPage() {
                         </Button>
                         <Input
                           value={item.quantity}
-                          className="h-full w-12 rounded-none border-x border-y-0 text-center"
+                          className="roundeddd-none h-full w-12 border-x border-y-0 text-center"
                           onChange={(e) =>
                             updateQuantity(
                               item.id,
@@ -167,7 +167,7 @@ export default function CartPage() {
           <div className="relative h-full">
             <div className="top-20 space-y-8 lg:sticky">
               {/* Order Summary */}
-              <div className="rounded-lg bg-white p-3 shadow-md md:p-6">
+              <div className="roundeddd-lg bg-white p-3 shadow-md md:p-6">
                 <h2 className="mb-4 flex items-center text-2xl font-semibold">
                   <Wallet2 className="mr-2" /> Cart Total
                 </h2>

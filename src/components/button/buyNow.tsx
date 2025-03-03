@@ -46,7 +46,7 @@ export default function BuyNow({
       variant={
         !isDetailsPage && !product.stock ? "secondary" : variant || "default"
       }
-      className={cn("w-full rounded", className)}
+      className={cn("roundeddd w-full", className)}
       size="sm"
       asChild={!isDetailsPage}
     >

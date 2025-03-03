@@ -302,9 +302,9 @@ export default function Checkout() {
                         alt={item?.name}
                         width={60}
                         height={60}
-                        className="bg-primary-200 size-14 rounded-md"
+                        className="bg-primary-200 roundeddd-md size-14"
                       />
-                      <div className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 text-xs text-white">
+                      <div className="roundeddd-full absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center bg-rose-600 text-xs text-white">
                         {item.quantity}
                       </div>
                     </div>
@@ -315,7 +315,7 @@ export default function Checkout() {
                       </p>
                     </div>
                     {/* <div className="flex flex-wrap items-center justify-between gap-2 md:flex-nowrap">
-                        <div className="flex w-fit items-center rounded-md border">
+                        <div className="flex w-fit items-center roundeddd-md border">
                           <Button
                             size="sm"
                             type="button"
@@ -332,7 +332,7 @@ export default function Checkout() {
                           </Button>
                           <Input
                             value={item.quantity}
-                            className="h-full w-12 rounded-none border-x border-y-0 text-center"
+                            className="h-full w-12 roundeddd-none border-x border-y-0 text-center"
                             onChange={(e) =>
                               updateQuantity(
                                 item.id,

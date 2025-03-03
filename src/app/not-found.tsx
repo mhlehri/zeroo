@@ -11,7 +11,7 @@ export default function NotFound() {
         alt="404"
         width={300}
         height={300}
-        className="rounded-full"
+        className="roundeddd-full"
       />
       <h2 className="text-primary-800 text-4xl font-bold">এনে কি ব্রো?</h2>
       <p className="text-primary-600">ব্যাকে যান মিয়া....</p>

@@ -55,7 +55,7 @@ export default function AddToCart({
           onClick={handleAddToCart}
           variant={!product.stock ? "destructive" : variant || "outline"}
           className={cn(
-            "rounded text-xs md:text-sm",
+            "roundeddd text-xs md:text-sm",
             textVisible ? "w-full" : "w-fit",
             className,
           )}
@@ -82,7 +82,7 @@ export default function AddToCart({
               onClick={handleAddToCart}
               variant={!product.stock ? "destructive" : variant || "outline"}
               className={cn(
-                "rounded text-xs md:text-sm",
+                "roundeddd text-xs md:text-sm",
                 textVisible ? "w-full" : "w-fit",
                 isAdded ? "bg-slate-200 text-slate-700" : "",
                 className,

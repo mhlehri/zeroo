@@ -28,7 +28,7 @@ export default function OrdersPage() {
   console.log(data);
   return (
     <div className="container min-h-[70dvh]">
-      <div className="mx-auto mt-10 max-w-4xl rounded-lg border">
+      <div className="roundeddd-lg mx-auto mt-10 max-w-4xl border">
         <h3 className="border-b py-2 text-center text-xl font-bold md:text-2xl">
           Your recent order list
         </h3>
@@ -78,7 +78,7 @@ export default function OrdersPage() {
                         order.payment === "done"
                           ? "bg-blue-100 text-blue-500"
                           : "bg-amber-100 text-amber-500"
-                      } rounded-full px-2 py-0.5`}
+                      } roundeddd-full px-2 py-0.5`}
                     >
                       {order.paymentStatus === "paid"
                         ? "Paid"
@@ -88,7 +88,7 @@ export default function OrdersPage() {
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span className="bg-primary-200 text-primary-500 rounded-full px-2 py-0.5">
+                    <span className="bg-primary-200 text-primary-500 roundeddd-full px-2 py-0.5">
                       {order.orderStatus}
                     </span>
                   </TableCell>

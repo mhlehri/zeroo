@@ -19,8 +19,8 @@ export default function CartSheet() {
     return (
       <div className="flex h-full flex-col items-center justify-center space-y-4 px-2 py-8">
         <div className="relative mb-4">
-          <div className="bg-primary/50 absolute inset-0 scale-150 rounded-full opacity-50 blur-xl" />
-          <div className="bg-background relative rounded-full p-4">
+          <div className="bg-primary/50 roundeddd-full absolute inset-0 scale-150 opacity-50 blur-xl" />
+          <div className="bg-background roundeddd-full relative p-4">
             <ShoppingBag className="size-12 text-slate-600" strokeWidth={1.5} />
           </div>
         </div>
@@ -62,7 +62,7 @@ export default function CartSheet() {
                   alt={item?.name}
                   width={60}
                   height={60}
-                  className="size-14 rounded-md bg-slate-600 object-cover"
+                  className="roundeddd-md size-14 bg-slate-600 object-cover"
                 />
                 <div>
                   <h3 className="line-clamp-2 font-medium">{item?.name}</h3>

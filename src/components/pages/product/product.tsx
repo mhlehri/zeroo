@@ -174,7 +174,7 @@ export default function Product({
         <FilterMenu {...filterProps} />
         <Select value={sortOrder} onValueChange={setSortOrder}>
           <SelectTrigger
-            className="h-9 w-fit rounded-md px-3 text-xs md:text-sm"
+            className="roundeddd-md h-9 w-fit px-3 text-xs md:text-sm"
             icon={<ListFilter className="size-4 opacity-70" />}
           >
             <SelectValue placeholder="Sort by" />
@@ -211,7 +211,7 @@ export default function Product({
             </div>
           ) : (
             <>
-              <div className="mb-6 flex h-20 w-full items-center justify-center gap-2 rounded bg-amber-500/20 p-3 text-lg font-medium text-slate-600">
+              <div className="roundeddd mb-6 flex h-20 w-full items-center justify-center gap-2 bg-amber-500/20 p-3 text-lg font-medium text-slate-600">
                 <Search /> No products found
               </div>
               {sortOrder || selectedCategory || category ? (

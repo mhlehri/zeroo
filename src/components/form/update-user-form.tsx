@@ -100,13 +100,13 @@ export default function UserUpdateForm({ id }: { id: string }) {
   };
 
   return (
-    <div className="w-full max-w-md p-6 md:p-8 rounded-lg shadow-lg border h-fit mx-auto">
+    <div className="roundeddd-lg mx-auto h-fit w-full max-w-md border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-3 md:space-y-4"
         >
-          <h3 className="text-primary text-2xl md:text-3xl font-semibold text-center">
+          <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
             {user ? "Update User" : "Add User"}
           </h3>
 

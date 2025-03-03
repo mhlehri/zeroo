@@ -55,7 +55,7 @@ export default function BottomNavigation() {
           <ShoppingBag className="text-primary-400 size-5" />
           <span className="text-black text-[10px]">Cart</span>
           <span
-            className={`absolute top-0 right-8 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] text-white`}
+            className={`absolute top-0 right-8 flex h-4 w-4 items-center justify-center roundeddd-full bg-rose-500 text-[10px] text-white`}
           >
             {cart.length}
           </span>

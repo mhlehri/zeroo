@@ -87,7 +87,7 @@ export default function SignupForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="mx-auto my-6 h-fit w-full max-w-xl rounded-lg border p-6 shadow-lg md:my-10 md:p-8">
+    <div className="roundeddd-lg mx-auto my-6 h-fit w-full max-w-xl border p-6 shadow-lg md:my-10 md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

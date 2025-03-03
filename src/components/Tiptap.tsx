@@ -23,7 +23,7 @@ export const MenuBar = ({ editor }: { editor: Editor | null }) => {
   }
 
   return (
-    <div className="rounded-t-lg bg-gray-100 p-2 shadow-sm">
+    <div className="roundeddd-t-lg bg-gray-100 p-2 shadow-sm">
       <div className="flex flex-wrap gap-2">
         <Button
           type="button"
@@ -190,10 +190,10 @@ export default function Tiptap() {
   });
 
   return (
-    <div className="mx-auto max-w-3xl rounded-lg bg-white p-4 shadow-lg">
+    <div className="roundeddd-lg mx-auto max-w-3xl bg-white p-4 shadow-lg">
       <MenuBar editor={editor} />
       <EditorContent
-        className="prose prose-sm sm:prose lg:prose-md focus:ring-none mx-auto rounded-lg border border-gray-200 bg-gray-50 focus:border-none focus:outline-none"
+        className="prose prose-sm sm:prose lg:prose-md focus:ring-none roundeddd-lg mx-auto border border-gray-200 bg-gray-50 focus:border-none focus:outline-none"
         editor={editor}
       />
     </div>

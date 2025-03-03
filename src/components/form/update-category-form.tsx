@@ -84,7 +84,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
   }
 
   return (
-    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
+    <div className="roundeddd-lg mx-auto h-fit w-full max-w-md border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
@@ -159,7 +159,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               <div className="loader mx-auto" />
             ) : imageUrl ? (
               <Image
-                className="mt-2 size-32 rounded border border-dashed border-slate-300 p-2"
+                className="roundeddd mt-2 size-32 border border-dashed border-slate-300 p-2"
                 width={100}
                 height={100}
                 src={imageUrl}

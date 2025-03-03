@@ -21,7 +21,7 @@ export default function Home() {
         <section>
           <Suspense
             fallback={
-              <div className="flex gap-4 overflow-hidden *:size-16 *:min-w-16 *:flex-1 *:rounded-md *:bg-slate-200 *:md:size-[90px] *:lg:size-[140px] *:lg:rounded *:xl:size-[180px] *:2xl:size-[200px]">
+              <div className="*:roundeddd-md *:lg:roundeddd flex gap-4 overflow-hidden *:size-16 *:min-w-16 *:flex-1 *:bg-slate-200 *:md:size-[90px] *:lg:size-[140px] *:xl:size-[180px] *:2xl:size-[200px]">
                 <Skeleton />
                 <Skeleton />
                 <Skeleton />

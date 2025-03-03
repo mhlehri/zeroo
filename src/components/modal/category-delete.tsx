@@ -53,7 +53,7 @@ export default function CategoryDeleteModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="hover:bg-primary-100 hover:text-primary-900 relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none dark:focus:bg-slate-800 dark:focus:text-slate-50">
+      <DialogTrigger className="hover:bg-primary-100 hover:text-primary-900 roundeddd-sm relative w-full cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none dark:focus:bg-slate-800 dark:focus:text-slate-50">
         {children}
       </DialogTrigger>
       <DialogContent className="max-h-[500px] overflow-y-auto xl:max-h-full">

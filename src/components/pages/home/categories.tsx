@@ -21,7 +21,7 @@ export default async function Categories() {
             <Link
               href={`/products?category=${category.name}`}
               key={index}
-              className="group relative overflow-hidden rounded-lg"
+              className="group roundeddd-lg relative overflow-hidden"
             >
               <span className="absolute inset-0 z-20 bg-black/20 opacity-0 duration-700 group-hover:opacity-100" />
               <Image
@@ -29,7 +29,7 @@ export default async function Categories() {
                 alt={category?.name}
                 width={600}
                 height={400}
-                className="bg-primary-100 relative z-10 h-full max-h-52 w-full max-w-3xl transform rounded-lg duration-700 group-hover:scale-110"
+                className="bg-primary-100 roundeddd-lg relative z-10 h-full max-h-52 w-full max-w-3xl transform duration-700 group-hover:scale-110"
               />
             </Link>
           ))}
@@ -57,10 +57,10 @@ export default async function Categories() {
                       alt={category.name}
                       width={140}
                       height={140}
-                      className="size-16 rounded-full bg-cover object-cover md:size-[70px] lg:size-[140px] lg:rounded xl:size-[180px] 2xl:size-[200px]"
+                      className="roundeddd-full lg:roundeddd size-16 bg-cover object-cover md:size-[70px] lg:size-[140px] xl:size-[180px] 2xl:size-[200px]"
                     />
                     <div
-                      className={`lg:group-hover/d:from-primary-950 items-end justify-center text-xs font-medium whitespace-nowrap transition duration-300 ease-out md:text-sm lg:invisible lg:absolute lg:inset-0 lg:flex lg:pb-4 lg:text-white lg:group-hover/d:visible lg:group-hover/d:z-50 lg:group-hover/d:rounded-lg lg:group-hover/d:bg-gradient-to-t lg:group-hover/d:px-2 lg:group-hover/d:py-1 lg:group-hover/d:text-white lg:group-hover/d:opacity-100`}
+                      className={`lg:group-hover/d:from-primary-950 lg:group-hover/d:roundeddd-lg items-end justify-center text-xs font-medium whitespace-nowrap transition duration-300 ease-out md:text-sm lg:invisible lg:absolute lg:inset-0 lg:flex lg:pb-4 lg:text-white lg:group-hover/d:visible lg:group-hover/d:z-50 lg:group-hover/d:bg-gradient-to-t lg:group-hover/d:px-2 lg:group-hover/d:py-1 lg:group-hover/d:text-white lg:group-hover/d:opacity-100`}
                     >
                       {category.name}
                     </div>

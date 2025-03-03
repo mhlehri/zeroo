@@ -41,11 +41,11 @@ export default function CheckoutSkeleton() {
               <Skeleton className="h-4 w-20" />
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="roundeddd-full h-4 w-4" />
                   <Skeleton className="h-4 w-32" />
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="roundeddd-full h-4 w-4" />
                   <Skeleton className="h-4 w-36" />
                 </div>
               </div>
@@ -56,11 +56,11 @@ export default function CheckoutSkeleton() {
               <Skeleton className="h-4 w-28" />
               <div className="space-y-2">
                 <div className="flex items-center space-x-2">
-                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="roundeddd-full h-4 w-4" />
                   <Skeleton className="h-4 w-32" />
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Skeleton className="h-4 w-4 rounded-full" />
+                  <Skeleton className="roundeddd-full h-4 w-4" />
                   <Skeleton className="h-4 w-36" />
                 </div>
               </div>
@@ -87,7 +87,7 @@ export default function CheckoutSkeleton() {
                     key={index}
                     className="flex items-center gap-2 border-b pb-2"
                   >
-                    <Skeleton className="size-14 rounded-md" />
+                    <Skeleton className="roundeddd-md size-14" />
                     <div className="flex-1 space-y-1">
                       <Skeleton className="h-4 w-32" />
                       <Skeleton className="h-4 w-16" />
