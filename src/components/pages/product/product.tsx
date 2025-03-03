@@ -168,7 +168,7 @@ export default function Product({
       </div>
       <hr />
       <div className="lg:flex lg:divide-x">
-        <div className="hidden w-1/6 flex-col gap-2 pr-2 lg:flex">
+        <div className="hidden max-h-[calc(100vh-15rem)] w-1/6 flex-col gap-2 overflow-y-auto pr-2 lg:flex">
           <div className="sticky top-20">
             <div className="mb-6">
               <h4 className="mb-4 text-lg font-medium uppercase">

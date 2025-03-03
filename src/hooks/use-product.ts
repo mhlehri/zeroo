@@ -26,8 +26,6 @@ export function useGetProducts({
     sortOrder = "";
     limit = 10;
     page = 1;
-    minPrice = 0;
-    maxPrice = 1000000;
     category = "";
   }
   const { data, isLoading, isError } = useQuery({
