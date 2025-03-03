@@ -1,6 +1,8 @@
 "use client";
 import ProductCard from "@/components/card/product-card";
-import { Category } from "@/components/layout/navbar/mobile-menu";
+import type React from "react";
+
+import type { Category } from "@/components/layout/navbar/mobile-menu";
 import CategorySkeleton from "@/components/skeleton/category-skeleton";
 import ProductCardSkeleton from "@/components/skeleton/product-card-skeleton";
 import {
@@ -38,6 +40,8 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import FilterMenu from "./FilterMenu";
+import { Slider } from "@/components/ui/slider";
+import { Input } from "@/components/ui/input";
 
 export default function Product({
   query,
@@ -54,6 +58,10 @@ export default function Product({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
+  const [minPrice, setMinPrice] = useState<string>("0");
+  const [maxPrice, setMaxPrice] = useState<string>("2000");
+
   // console.log("Query =>", query, "from product.tsx");
   // console.log("Category =>", category, "from product.tsx");
   // console.log("selectedCategory =>", selectedCategory, "from product.tsx");
@@ -63,6 +71,8 @@ export default function Product({
     query,
     page: currentPage,
     limit: itemsPerPage,
+    minPrice: priceRange[0],
+    maxPrice: priceRange[1],
   });
   const { categories, isCategoriesLoading } = useCategories();
   const [openCategories, setOpenCategories] = useState<string[]>([]);
@@ -101,6 +111,31 @@ export default function Product({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handlePriceChange = (value: [number, number]) => {
+    setPriceRange(value);
+    setMinPrice(value[0].toString());
+    setMaxPrice(value[1].toString());
+    setCurrentPage(1);
+  };
+
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMinPrice(value);
+    if (value && !isNaN(Number(value))) {
+      setPriceRange([Number(value), priceRange[1]]);
+      setCurrentPage(1);
+    }
+  };
+
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setMaxPrice(value);
+    if (value && !isNaN(Number(value))) {
+      setPriceRange([priceRange[0], Number(value)]);
+      setCurrentPage(1);
+    }
+  };
+
   return (
     <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
       <div className="flex items-center justify-between py-2">
@@ -134,11 +169,44 @@ export default function Product({
       <hr />
       <div className="lg:flex lg:divide-x">
         <div className="hidden w-1/6 flex-col gap-2 pr-2 lg:flex">
-          {/* <div>
-            <h4 className="text-lg uppercase font-medium">Filter by price</h4>
-          </div> */}
           <div className="sticky top-20">
-            <h4 className="mb-2 text-lg font-medium uppercase">Categories</h4>
+            <div className="mb-6">
+              <h4 className="mb-4 text-lg font-medium uppercase">
+                Filter by price
+              </h4>
+              <div className="space-y-4">
+                <Slider
+                  defaultValue={[0, 2000]}
+                  max={2000}
+                  step={10}
+                  value={priceRange}
+                  onValueChange={handlePriceChange}
+                  className="py-4"
+                />
+                <div className="flex items-center gap-2">
+                  <div className="flex-1">
+                    <Input
+                      type="number"
+                      placeholder="Min"
+                      value={minPrice}
+                      onChange={handleMinPriceChange}
+                      className="h-9"
+                    />
+                  </div>
+                  <span className="text-sm">to</span>
+                  <div className="flex-1">
+                    <Input
+                      type="number"
+                      placeholder="Max"
+                      value={maxPrice}
+                      onChange={handleMaxPriceChange}
+                      className="h-9"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h4 className="mb-4 text-lg font-medium uppercase">Categories</h4>
             <div className="flex flex-col">
               {isCategoriesLoading ? (
                 <div className="mt-4 flex flex-col gap-6">
@@ -224,6 +292,9 @@ export default function Product({
                     onClick={() => {
                       setSortOrder("");
                       setSelectedCategory("");
+                      setPriceRange([0, 2000]);
+                      setMinPrice("0");
+                      setMaxPrice("2000");
                       setCurrentPage(1);
                     }}
                   >
