@@ -26,7 +26,7 @@ export default function ProductModal({
       </DialogTrigger>
       <DialogContent className="max-h-[500px] overflow-y-auto xl:max-h-full">
         <div className="my-4 flex w-full flex-col justify-center gap-4">
-          <div className="max-w-[280px]">
+          <div className="max-w-[280px] sm:max-w-[320px]">
             <EmblaCarousel slides={slides} />
           </div>
           <div className="space-y-3">
