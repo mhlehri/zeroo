@@ -168,99 +168,97 @@ export default function Product({
       </div>
       <hr />
       <div className="lg:flex lg:divide-x">
-        <div className="hidden max-h-[calc(100vh-15rem)] w-1/6 flex-col gap-2 overflow-y-auto pr-2 lg:flex">
-          <div className="sticky top-20">
-            <div className="mb-6">
-              <h4 className="mb-4 text-lg font-medium uppercase">
-                Filter by price
-              </h4>
-              <div className="space-y-4">
-                <Slider
-                  defaultValue={[0, 2000]}
-                  max={2000}
-                  step={10}
-                  value={priceRange}
-                  onValueChange={handlePriceChange}
-                  className="py-4"
-                />
-                <div className="flex items-center gap-2">
-                  <div className="flex-1">
-                    <Input
-                      type="number"
-                      placeholder="Min"
-                      value={minPrice}
-                      onChange={handleMinPriceChange}
-                      className="h-9"
-                    />
-                  </div>
-                  <span className="text-sm">to</span>
-                  <div className="flex-1">
-                    <Input
-                      type="number"
-                      placeholder="Max"
-                      value={maxPrice}
-                      onChange={handleMaxPriceChange}
-                      className="h-9"
-                    />
-                  </div>
+        <div className="sticky top-20 hidden max-h-[calc(100vh-15rem)] w-1/6 flex-col gap-2 overflow-y-auto pr-2 lg:flex">
+          <div className="mb-6">
+            <h4 className="mb-4 text-lg font-medium uppercase">
+              Filter by price
+            </h4>
+            <div className="space-y-4">
+              <Slider
+                defaultValue={[0, 2000]}
+                max={2000}
+                step={10}
+                value={priceRange}
+                onValueChange={handlePriceChange}
+                className="py-4"
+              />
+              <div className="flex items-center gap-2">
+                <div className="flex-1">
+                  <Input
+                    type="number"
+                    placeholder="Min"
+                    value={minPrice}
+                    onChange={handleMinPriceChange}
+                    className="h-9"
+                  />
+                </div>
+                <span className="text-sm">to</span>
+                <div className="flex-1">
+                  <Input
+                    type="number"
+                    placeholder="Max"
+                    value={maxPrice}
+                    onChange={handleMaxPriceChange}
+                    className="h-9"
+                  />
                 </div>
               </div>
             </div>
-            <h4 className="mb-4 text-lg font-medium uppercase">Categories</h4>
-            <div className="flex flex-col">
-              {isCategoriesLoading ? (
-                <div className="mt-4 flex flex-col gap-6">
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <CategorySkeleton key={`${index}-category-skeleton`} />
-                  ))}
-                </div>
-              ) : (
-                categoryLinks?.length &&
-                categoryLinks?.map((category: Category) => (
-                  <div key={category.label} className="">
-                    {category.subCategory ? (
-                      <Collapsible
-                        open={openCategories.includes(category.label)}
-                        onOpenChange={() => toggleCategory(category.label)}
-                      >
-                        <CollapsibleTrigger
-                          className={`flex w-full cursor-pointer items-center justify-between px-2 py-3 transition-colors outline-none hover:bg-gray-100`}
-                        >
-                          <span className="font-medium">{category.label}</span>
-                          <ChevronDown
-                            className={cn(
-                              "size-4 text-gray-900 transition-transform duration-200",
-                              openCategories.includes(category.label) &&
-                                "rotate-180",
-                            )}
-                          />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent>
-                          <div className="ml-2 border-l">
-                            {category.subCategory.map((sub) => (
-                              <Link
-                                key={sub.label}
-                                href={sub.href}
-                                className="flex items-center px-3 py-2.5 text-sm transition-colors hover:bg-gray-100"
-                              >
-                                {sub.label}
-                              </Link>
-                            ))}
-                          </div>
-                        </CollapsibleContent>
-                      </Collapsible>
-                    ) : (
-                      <Link
-                        href={category.href}
-                        className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
+          </div>
+          <h4 className="mb-4 text-lg font-medium uppercase">Categories</h4>
+          <div className="flex flex-col">
+            {isCategoriesLoading ? (
+              <div className="mt-4 flex flex-col gap-6">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <CategorySkeleton key={`${index}-category-skeleton`} />
+                ))}
+              </div>
+            ) : (
+              categoryLinks?.length &&
+              categoryLinks?.map((category: Category) => (
+                <div key={category.label} className="">
+                  {category.subCategory ? (
+                    <Collapsible
+                      open={openCategories.includes(category.label)}
+                      onOpenChange={() => toggleCategory(category.label)}
+                    >
+                      <CollapsibleTrigger
+                        className={`flex w-full cursor-pointer items-center justify-between px-2 py-3 transition-colors outline-none hover:bg-gray-100`}
                       >
                         <span className="font-medium">{category.label}</span>
-                      </Link>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
+                        <ChevronDown
+                          className={cn(
+                            "size-4 text-gray-900 transition-transform duration-200",
+                            openCategories.includes(category.label) &&
+                              "rotate-180",
+                          )}
+                        />
+                      </CollapsibleTrigger>
+                      <CollapsibleContent>
+                        <div className="ml-2 border-l">
+                          {category.subCategory.map((sub) => (
+                            <Link
+                              key={sub.label}
+                              href={sub.href}
+                              className="flex items-center px-3 py-2.5 text-sm transition-colors hover:bg-gray-100"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  ) : (
+                    <Link
+                      href={category.href}
+                      className="flex items-center px-4 py-3 transition-colors hover:bg-gray-100"
+                    >
+                      <span className="font-medium">{category.label}</span>
+                    </Link>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
         <div className="w-full lg:pl-4">
