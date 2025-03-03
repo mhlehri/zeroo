@@ -53,8 +53,9 @@ export function useGetProducts({
 
   const products = useMemo(() => data?.products ?? [], [data]);
   const totalProducts = useMemo(() => data?.total ?? 0, [data]);
+  const maximumPrice = useMemo(() => data?.maximumPrice ?? 0, [data]);
 
-  return { totalProducts, products, isLoading, isError };
+  return { totalProducts, products, isLoading, isError, maximumPrice };
 }
 
 export function useGetProductById(id: string) {
