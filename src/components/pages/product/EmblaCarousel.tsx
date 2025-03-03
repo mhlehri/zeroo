@@ -53,21 +53,23 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <div className="relative container">
       <div className="mx-auto flex gap-2">
         {/* Thumbnails for extra larger screens */}
-        <div
-          className="hidden min-w-20 overflow-hidden xl:block"
-          ref={emblaThumbsRef}
-        >
-          <div className="flex flex-col gap-2">
-            {slides?.map((img, index) => (
-              <Thumb
-                key={index}
-                onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex}
-                img={img}
-              />
-            ))}
+        {slides.length > 1 && (
+          <div
+            className="hidden min-w-20 overflow-hidden xl:block"
+            ref={emblaThumbsRef}
+          >
+            <div className="flex flex-col gap-2">
+              {slides?.map((img, index) => (
+                <Thumb
+                  key={index}
+                  onClick={() => onThumbClick(index)}
+                  selected={index === selectedIndex}
+                  img={img}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
         <div className="overflow-hidden" ref={emblaMainRef}>
           <div className="flex max-w-2xl touch-pan-y">
             {slides?.map((img, index) => (
