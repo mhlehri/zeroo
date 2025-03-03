@@ -5,6 +5,8 @@ export const Counts = async ({
 }) => {
   const { total } = await func;
   return (
-    <p className="text-xl font-semibold md:text-2xl lg:text-3xl">{total}</p>
+    <p className="text-xl font-semibold md:text-2xl lg:text-3xl">
+      {total || 0}
+    </p>
   );
 };
