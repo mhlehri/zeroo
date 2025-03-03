@@ -154,7 +154,7 @@ export default function UnpublishedProductList() {
   const { products, isLoading } = useGetProducts({
     limit: 0,
     query: debouncedQuery,
-    isPublished: false,
+    isPublished: "false",
   });
 
   console.log(products);

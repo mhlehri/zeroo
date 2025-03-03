@@ -11,7 +11,7 @@ type TProductParams = {
   maxPrice?: number;
   category?: string;
   page?: number;
-  isPublished?: boolean;
+  isPublished?: string;
 };
 
 export function useGetProducts({

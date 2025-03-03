@@ -132,7 +132,7 @@ const ActionCell = ({ product }: { product: TProduct }) => {
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
           <ProductDeleteModal name={product.name} id={product._id}>
-            Delete
+            Unpublish
           </ProductDeleteModal>
         </DropdownMenuItem>
       </DropdownMenuContent>
