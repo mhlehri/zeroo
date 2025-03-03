@@ -7,6 +7,8 @@ type TProductParams = {
   query?: string;
   sortOrder?: string;
   limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
   category?: string;
   page?: number;
 };
@@ -15,19 +17,40 @@ export function useGetProducts({
   query,
   sortOrder,
   limit,
+  minPrice,
+  maxPrice,
   category,
   page,
 }: TProductParams) {
   if (query && query?.length > 0) {
     sortOrder = "";
-    limit = 12;
+    limit = 10;
     page = 1;
+    minPrice = 0;
+    maxPrice = 1000000;
     category = "";
   }
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["products", query, sortOrder, limit, category, page],
+    queryKey: [
+      "products",
+      query,
+      sortOrder,
+      minPrice,
+      maxPrice,
+      limit,
+      category,
+      page,
+    ],
     queryFn: () =>
-      getProducts({ searchTerm: query, sortOrder, limit, category, page }),
+      getProducts({
+        searchTerm: query,
+        sortOrder,
+        limit,
+        category,
+        page,
+        minPrice,
+        maxPrice,
+      }),
   });
 
   const products = useMemo(() => data?.products ?? [], [data]);

@@ -10,16 +10,28 @@ export async function getProducts({
   sortOrder = "",
   category = "",
   page = 1,
+  minPrice,
+  maxPrice,
 }: {
   searchTerm?: string;
   limit?: number;
   sortOrder?: string;
   category?: string;
   page?: number;
+  minPrice?: number;
+  maxPrice?: number;
 }) {
   try {
     const { data } = await ax.get(`/products`, {
-      params: { searchTerm, limit, sortOrder, category, page },
+      params: {
+        searchTerm,
+        limit,
+        sortOrder,
+        category,
+        page,
+        minPrice,
+        maxPrice,
+      },
     });
 
     return data?.data;
