@@ -1,4 +1,5 @@
 "use client";
+import CheckoutSkeleton from "@/components/skeleton/checkout-skeleton";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,11 +22,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
-
-// // Load Stripe
-// const stripePromise = loadStripe(
-//   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-// );
 
 // Form Schema for validation
 const FormSchema = z.object({
@@ -129,18 +125,14 @@ export default function Checkout() {
     }
   };
 
-  if (cartLoading) return <div className="loader mx-auto" />;
+  if (cartLoading) return <CheckoutSkeleton />;
 
   if (cart?.length === 0) {
     router.push("/products");
   }
 
   return (
-    <div className="">
-      {/* <h1 className="text-primary-800 mb-8 text-center text-3xl font-bold">
-        Checkout
-      </h1> */}
-
+    <div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitOrder)}

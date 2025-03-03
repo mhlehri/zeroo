@@ -28,7 +28,7 @@ export default function OrdersPage() {
   console.log(data);
   return (
     <div className="container min-h-[70dvh]">
-      <div className="max-w-4xl rounded-lg border">
+      <div className="mx-auto mt-10 max-w-4xl rounded-lg border">
         <h3 className="border-b py-2 text-center text-xl font-bold md:text-2xl">
           Your recent order list
         </h3>

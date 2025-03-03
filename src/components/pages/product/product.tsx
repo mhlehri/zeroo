@@ -121,7 +121,7 @@ export default function Product({
 
   return (
     <div className="min-h-[90dvh] space-y-3 md:my-6 md:space-y-5">
-      <div className="flex items-center justify-between py-2">
+      <div className="flex items-center justify-between">
         <Breadcrumb className="hidden md:block">
           <BreadcrumbList>
             <BreadcrumbItem>
