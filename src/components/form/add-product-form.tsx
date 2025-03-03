@@ -60,9 +60,6 @@ const formSchema = z.object({
   discountPrice: z.string().optional(),
   discountType: z.string().optional(),
   sku: z.string().optional(),
-  images: z
-    .array(z.string())
-    .min(1, { message: "At least one image is required" }),
   variants: z
     .array(
       z.object({
@@ -94,7 +91,6 @@ export default function ProductForm() {
       discountPrice: "",
       discountType: "",
       sku: "",
-      images: [],
       variants: [],
       tags: [],
     },
@@ -169,10 +165,6 @@ export default function ProductForm() {
 
   function removeImage(index: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
-    form.setValue(
-      "images",
-      imageUrls.filter((_, i) => i !== index),
-    );
   }
 
   const addVariant = () => {
@@ -488,11 +480,6 @@ export default function ProductForm() {
                   {errorImage && (
                     <p className="mt-2 text-xs text-red-500">
                       Image is required!
-                    </p>
-                  )}
-                  {form.formState.errors.images && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {form.formState.errors.images.message}
                     </p>
                   )}
                 </div>
