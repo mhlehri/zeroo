@@ -140,7 +140,7 @@ const ActionCell = ({ product }: { product: TProduct }) => {
   );
 };
 
-export default function ProductList() {
+export default function UnpublishedProductList() {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
