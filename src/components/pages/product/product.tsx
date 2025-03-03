@@ -73,6 +73,7 @@ export default function Product({
       setPriceRange([0, maximumPrice]);
       setMaxPrice(maximumPrice.toString());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log("maximumPrice =>", maximumPrice, "from product.tsx");
