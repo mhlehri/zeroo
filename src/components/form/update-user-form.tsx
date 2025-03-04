@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { useUserById } from "@/hooks/use-user";
+import { Loader2 } from "lucide-react";
 
 // Validation schema
 const formSchema = z.object({
@@ -191,7 +192,16 @@ export default function UserUpdateForm({ id }: { id: string }) {
             )}
           />
           <Button disabled={isPending} type="submit">
-            {isPending ? "Processing..." : user ? "Update User" : "Add User"}
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Processing...
+              </>
+            ) : user ? (
+              "Update User"
+            ) : (
+              "Add User"
+            )}
           </Button>
         </form>
       </Form>

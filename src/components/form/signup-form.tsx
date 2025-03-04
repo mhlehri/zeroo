@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { signupAction } from "@/services/auth";
+import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "name must be at least 2 characters.",
@@ -148,7 +149,14 @@ export default function SignupForm() {
             )}
           />
           <Button disabled={submitting} type="submit">
-            {submitting ? "Submitting..." : "Submit"}
+            {submitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              "Submit"
+            )}
           </Button>
           <p className="text-center text-xs text-slate-600">
             Already have an account?{" "}

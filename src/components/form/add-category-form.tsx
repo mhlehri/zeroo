@@ -18,6 +18,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Input } from "../ui/input";
+import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
@@ -147,7 +148,14 @@ export default function AddCategoryForm() {
           </div>
 
           <Button disabled={submitting} type="submit">
-            {submitting ? "Submitting..." : "Submit"}
+            {submitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              "Add Category"
+            )}
           </Button>
         </form>
       </Form>

@@ -72,6 +72,7 @@ declare global {
     name: string;
     image: string;
     subCategories: {
+      _id: string;
       name: string;
       isPublished?: boolean;
       isDeleted?: boolean;

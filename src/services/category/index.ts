@@ -86,3 +86,20 @@ export async function deleteCategory(id: string) {
     throw error;
   }
 }
+
+export async function updateSubCategory(formData: {
+  categoryId: string;
+  subCategoryId: string;
+  name: string;
+}) {
+  try {
+    const { data } = await ax.put(`/categories/subcategory`, formData);
+    revalidatePath("/admin/categories");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}

@@ -17,6 +17,7 @@ import {
 import { Input } from "../ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUser } from "@/context/user-provider";
+import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   email: z.string().email({
     message: "Invalid email.",
@@ -115,7 +116,14 @@ export default function LoginForm() {
             )}
           />
           <Button disabled={submitting} type="submit">
-            {submitting ? "Checking..." : "Continue"}
+            {submitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Checking...
+              </>
+            ) : (
+              "Continue"
+            )}
           </Button>
           <p className="text-center text-xs text-slate-600">
             Don&apos;t have an account?{" "}

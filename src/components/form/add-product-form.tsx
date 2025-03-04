@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Controller, type FieldValues, useForm } from "react-hook-form";
 
-import { ImagePlus, PackagePlus, X } from "lucide-react";
+import { ImagePlus, Loader2, PackagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -257,7 +257,10 @@ export default function ProductForm() {
                 className="capitalize"
               >
                 {submitting ? (
-                  "Submitting..."
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Submitting...
+                  </>
                 ) : (
                   <span className="flex gap-1">
                     <PackagePlus /> add product

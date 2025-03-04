@@ -20,6 +20,7 @@ import {
 } from "../ui/form";
 import { Input } from "../ui/input";
 import { useCategoryById } from "@/hooks/use-category";
+import { Loader2 } from "lucide-react";
 
 // ✅ Form Schema
 const formSchema = z.object({
@@ -167,14 +168,21 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               />
             ) : (
               <p className="text-primary-400 mt-1 text-xs">
-                No images avalaible
+                No images available
               </p>
             )}
           </div>
 
           {/* ✅ Submit Button */}
           <Button disabled={isPending} type="submit">
-            {isPending ? "Updating..." : "Update Category"}
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update Category"
+            )}
           </Button>
         </form>
       </Form>

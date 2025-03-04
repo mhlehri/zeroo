@@ -257,7 +257,14 @@ export default function UpdateProductForm({ id }: { id: string }) {
             </div>
           </div>
           <Button disabled={isPending} type="submit">
-            {isPending ? "Updating..." : "Update Product"}
+            {isPending ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Updating...
+              </>
+            ) : (
+              "Update Product"
+            )}
           </Button>
         </form>
       </Form>
