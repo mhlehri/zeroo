@@ -34,16 +34,16 @@ export const items = [
     isActive: true,
     items: [
       {
-        title: "Add Product",
-        url: "/admin/add-product",
-      },
-      {
         title: "Product List",
         url: "/admin/products",
       },
       {
         title: "Unpublished Products",
         url: "/admin/unpublished-product",
+      },
+      {
+        title: "Add Product",
+        url: "/admin/add-product",
       },
     ],
   },
