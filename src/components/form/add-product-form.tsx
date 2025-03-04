@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Controller, type FieldValues, useForm } from "react-hook-form";
 
-import { ImagePlus, Loader2, PackagePlus, X } from "lucide-react";
+import { ImagePlus, PackagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/select";
 import { useCategories } from "@/hooks/use-category";
 import { addProduct } from "@/services/product";
+// import type { CloudinaryUploadWidgetResults } from "@cloudinary-util/types";
 import Highlight from "@tiptap/extension-highlight";
 import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
@@ -37,6 +38,8 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { CldUploadWidget } from "next-cloudinary";
 import { MenuBar } from "../Tiptap";
+import { useQuery } from "@tanstack/react-query";
+import { getSizes, getTags } from "@/services/inventory";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -60,6 +63,9 @@ const formSchema = z.object({
   discountPrice: z.string().optional(),
   discountType: z.string().optional(),
   sku: z.string().optional(),
+  images: z
+    .array(z.string())
+    .min(1, { message: "At least one image is required" }),
   variants: z
     .array(
       z.object({
@@ -91,6 +97,7 @@ export default function ProductForm() {
       discountPrice: "",
       discountType: "",
       sku: "",
+      images: [],
       variants: [],
       tags: [],
     },
@@ -112,6 +119,16 @@ export default function ProductForm() {
     onUpdate: ({ editor }) => {
       form.setValue("description", editor.getHTML());
     },
+  });
+
+  const { data: availableSizes = [], isLoading: isSizesLoading } = useQuery({
+    queryKey: ["sizes"],
+    queryFn: getSizes,
+  });
+
+  const { data: availableTags = [], isLoading: isTagsLoading } = useQuery({
+    queryKey: ["tags"],
+    queryFn: getTags,
   });
 
   const { mutate: createProduct, isPending } = useMutation<
@@ -152,10 +169,6 @@ export default function ProductForm() {
       price: Number(values.price),
       stock: Number(values.stock),
       discountPrice: values.discountPrice ? Number(values.discountPrice) : 0,
-      discountType:
-        values.discountPrice && !values.discountType
-          ? "percentage"
-          : values.discountType || "",
       images: imageUrls,
     };
     console.log(formData, "formData");
@@ -169,6 +182,10 @@ export default function ProductForm() {
 
   function removeImage(index: number) {
     setImageUrls((prev) => prev.filter((_, i) => i !== index));
+    form.setValue(
+      "images",
+      imageUrls.filter((_, i) => i !== index),
+    );
   }
 
   const addVariant = () => {
@@ -223,6 +240,20 @@ export default function ProductForm() {
 
   const submitting = form.formState.isSubmitting || isPending;
 
+  // function onUploadSuccess(result: CloudinaryUploadWidgetResults) {
+  //   setErrorImage(false);
+  //   const info = result?.info;
+  //   if (
+  //     info &&
+  //     typeof info === "object" &&
+  //     "secure_url" in info &&
+  //     typeof info.secure_url === "string"
+  //   ) {
+  //     setImageUrls((prev) => [...prev, info.secure_url]);
+  //     form.setValue("images", [imageUrls]);
+  //   }
+  // }
+
   type TCategory = {
     name: string;
   };
@@ -257,10 +288,7 @@ export default function ProductForm() {
                 className="capitalize"
               >
                 {submitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Submitting...
-                  </>
+                  "Submitting..."
                 ) : (
                   <span className="flex gap-1">
                     <PackagePlus /> add product
@@ -489,6 +517,11 @@ export default function ProductForm() {
                       Image is required!
                     </p>
                   )}
+                  {form.formState.errors.images && (
+                    <p className="mt-2 text-xs text-red-500">
+                      {form.formState.errors.images.message}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -533,11 +566,30 @@ export default function ProductForm() {
                 <h2 className="mb-4 text-xl font-semibold">Variants</h2>
                 <div className="space-y-4">
                   <div className="flex gap-2">
-                    <Input
-                      placeholder="Size"
+                    <Select
                       value={variantSize}
-                      onChange={(e) => setVariantSize(e.target.value)}
-                    />
+                      onValueChange={setVariantSize}
+                      disabled={isSizesLoading || availableSizes.length === 0}
+                    >
+                      <SelectTrigger className="flex-1">
+                        <SelectValue
+                          placeholder={
+                            isSizesLoading
+                              ? "Loading sizes..."
+                              : availableSizes.length === 0
+                                ? "No sizes available"
+                                : "Select a size"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableSizes.map((size: string) => (
+                          <SelectItem key={size} value={size}>
+                            {size}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <Input
                       type="number"
                       placeholder="Stock"
@@ -548,6 +600,7 @@ export default function ProductForm() {
                       type="button"
                       onClick={addVariant}
                       variant="secondary"
+                      disabled={!variantSize || !variantStock || isSizesLoading}
                     >
                       Add Variant
                     </Button>
@@ -580,18 +633,36 @@ export default function ProductForm() {
                 <h2 className="mb-4 text-xl font-semibold">Tags</h2>
                 <div className="space-y-4">
                   <div className="flex gap-2">
-                    <Input
-                      placeholder="Add a tag"
+                    <Select
                       value={tag}
-                      onChange={(e) => setTag(e.target.value)}
-                      onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          addTag();
-                        }
-                      }}
-                    />
-                    <Button type="button" onClick={addTag} variant="secondary">
+                      onValueChange={setTag}
+                      disabled={isTagsLoading || availableTags.length === 0}
+                    >
+                      <SelectTrigger className="flex-1">
+                        <SelectValue
+                          placeholder={
+                            isTagsLoading
+                              ? "Loading tags..."
+                              : availableTags.length === 0
+                                ? "No tags available"
+                                : "Select a tag"
+                          }
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {availableTags.map((tagItem: string) => (
+                          <SelectItem key={tagItem} value={tagItem}>
+                            {tagItem}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      type="button"
+                      onClick={addTag}
+                      variant="secondary"
+                      disabled={!tag || isTagsLoading}
+                    >
                       Add Tag
                     </Button>
                   </div>
