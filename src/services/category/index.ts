@@ -87,11 +87,7 @@ export async function deleteCategory(id: string) {
   }
 }
 
-export async function updateSubCategory(formData: {
-  categoryId: string;
-  subCategoryId: string;
-  name: string;
-}) {
+export async function updateSubCategory(formData: FieldValues) {
   try {
     const { data } = await ax.put(`/categories/subcategory`, formData);
     revalidatePath("/admin/categories");

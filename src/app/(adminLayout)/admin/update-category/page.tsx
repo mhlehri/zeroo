@@ -9,7 +9,7 @@ export default async function Page({
   console.log(id, "searchParams");
 
   return (
-    <div>
+    <div className="flex h-[70vh] items-center justify-center">
       <UpdateCategoryForm id={id} />
     </div>
   );

@@ -85,7 +85,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
   }
 
   return (
-    <div className="roundeddd-lg mx-auto h-fit w-full max-w-md border p-6 shadow-lg md:p-8">
+    <div className="mx-auto h-fit w-full max-w-md border bg-white p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <h3 className="text-primary text-center text-2xl font-semibold md:text-3xl">
