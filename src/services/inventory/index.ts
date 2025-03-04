@@ -32,7 +32,7 @@ export async function addTag(formData: FieldValues) {
 
 export async function deleteTag(formData: FieldValues) {
   try {
-    const { data } = await ax.delete(`/inventory/tag`, formData);
+    const { data } = await ax.delete(`/inventory/tag`, { data: formData });
     revalidatePath("/");
     return data;
   } catch (error) {
@@ -69,9 +69,9 @@ export async function addSize(formData: FieldValues) {
   }
 }
 
-export async function deleteSize(formData: FieldValues) {
+export async function deleteSize({ size }: { size: string }) {
   try {
-    const { data } = await ax.delete(`/inventory/size`, formData);
+    const { data } = await ax.delete(`/inventory/size`, { data: { size } });
     revalidatePath("/");
     return data;
   } catch (error) {

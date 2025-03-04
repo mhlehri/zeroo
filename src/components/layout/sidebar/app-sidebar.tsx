@@ -10,6 +10,7 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import {
+  Box,
   LayoutDashboard,
   ListEnd,
   ListOrdered,
@@ -87,30 +88,13 @@ export const items = [
       },
     ],
   },
-  // {
-  //   title: "Settings",
-  //   url: "#",
-  //   icon: Settings2,
-  //   items: [
-  //     {
-  //       title: "General",
-  //       url: "#",
-  //     },
-  //     {
-  //       title: "Team",
-  //       url: "#",
-  //     },
-  //     {
-  //       title: "Billing",
-  //       url: "#",
-  //     },
-  //     {
-  //       title: "Limits",
-  //       url: "#",
-  //     },
-  //   ],
-  // },
+  {
+    title: "Inventory",
+    url: "/admin/inventory",
+    icon: Box,
+  },
 ];
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { user } = useUser();
   return (
