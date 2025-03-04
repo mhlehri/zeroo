@@ -57,15 +57,21 @@ export default function TagsManagement() {
     mutationFn: addTag,
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message || "Tag added successfully");
+        toast.success(data.message || "Tag added successfully", {
+          richColors: true,
+        });
         queryClient.invalidateQueries({ queryKey: ["tags"] });
         tagForm.reset();
       } else {
-        toast.error(data.message || "Failed to add tag");
+        toast.error(data.message || "Failed to add tag", {
+          richColors: true,
+        });
       }
     },
     onError: (error) => {
-      toast.error("An error occurred while adding the tag");
+      toast.error("An error occurred while adding the tag", {
+        richColors: true,
+      });
       console.error(error);
     },
   });
@@ -75,20 +81,27 @@ export default function TagsManagement() {
     mutationFn: deleteTag,
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message || "Tag deleted successfully");
+        toast.success(data.message || "Tag deleted successfully", {
+          richColors: true,
+        });
         queryClient.invalidateQueries({ queryKey: ["tags"] });
       } else {
-        toast.error(data.message || "Failed to delete tag");
+        toast.error(data.message || "Failed to delete tag", {
+          richColors: true,
+        });
       }
     },
     onError: (error) => {
-      toast.error("An error occurred while deleting the tag");
+      toast.error("An error occurred while deleting the tag", {
+        richColors: true,
+      });
       console.error(error);
     },
   });
 
   // Submit handler
   const onSubmitTag = (values: z.infer<typeof tagFormSchema>) => {
+    values.tag = values.tag.trim().toLowerCase();
     addTagMutation(values);
   };
 
@@ -152,7 +165,7 @@ export default function TagsManagement() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag: string, index: number) => (
+              {tags.sort().map((tag: string, index: number) => (
                 <Badge
                   key={index}
                   variant="secondary"

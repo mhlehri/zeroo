@@ -57,15 +57,21 @@ export default function SizesManagement() {
     mutationFn: addSize,
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message || "Size added successfully");
+        toast.success(data.message || "Size added successfully", {
+          richColors: true,
+        });
         queryClient.invalidateQueries({ queryKey: ["sizes"] });
         sizeForm.reset();
       } else {
-        toast.error(data.message || "Failed to add size");
+        toast.error(data.message || "Failed to add size", {
+          richColors: true,
+        });
       }
     },
     onError: (error) => {
-      toast.error("An error occurred while adding the size");
+      toast.error("An error occurred while adding the size", {
+        richColors: true,
+      });
       console.error(error);
     },
   });
@@ -76,14 +82,20 @@ export default function SizesManagement() {
       mutationFn: deleteSize,
       onSuccess: (data) => {
         if (data.success) {
-          toast.success(data.message || "Size deleted successfully");
+          toast.success(data.message || "Size deleted successfully", {
+            richColors: true,
+          });
           queryClient.invalidateQueries({ queryKey: ["sizes"] });
         } else {
-          toast.error(data.message || "Failed to delete size");
+          toast.error(data.message || "Failed to delete size", {
+            richColors: true,
+          });
         }
       },
       onError: (error) => {
-        toast.error("An error occurred while deleting the size");
+        toast.error("An error occurred while deleting the size", {
+          richColors: true,
+        });
         console.error(error);
       },
     },
@@ -91,6 +103,7 @@ export default function SizesManagement() {
 
   // Submit handler
   const onSubmitSize = (values: z.infer<typeof sizeFormSchema>) => {
+    values.size = values.size.trim().toLowerCase();
     addSizeMutation(values);
   };
 
@@ -157,7 +170,7 @@ export default function SizesManagement() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {sizes.map((size: string, index: number) => (
+              {sizes.sort().map((size: string, index: number) => (
                 <Badge
                   key={index}
                   variant="secondary"

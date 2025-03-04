@@ -20,7 +20,7 @@ export const getTags = async () => {
 export async function addTag(formData: FieldValues) {
   try {
     const { data } = await ax.put(`/inventory/tag`, formData);
-    revalidatePath("/");
+    revalidatePath("/admin/inventory");
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -33,7 +33,7 @@ export async function addTag(formData: FieldValues) {
 export async function deleteTag(formData: FieldValues) {
   try {
     const { data } = await ax.delete(`/inventory/tag`, { data: formData });
-    revalidatePath("/");
+    revalidatePath("/admin/inventory");
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -59,7 +59,7 @@ export const getSizes = async () => {
 export async function addSize(formData: FieldValues) {
   try {
     const { data } = await ax.put(`/inventory/size`, formData);
-    revalidatePath("/");
+    revalidatePath("/admin/inventory");
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -72,7 +72,7 @@ export async function addSize(formData: FieldValues) {
 export async function deleteSize({ size }: { size: string }) {
   try {
     const { data } = await ax.delete(`/inventory/size`, { data: { size } });
-    revalidatePath("/");
+    revalidatePath("/admin/inventory");
     return data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
