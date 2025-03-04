@@ -1,5 +1,4 @@
 "use client";
-import { Trash } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -16,14 +15,16 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function ProductDeleteModal({
+export default function ProductPublishModal({
   name,
   id,
   children,
+  isPublished,
 }: {
   name: string;
   id: string;
   children: React.ReactNode;
+  isPublished: string;
 }) {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
@@ -71,9 +72,9 @@ export default function ProductDeleteModal({
           <Button
             disabled={isPending}
             onClick={() => deleteP(id)} // Only call deleteP here
-            variant="destructive"
+            variant={isPublished === "true" ? "destructive" : "default"}
           >
-            <Trash /> {isPending ? "Deleting..." : "Delete"}
+            {isPublished === "true" ? "Unpublish" : "Publish"}
           </Button>
           <DialogClose>
             <Button className="bg-blue-500 hover:bg-blue-600">Cancel</Button>

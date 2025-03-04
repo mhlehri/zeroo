@@ -17,7 +17,7 @@ import { useGetProducts } from "@/hooks/use-product";
 import { useDebounce } from "@/lib/use-debounce";
 import Image from "next/image";
 import Link from "next/link";
-import ProductDeleteModal from "../modal/product-delete";
+import ProductPublishModal from "../modal/product-publish";
 import ProductModal from "../modal/product-modal";
 import { DataTableColumnHeader } from "./column-header";
 import { DataTable } from "./data-table";
@@ -130,13 +130,13 @@ export default function ProductList({ isPublished }: { isPublished?: string }) {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            {isPublished === "false" ? (
-              <></>
-            ) : (
-              <ProductDeleteModal name={product.name} id={product._id}>
-                Unpublish
-              </ProductDeleteModal>
-            )}
+            <ProductPublishModal
+              name={product.name}
+              id={product._id}
+              isPublished={product.isPublished ? "true" : "false"}
+            >
+              {product.isPublished ? "Unpublish" : "Publish"}
+            </ProductPublishModal>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
