@@ -15,8 +15,9 @@ import { useUser } from "@/context/user-provider";
 import { useUserById } from "@/hooks/use-user";
 import { addOrder } from "@/services/order";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ShoppingBag, Truck, Wallet2 } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Trash2, Truck, Wallet2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,7 +43,8 @@ export default function Checkout() {
   const { user: u } = useUserById(user?.id as string);
   const [processing, setProcessing] = useState(false);
   const router = useRouter();
-  const { cart, cartLoading, clearCart } = useCart();
+  const { cart, cartLoading, clearCart, removeFromCart, updateQuantity } =
+    useCart();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -291,76 +293,80 @@ export default function Checkout() {
                 {cart.map((item) => (
                   <li
                     key={item.id}
-                    className="flex items-center gap-2 border-b pb-2"
+                    className="flex items-center justify-between gap-2 border-b pb-2"
                   >
-                    <div className="relative">
-                      <Image
-                        src={
-                          item?.image ||
-                          "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20fill='%23fff'%3E%3Cpath%20fill-rule='evenodd'%20d='M8%208.5V1a1%201%200%200%200-2%200v7.5H1a1%201%200%200%200%200%202h5.5V15a1%201%200%200%200%202%200v-5.5H15a1%201%200%200%200%200-2h-5.5z'%2F%3E%3C%2Fsvg%3E"
-                        }
-                        alt={item?.name}
-                        width={60}
-                        height={60}
-                        className="bg-primary-200 roundeddd-md size-14"
-                      />
-                      <div className="roundeddd-full absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center bg-rose-600 text-xs text-white">
-                        {item.quantity}
+                    <div className="flex items-center gap-2">
+                      <div className="relative">
+                        <Link href={`/products/${item.id}`}>
+                          <Image
+                            src={
+                              item?.image ||
+                              "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2016%2016'%20fill='%23fff'%3E%3Cpath%20fill-rule='evenodd'%20d='M8%208.5V1a1%201%200%200%200-2%200v7.5H1a1%201%200%200%200%200%202h5.5V15a1%201%200%200%200%202%200v-5.5H15a1%201%200%200%200%200-2h-5.5z'%2F%3E%3C%2Fsvg%3E"
+                            }
+                            alt={item?.name}
+                            width={60}
+                            height={60}
+                            className="bg-primary-200 roundeddd-md size-14"
+                          />
+                        </Link>
+                        <div className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded bg-rose-600 text-xs text-white">
+                          {item.quantity}
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold">{item.name}</h3>
+                        <p className="text-primary-600 text-sm">
+                          ৳{item.price * item.quantity}
+                        </p>
                       </div>
                     </div>
-                    <div>
-                      <h3 className="text-sm font-semibold">{item.name}</h3>
-                      <p className="text-primary-600 text-sm">
-                        ৳{item.price * item.quantity}
-                      </p>
-                    </div>
-                    {/* <div className="flex flex-wrap items-center justify-between gap-2 md:flex-nowrap">
-                        <div className="flex w-fit items-center roundeddd-md border">
-                          <Button
-                            size="sm"
-                            type="button"
-                            variant="ghost"
-                            className="p-1.5 text-xs md:text-sm"
-                            onClick={() =>
-                              updateQuantity(
-                                item.id,
-                                Math.max(1, item.quantity - 1),
-                              )
-                            }
-                          >
-                            <Minus size={14} />
-                          </Button>
-                          <Input
-                            value={item.quantity}
-                            className="h-full w-12 roundeddd-none border-x border-y-0 text-center"
-                            onChange={(e) =>
-                              updateQuantity(
-                                item.id,
-                                Number.parseInt(e.target.value) || 1,
-                              )
-                            }
-                          />
-                          <Button
-                            type="button"
-                            className="p-1.5 text-xs md:text-sm"
-                            size="sm"
-                            variant="ghost"
-                            onClick={() =>
-                              updateQuantity(item.id, item.quantity + 1)
-                            }
-                          >
-                            <Plus size={14} />
-                          </Button>
-                        </div>
+                    <div className="flex flex-wrap items-center justify-between gap-2 md:flex-nowrap">
+                      <div className="roundeddd-md flex w-fit items-center border">
                         <Button
                           size="sm"
-                          variant="link"
-                          className="text-xs text-red-500"
-                          onClick={() => removeFromCart(item.id)}
+                          type="button"
+                          variant="ghost"
+                          className="p-1.5 text-xs md:text-sm"
+                          onClick={() =>
+                            updateQuantity(
+                              item.id,
+                              Math.max(1, item.quantity - 1),
+                            )
+                          }
                         >
-                          <Trash2 size={14} />{" "}
+                          <Minus size={14} />
                         </Button>
-                      </div> */}
+                        <Input
+                          value={item.quantity}
+                          className="roundeddd-none h-full w-12 border-x border-y-0 text-center"
+                          onChange={(e) =>
+                            updateQuantity(
+                              item.id,
+                              Number.parseInt(e.target.value) || 1,
+                            )
+                          }
+                        />
+                        <Button
+                          type="button"
+                          className="p-1.5 text-xs md:text-sm"
+                          size="sm"
+                          variant="ghost"
+                          onClick={() =>
+                            updateQuantity(item.id, item.quantity + 1)
+                          }
+                        >
+                          <Plus size={14} />
+                        </Button>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="link"
+                        className="text-xs text-red-500"
+                        onClick={() => removeFromCart(item.id)}
+                      >
+                        <Trash2 size={14} />{" "}
+                      </Button>
+                    </div>
                   </li>
                 ))}
               </ul>

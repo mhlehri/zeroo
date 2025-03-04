@@ -19,8 +19,8 @@ export default function CartSheet() {
     return (
       <div className="flex h-full flex-col items-center justify-center space-y-4 px-2 py-8">
         <div className="relative mb-4">
-          <div className="bg-primary/50 roundeddd-full absolute inset-0 scale-150 opacity-50 blur-xl" />
-          <div className="bg-background roundeddd-full relative p-4">
+          <div className="absolute inset-0 scale-150 rounded-full bg-teal-500/50 opacity-50 blur-xl" />
+          <div className="relative rounded-full bg-teal-50 p-4">
             <ShoppingBag className="size-12 text-slate-600" strokeWidth={1.5} />
           </div>
         </div>
@@ -53,19 +53,23 @@ export default function CartSheet() {
               className="flex items-start justify-between gap-3 border-b pb-4"
             >
               <div className="flex gap-3">
-                <Image
-                  src={
-                    item?.image ||
-                    "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" ||
-                    "/placeholder.svg"
-                  }
-                  alt={item?.name}
-                  width={60}
-                  height={60}
-                  className="roundeddd-md size-14 bg-slate-600 object-cover"
-                />
+                <Link href={`/products/${item.id}`}>
+                  <Image
+                    src={
+                      item?.image ||
+                      "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" ||
+                      "/placeholder.svg"
+                    }
+                    alt={item?.name}
+                    width={60}
+                    height={60}
+                    className="roundeddd-md size-14 bg-slate-600 object-cover"
+                  />
+                </Link>
                 <div>
-                  <h3 className="line-clamp-2 font-medium">{item?.name}</h3>
+                  <Link href={`/products/${item.id}`}>
+                    <h3 className="line-clamp-2 font-medium">{item?.name}</h3>
+                  </Link>
                   <p className="text-sm text-slate-600">TK {item.price}</p>
                   <div className="mt-1 flex items-center gap-2">
                     <Button

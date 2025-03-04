@@ -37,9 +37,9 @@ export default function CartPage() {
       ) : cart.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
-            <div className="relative mb-6">
+            <div className="relative mx-auto mb-6 w-fit">
               <div className="absolute inset-0 scale-[1.8] rounded-full bg-teal-500/50 opacity-50 blur-xl" />
-              <div className="bg-background roundeddd-full relative p-6">
+              <div className="relative rounded-full bg-teal-50 p-6">
                 <ShoppingBag
                   className="mx-auto size-16 md:size-20"
                   strokeWidth={1.5}
@@ -146,6 +146,7 @@ export default function CartPage() {
                           type="button"
                           className="text-xs md:text-sm"
                           size="sm"
+                          disabled={item.quantity >= 10}
                           variant="ghost"
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)
