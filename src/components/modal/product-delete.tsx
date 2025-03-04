@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export default function ProductPublishModal({
+export default function ProductDeleteModal({
   name,
   id,
   children,
@@ -23,7 +23,6 @@ export default function ProductPublishModal({
   name: string;
   id: string;
   children: React.ReactNode;
-  isPublished: string;
 }) {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();

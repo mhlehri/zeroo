@@ -21,6 +21,7 @@ import ProductPublishModal from "../modal/product-publish";
 import ProductModal from "../modal/product-modal";
 import { DataTableColumnHeader } from "./column-header";
 import { DataTable } from "./data-table";
+import ProductDeleteModal from "../modal/product-delete";
 
 export default function ProductList({ isPublished }: { isPublished?: string }) {
   const [query, setQuery] = React.useState("");
@@ -137,6 +138,11 @@ export default function ProductList({ isPublished }: { isPublished?: string }) {
             >
               {product.isPublished ? "Unpublish" : "Publish"}
             </ProductPublishModal>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <ProductDeleteModal name={product.name} id={product._id}>
+              Delete
+            </ProductDeleteModal>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
