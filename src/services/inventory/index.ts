@@ -54,3 +54,16 @@ export async function addSize(formData: FieldValues) {
     throw error;
   }
 }
+
+export async function deleteSize(formData: FieldValues) {
+  try {
+    const { data } = await ax.delete(`/inventory/size`, formData);
+    revalidatePath("/");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
