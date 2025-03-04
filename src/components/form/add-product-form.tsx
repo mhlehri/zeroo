@@ -591,6 +591,7 @@ export default function ProductForm() {
                       </SelectContent>
                     </Select>
                     <Input
+                      className="flex-1"
                       type="number"
                       placeholder="Stock"
                       value={variantStock}
