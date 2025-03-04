@@ -113,6 +113,7 @@ export default function SizesManagement() {
 
   // Submit handler
   const onSubmitSize = (values: z.infer<typeof sizeFormSchema>) => {
+    values.size = values.size.trim().toUpperCase();
     addSizeMutation(values);
   };
 
