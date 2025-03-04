@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Trash2 } from "lucide-react";
+import { Trash2, RefreshCw } from "lucide-react";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import {
   Form,
@@ -34,14 +36,18 @@ const sizeFormSchema = z.object({
 export default function SizesManagement() {
   const queryClient = useQueryClient();
 
-  // Sizes Query
+  // Sizes Query with refetch interval
   const {
     data: sizes = [],
     isLoading: isSizesLoading,
     isError: isSizesError,
+    refetch: refetchSizes,
+    isFetching: isRefetchingSizes,
   } = useQuery({
     queryKey: ["sizes"],
     queryFn: getSizes,
+    refetchInterval: 0, // Disable automatic refetching
+    staleTime: 0, // Consider data stale immediately
   });
 
   // Size Form
@@ -60,7 +66,9 @@ export default function SizesManagement() {
         toast.success(data.message || "Size added successfully", {
           richColors: true,
         });
+        // Force refetch after mutation
         queryClient.invalidateQueries({ queryKey: ["sizes"] });
+        refetchSizes();
         sizeForm.reset();
       } else {
         toast.error(data.message || "Failed to add size", {
@@ -85,7 +93,9 @@ export default function SizesManagement() {
           toast.success(data.message || "Size deleted successfully", {
             richColors: true,
           });
+          // Force refetch after mutation
           queryClient.invalidateQueries({ queryKey: ["sizes"] });
+          refetchSizes();
         } else {
           toast.error(data.message || "Failed to delete size", {
             richColors: true,
@@ -103,13 +113,17 @@ export default function SizesManagement() {
 
   // Submit handler
   const onSubmitSize = (values: z.infer<typeof sizeFormSchema>) => {
-    values.size = values.size.trim().toLowerCase();
     addSizeMutation(values);
   };
 
   const handleDeleteSize = (size: string) => {
     deleteSizeMutation({ size });
   };
+
+  // Force refetch when component mounts
+  useEffect(() => {
+    refetchSizes();
+  }, [refetchSizes]);
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -151,9 +165,23 @@ export default function SizesManagement() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Existing Sizes</CardTitle>
-          <CardDescription>Manage your product sizes</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Existing Sizes</CardTitle>
+            <CardDescription>Manage your product sizes</CardDescription>
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => refetchSizes()}
+            disabled={isRefetchingSizes}
+            className="h-8 w-8"
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${isRefetchingSizes ? "animate-spin" : ""}`}
+            />
+            <span className="sr-only">Refresh</span>
+          </Button>
         </CardHeader>
         <CardContent>
           {isSizesLoading ? (
@@ -172,7 +200,7 @@ export default function SizesManagement() {
             <div className="flex flex-wrap gap-2">
               {sizes.sort().map((size: string, index: number) => (
                 <Badge
-                  key={index}
+                  key={`${size}-${index}`}
                   variant="secondary"
                   className="flex items-center gap-1 px-3 py-1.5"
                 >
@@ -192,6 +220,9 @@ export default function SizesManagement() {
             </div>
           )}
         </CardContent>
+        <CardFooter className="text-muted-foreground text-xs">
+          {sizes.length} sizes total
+        </CardFooter>
       </Card>
     </div>
   );
