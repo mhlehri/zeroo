@@ -67,3 +67,16 @@ export async function deleteSize(formData: FieldValues) {
     throw error;
   }
 }
+
+export async function deleteTag(formData: FieldValues) {
+  try {
+    const { data } = await ax.delete(`/inventory/tag`, formData);
+    revalidatePath("/");
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response) {
+      return error.response.data;
+    }
+    throw error;
+  }
+}
