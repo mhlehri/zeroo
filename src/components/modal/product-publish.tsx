@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
-import { deleteProduct } from "@/services/product";
+import { updateProduct } from "@/services/product";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -32,7 +32,10 @@ export default function ProductPublishModal({
   const { mutate: deleteP, isPending } = useMutation({
     mutationKey: ["products"], // Tracks mutation
     mutationFn: async (id: string) => {
-      const res = await deleteProduct(id);
+      const res = await updateProduct({
+        id,
+        formData: { isPublished: isPublished === "true" ? "false" : "true" },
+      });
       return res;
     },
     onSuccess: (data) => {
