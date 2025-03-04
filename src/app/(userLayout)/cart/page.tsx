@@ -38,7 +38,7 @@ export default function CartPage() {
         <div className="flex h-full w-full flex-col items-center justify-center px-4 py-16">
           <div className="mx-auto max-w-md text-center">
             <div className="relative mb-6">
-              <div className="bg-primary/50 roundeddd-full absolute inset-0 scale-[1.8] opacity-50 blur-xl" />
+              <div className="absolute inset-0 scale-[1.8] rounded-full bg-teal-500/50 opacity-50 blur-xl" />
               <div className="bg-background roundeddd-full relative p-6">
                 <ShoppingBag
                   className="mx-auto size-16 md:size-20"
@@ -91,26 +91,31 @@ export default function CartPage() {
                     key={item?.id}
                     className="flex flex-col justify-between gap-4 border-b pb-4 last-of-type:border-b-0 last-of-type:pb-0 md:flex-row"
                   >
-                    <div className="flex gap-2 md:flex-nowrap md:gap-4">
-                      <Image
-                        src={
-                          item?.image ||
-                          "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
-                        }
-                        alt={item?.name}
-                        width={60}
-                        height={60}
-                        className="roundeddd-md size-16 bg-gray-200"
-                      />
-                      <div>
-                        <h3 className="text-md font-semibold md:text-base">
-                          {item?.name}
-                        </h3>
-                        <p className="md:text-md text-sm text-slate-600">
-                          TK {item.price} x {item.quantity}
-                        </p>
+                    <Link
+                      href={`/products/${item?.id}`}
+                      className="hover:bg-gray-50"
+                    >
+                      <div className="flex gap-2 md:flex-nowrap">
+                        <Image
+                          src={
+                            item?.image ||
+                            "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                          }
+                          alt={item?.name}
+                          width={60}
+                          height={60}
+                          className="roundeddd-md size-16 bg-gray-200"
+                        />
+                        <div className="px-1">
+                          <h3 className="text-md font-semibold md:text-base">
+                            {item?.name}
+                          </h3>
+                          <p className="md:text-md text-sm text-slate-600">
+                            TK {item.price} x {item.quantity}
+                          </p>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                     <div className="flex items-center gap-1 md:gap-2">
                       <div className="roundeddd-md flex w-fit border">
                         <Button
