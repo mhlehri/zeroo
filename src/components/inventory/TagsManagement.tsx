@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Trash2 } from "lucide-react";
+import { Trash2, RefreshCw } from "lucide-react";
+import { useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,6 +15,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import {
   Form,
@@ -34,14 +36,18 @@ const tagFormSchema = z.object({
 export default function TagsManagement() {
   const queryClient = useQueryClient();
 
-  // Tags Query
+  // Tags Query with refetch interval
   const {
     data: tags = [],
     isLoading: isTagsLoading,
     isError: isTagsError,
+    refetch: refetchTags,
+    isFetching: isRefetchingTags,
   } = useQuery({
     queryKey: ["tags"],
     queryFn: getTags,
+    refetchInterval: 0, // Disable automatic refetching
+    staleTime: 0, // Consider data stale immediately
   });
 
   // Tag Form
@@ -60,7 +66,9 @@ export default function TagsManagement() {
         toast.success(data.message || "Tag added successfully", {
           richColors: true,
         });
+        // Force refetch after mutation
         queryClient.invalidateQueries({ queryKey: ["tags"] });
+        refetchTags();
         tagForm.reset();
       } else {
         toast.error(data.message || "Failed to add tag", {
@@ -84,7 +92,9 @@ export default function TagsManagement() {
         toast.success(data.message || "Tag deleted successfully", {
           richColors: true,
         });
+        // Force refetch after mutation
         queryClient.invalidateQueries({ queryKey: ["tags"] });
+        refetchTags();
       } else {
         toast.error(data.message || "Failed to delete tag", {
           richColors: true,
@@ -108,6 +118,11 @@ export default function TagsManagement() {
   const handleDeleteTag = (tag: string) => {
     deleteTagMutation({ tag });
   };
+
+  // Force refetch when component mounts
+  useEffect(() => {
+    refetchTags();
+  }, [refetchTags]);
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -146,9 +161,23 @@ export default function TagsManagement() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Existing Tags</CardTitle>
-          <CardDescription>Manage your product tags</CardDescription>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Existing Tags</CardTitle>
+            <CardDescription>Manage your product tags</CardDescription>
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => refetchTags()}
+            disabled={isRefetchingTags}
+            className="h-8 w-8"
+          >
+            <RefreshCw
+              className={`h-4 w-4 ${isRefetchingTags ? "animate-spin" : ""}`}
+            />
+            <span className="sr-only">Refresh</span>
+          </Button>
         </CardHeader>
         <CardContent>
           {isTagsLoading ? (
@@ -165,9 +194,9 @@ export default function TagsManagement() {
             </div>
           ) : (
             <div className="flex flex-wrap gap-2">
-              {tags.sort().map((tag: string, index: number) => (
+              {tags.map((tag: string, index: number) => (
                 <Badge
-                  key={index}
+                  key={`${tag}-${index}`}
                   variant="secondary"
                   className="flex items-center gap-1 px-3 py-1.5"
                 >
@@ -187,6 +216,9 @@ export default function TagsManagement() {
             </div>
           )}
         </CardContent>
+        <CardFooter className="text-muted-foreground text-xs">
+          {tags.length} tags total
+        </CardFooter>
       </Card>
     </div>
   );
