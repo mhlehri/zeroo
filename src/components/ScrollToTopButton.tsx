@@ -33,7 +33,7 @@ export function ScrollToTopButton() {
       <div
         className={`${isVisible ? "right-4" : "-right-10"} fixed bottom-16 z-50 transition-discrete duration-300 md:bottom-6`}
       >
-        <Button onClick={scrollToTop} size="icon" className="roundeddd-full">
+        <Button onClick={scrollToTop} size="icon" className="rounded-full">
           <ArrowUpToLine className="size-3 md:size-4" />
         </Button>
       </div>

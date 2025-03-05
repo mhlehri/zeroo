@@ -58,7 +58,7 @@ export default function LoginForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="roundeddd-lg relative z-40 h-fit w-full max-w-md border p-6 shadow-xs sm:p-8 md:p-10">
+    <div className="relative z-40 h-fit w-full max-w-md rounded-lg border p-6 shadow-xs sm:p-8 md:p-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

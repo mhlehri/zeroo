@@ -226,7 +226,7 @@ export function OrderList() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="roundeddd-md border">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -71,7 +71,7 @@ export default function AddSubCategoryForm() {
 
   const submitting = isPending;
   return (
-    <div className="roundeddd-lg h-fit w-full max-w-md border bg-white p-6 shadow-lg md:p-8">
+    <div className="h-fit w-full max-w-md rounded-lg border bg-white p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

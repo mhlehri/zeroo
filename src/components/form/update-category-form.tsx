@@ -160,7 +160,7 @@ export default function UpdateCategoryForm({ id }: { id: string }) {
               <div className="loader mx-auto" />
             ) : imageUrl ? (
               <Image
-                className="roundeddd mt-2 size-32 border border-dashed border-slate-300 p-2"
+                className="mt-2 size-32 rounded border border-dashed border-slate-300 p-2"
                 width={100}
                 height={100}
                 src={imageUrl}

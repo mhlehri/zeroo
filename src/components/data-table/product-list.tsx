@@ -51,7 +51,7 @@ export default function ProductList({ isPublished }: { isPublished?: string }) {
             alt={row.getValue("name")}
             width={50}
             height={50}
-            className="roundeddd size-12"
+            className="size-12 rounded"
           />
         );
       },
@@ -125,7 +125,7 @@ export default function ProductList({ isPublished }: { isPublished?: string }) {
           <DropdownMenuItem asChild>
             <Link
               href={`/admin/update-product?id=${product._id}`}
-              className="roundeddd-sm relative w-full cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+              className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
             >
               Edit
             </Link>

@@ -10,7 +10,7 @@ type Props = {
 
 export default function TotalCounts({ text, func, link }: Props) {
   return (
-    <div className="roundeddd border bg-white">
+    <div className="rounded border bg-white">
       <div className="px-4 pt-4 pb-2">
         <p className="text-lg font-medium text-slate-800 md:text-xl">{text}</p>
 

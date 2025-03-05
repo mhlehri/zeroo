@@ -262,7 +262,7 @@ export default function ProductForm() {
     <div className="mb-14 md:container md:mb-0">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="md:roundeddd-lg fixed bottom-0 z-50 w-full border bg-white p-2 shadow-xs md:relative md:mb-4 md:flex md:items-center md:justify-between md:p-6">
+          <div className="fixed bottom-0 z-50 w-full border bg-white p-2 shadow-xs md:relative md:mb-4 md:flex md:items-center md:justify-between md:rounded-lg md:p-6">
             <h3 className="hidden text-lg font-semibold text-balance text-slate-950 sm:text-xl md:block md:text-2xl lg:text-3xl">
               Add Product
             </h3>
@@ -300,7 +300,7 @@ export default function ProductForm() {
 
           <div className="grid gap-8 p-4 md:grid-cols-2 md:p-0">
             <div className="space-y-6">
-              <div className="roundeddd-lg border bg-white p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">
                   General Information
                 </h2>
@@ -330,7 +330,7 @@ export default function ProductForm() {
                             control={form.control}
                             render={({ field }) => (
                               <div className="relative">
-                                <div className="roundeddd-md flex min-h-[80px] w-full flex-col border border-slate-200">
+                                <div className="flex min-h-[80px] w-full flex-col rounded-md border border-slate-200">
                                   <MenuBar editor={editor} />
                                   <EditorContent
                                     className="prose prose-h3:m-0 prose-p:m-0 min-h-20 border-none p-2"
@@ -349,7 +349,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="roundeddd-lg border bg-white p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Pricing</h2>
                 <div className="space-y-4">
                   <FormField
@@ -416,7 +416,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="roundeddd-lg border bg-white p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Inventory</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <FormField
@@ -456,9 +456,9 @@ export default function ProductForm() {
 
             {/* Right Column */}
             <div className="space-y-6">
-              <div className="roundeddd-lg border bg-white p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Product Media</h2>
-                <div className="roundeddd-lg border-2 border-dashed p-4">
+                <div className="rounded-lg border-2 border-dashed p-4">
                   <div className="grid grid-cols-3 gap-4">
                     {imageUrls.map((image, index) => (
                       <div key={index} className="group relative">
@@ -467,12 +467,12 @@ export default function ProductForm() {
                           alt={`Product image ${index + 1}`}
                           width={100}
                           height={100}
-                          className="roundeddd-lg aspect-square w-full object-cover"
+                          className="aspect-square w-full rounded-lg object-cover"
                         />
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="roundeddd-full absolute top-1 right-1 size-6 bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
+                          className="absolute top-1 right-1 size-6 rounded-full bg-red-500 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -525,7 +525,7 @@ export default function ProductForm() {
                 </div>
               </div>
 
-              <div className="roundeddd-lg border bg-white p-6 shadow-xs">
+              <div className="rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Category</h2>
                 <div className="space-y-4">
                   <FormField
@@ -562,7 +562,7 @@ export default function ProductForm() {
               </div>
 
               {/* Add Variants section */}
-              <div className="roundeddd-lg mt-6 border bg-white p-6 shadow-xs">
+              <div className="mt-6 rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Variants</h2>
                 <div className="space-y-4">
                   <div className="flex gap-2">
@@ -630,7 +630,7 @@ export default function ProductForm() {
               </div>
 
               {/* Add Tags section */}
-              <div className="roundeddd-lg mt-6 border bg-white p-6 shadow-xs">
+              <div className="mt-6 rounded-lg border bg-white p-6 shadow-xs">
                 <h2 className="mb-4 text-xl font-semibold">Tags</h2>
                 <div className="space-y-4">
                   <div className="flex gap-2">

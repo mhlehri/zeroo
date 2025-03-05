@@ -13,15 +13,16 @@ export default function ProductCard({ product }: { product: TProduct }) {
     image: product?.images[0],
     stock: product?.stock,
   };
+  const isInStock = product?.stock > 0;
   return (
-    <div className="roundeddd-md mb-4 w-full max-w-[230px] overflow-hidden border-none shadow-none">
+    <div className="group/card relative mb-4 h-full w-full max-w-[230px] overflow-hidden rounded-lg border bg-white shadow-sm transition-all duration-300 hover:shadow-md">
       <Link href={`/products/${product?._id}`}>
-        <div className="relative mb-2">
+        <div className="relative mb-2 aspect-square overflow-hidden">
           <Image
             src={product?.images[0]}
-            className="roundeddd-md h-[200px] w-full bg-gray-100 lg:h-[240px]"
-            width={240}
-            height={240}
+            className="h-full w-full bg-gray-100 object-cover transition-transform duration-300 group-hover/card:scale-105"
+            width={300}
+            height={300}
             alt={product?.name}
           />
           <Badge
@@ -30,8 +31,18 @@ export default function ProductCard({ product }: { product: TProduct }) {
           >
             Stock Out
           </Badge>
+          {isInStock && product.discountPrice && (
+            <Badge
+              variant="secondary"
+              className="absolute top-2 left-2 bg-teal-50 text-teal-600"
+            >
+              {product.discountType === "percentage"
+                ? `${product.discountPrice}% OFF`
+                : "FLAT"}
+            </Badge>
+          )}
         </div>
-        <div className="mb-2 grid grid-rows-2 gap-0.5 md:gap-2">
+        <div className="mb-2 grid grid-rows-2 gap-0.5 px-4 md:gap-2">
           <h4 className="truncate text-sm font-medium capitalize md:text-base">
             {product?.name}
           </h4>
@@ -40,8 +51,8 @@ export default function ProductCard({ product }: { product: TProduct }) {
           </h6>
         </div>
       </Link>
-      <div className="max-w-[1360px]:flex-nowrap flex flex-wrap gap-2 xl:gap-1">
-        <AddToCart textVisible product={productSend} />
+      <div className="flex gap-2 p-4 pt-0 *:flex-1 xl:gap-1">
+        <AddToCart product={productSend} />
         <BuyNow product={productSend} />
       </div>
     </div>

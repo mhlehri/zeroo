@@ -101,7 +101,7 @@ const ActionCell = ({ user }: { user: TUser }) => {
         <DropdownMenuItem asChild>
           <Link
             href={`/admin/update-user?id=${user._id}`}
-            className="roundeddd-sm relative w-full cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
+            className="relative w-full cursor-pointer items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm outline-hidden transition-colors select-none hover:bg-slate-100 hover:text-slate-900 dark:focus:bg-slate-800 dark:focus:text-slate-50"
           >
             Edit
           </Link>
@@ -161,7 +161,7 @@ export default function UserList() {
         />
         <DataTableViewOptions table={table} />
       </div>
-      <div className="roundeddd-md border">
+      <div className="rounded-md border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

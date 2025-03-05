@@ -120,7 +120,7 @@ const StripePaymentForm: React.FC<StripePaymentFormProps> = ({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="roundeddd-md border p-3">
+      <div className="rounded-md border p-3">
         <CardElement
           options={{
             style: {

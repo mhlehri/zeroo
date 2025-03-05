@@ -74,7 +74,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
           <div className="flex max-w-2xl touch-pan-y">
             {slides?.map((img, index) => (
               <div className="min-w-0 flex-[0_0_100%]" key={index}>
-                <div className="roundeddd-md flex aspect-square w-full items-center justify-center overflow-hidden">
+                <div className="flex aspect-square w-full items-center justify-center overflow-hidden rounded-md">
                   <Image
                     width={400}
                     height={400}
@@ -108,11 +108,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
       {/* Dots for mobile devices */}
       {slides.length > 1 && (
-        <div className="roundeddd-full mt-1 flex justify-center space-x-2 p-1 sm:hidden">
+        <div className="mt-1 flex justify-center space-x-2 rounded-full p-1 sm:hidden">
           {slides?.map((_, index) => (
             <button
               key={index}
-              className={`roundeddd-full h-2 w-2 transition-colors duration-300 ${
+              className={`h-2 w-2 rounded-full transition-colors duration-300 ${
                 index === selectedIndex ? "bg-primary" : "bg-primary-300"
               }`}
               onClick={() => onThumbClick(index)}

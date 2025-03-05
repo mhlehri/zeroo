@@ -63,7 +63,7 @@ export default function CartSheet() {
                     alt={item?.name}
                     width={60}
                     height={60}
-                    className="roundeddd-md size-14 bg-slate-600 object-cover"
+                    className="size-14 rounded-md bg-slate-600 object-cover"
                   />
                 </Link>
                 <div>

@@ -17,7 +17,7 @@ export const Thumb: React.FC<PropType> = (props) => {
       variant="link"
       className={`${
         selected ? "" : "opacity-70 hover:opacity-100"
-      } roundeddd-lg size-20 shrink-0 overflow-hidden bg-transparent p-0`}
+      } size-20 shrink-0 overflow-hidden rounded-lg bg-transparent p-0`}
     >
       <Image
         src={img}

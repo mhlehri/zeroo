@@ -69,7 +69,7 @@ export function CommandDialogSearch({
                 isMobile && isProductPage
                   ? "block h-8 w-full pl-7"
                   : "hidden pl-10"
-              } roundeddd py-0 text-sm ring-0 outline-hidden placeholder:text-black/50 md:block`}
+              } rounded py-0 text-sm ring-0 outline-hidden placeholder:text-black/50 md:block`}
               onFocus={() => setOpen(true)}
             />
             <Search
@@ -107,7 +107,7 @@ export function CommandDialogSearch({
                         onClick={() => handleProductClick(product?.name)}
                       >
                         <Image
-                          className="roundeddd-lg size-10"
+                          className="size-10 rounded-lg"
                           src={product?.images[0] || "/placeholder.svg"}
                           alt={product?.name}
                           width={50}

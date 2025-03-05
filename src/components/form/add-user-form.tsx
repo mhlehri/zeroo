@@ -78,7 +78,7 @@ export default function AddUserForm() {
   }
   const submitting = form.formState.isSubmitting;
   return (
-    <div className="roundeddd-lg mx-auto h-fit w-full max-w-md border p-6 shadow-lg md:p-8">
+    <div className="mx-auto h-fit w-full max-w-md rounded-lg border p-6 shadow-lg md:p-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
