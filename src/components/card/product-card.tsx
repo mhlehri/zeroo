@@ -6,10 +6,19 @@ import { Badge } from "../ui/badge";
 
 export default function ProductCard({ product }: { product: TProduct }) {
   // console.log(product?.images[0], "Product Image");
+  const discountedPrice =
+    product.discountType === "percentage" && product.discountPrice
+      ? product.price - (product.price * product.discountPrice) / 100
+      : product.discountType === "fixed" && product.discountPrice
+        ? product.price - product.discountPrice
+        : product.discountType === ""
+          ? product.price
+          : (product.discountPrice ?? product.price);
+
   const productSend = {
     id: product?._id,
     name: product?.name,
-    price: product?.price,
+    price: discountedPrice,
     image: product?.images[0],
     stock: product?.stock,
   };
@@ -38,7 +47,9 @@ export default function ProductCard({ product }: { product: TProduct }) {
             >
               {product.discountType === "percentage"
                 ? `${product.discountPrice}% OFF`
-                : "FLAT"}
+                : product.discountType === "fixed"
+                  ? `${product.discountPrice} FLAT`
+                  : null}
             </Badge>
           )}
         </div>
@@ -46,9 +57,20 @@ export default function ProductCard({ product }: { product: TProduct }) {
           <h4 className="truncate text-sm font-medium capitalize md:text-base">
             {product?.name}
           </h4>
-          <h6 className="text-sm md:text-base">
-            TK <span className="font-bold">{product?.price.toFixed(2)}</span>
-          </h6>
+          <div className="flex items-baseline gap-2">
+            <span className="text-sm font-bold md:text-base">
+              TK{" "}
+              {product.discountType !== "" && product?.discountPrice
+                ? discountedPrice?.toFixed(2)
+                : product?.price.toFixed(2)}
+            </span>
+
+            {product.discountType !== "" && product?.discountPrice ? (
+              <span className="text-xs text-slate-500 line-through md:text-sm">
+                TK {product.price.toFixed(2)}
+              </span>
+            ) : null}
+          </div>
         </div>
       </Link>
       <div className="flex gap-2 p-4 pt-0 *:flex-1 xl:gap-1">
