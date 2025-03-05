@@ -99,7 +99,8 @@ export default function CartPage() {
                         <Image
                           src={
                             item?.image ||
-                            "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+                            "data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" ||
+                            "/placeholder.svg"
                           }
                           alt={item?.name}
                           width={60}
@@ -135,18 +136,20 @@ export default function CartPage() {
                         <Input
                           value={item.quantity}
                           className="roundeddd-none h-full w-12 border-x border-y-0 text-center"
-                          onChange={(e) =>
+                          onChange={(e) => {
+                            const newQuantity =
+                              Number.parseInt(e.target.value) || 1;
                             updateQuantity(
                               item.id,
-                              Number.parseInt(e.target.value) || 1,
-                            )
-                          }
+                              Math.min(newQuantity, item.stock || 10),
+                            );
+                          }}
                         />
                         <Button
                           type="button"
                           className="text-xs md:text-sm"
                           size="sm"
-                          disabled={item.quantity >= 10}
+                          disabled={item.quantity >= (item.stock || 10)}
                           variant="ghost"
                           onClick={() =>
                             updateQuantity(item.id, item.quantity + 1)

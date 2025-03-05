@@ -105,11 +105,6 @@ export default function ProductDetails({ product }: { product: TProduct }) {
             </div>
           </div>
 
-          {/* <div className="flex items-center text-green-600">
-            <Truck className="w-5 h-5 mr-2" />
-            <span>Free shipping - Estimated delivery in 3-5 days</span>
-          </div> */}
-
           <p className={`${stock > 0 ? "text-green-600" : "text-red-600"}`}>
             {stock > 0 ? `In stock (${stock} available)` : "Out of stock"}
           </p>
@@ -144,12 +139,6 @@ export default function ProductDetails({ product }: { product: TProduct }) {
       <hr />
 
       <div className="space-y-4 px-4 md:px-0">
-        {/* <div className="my-4 md:my-6">
-          <Reviews productId={product?._id} />
-          {user && user.role == "admin" ? null : !user ? null : (
-            <AddReviewForm productId={product?._id} />
-          )}
-        </div> */}
         <div>
           {isLoading ? (
             <CardCarouselSkeleton />
