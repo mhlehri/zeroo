@@ -79,7 +79,7 @@ export default function ProductImageGallery({
                   src={images[currentImage] || "/placeholder.svg"}
                   alt={`${productName} - Image ${currentImage + 1}`}
                   fill
-                  className="object-contain"
+                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   priority
                 />
