@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: TProduct }) {
   };
   const isInStock = product?.stock > 0;
   return (
-    <div className="group/card relative mb-4 h-full w-full max-w-[230px] overflow-hidden rounded-lg border bg-white shadow-sm transition-all duration-300 hover:shadow-md">
+    <div className="group/card relative h-full w-full max-w-[230px] overflow-hidden rounded-lg border bg-white shadow-sm transition-all duration-300 hover:shadow-md">
       <Link href={`/products/${product?._id}`}>
         <div className="relative mb-2 aspect-square overflow-hidden">
           <Image
