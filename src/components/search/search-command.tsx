@@ -65,7 +65,7 @@ export function CommandDialogSearch({
             <Input
               hidden={isSearchInputHidden}
               placeholder="Search by products..."
-              className={`border-slate-200 bg-white hover:placeholder:text-slate-700 ${
+              className={`border-slate-200 bg-white hover:placeholder:text-black/70 ${
                 isMobile && isProductPage
                   ? "block h-8 w-full pl-7"
                   : "hidden pl-10"
@@ -73,7 +73,7 @@ export function CommandDialogSearch({
               onFocus={() => setOpen(true)}
             />
             <Search
-              className={`z-50 text-black md:text-slate-800 ${isSearchInputHidden ? "" : isMobile && isProductPage ? "absolute top-[25%] left-2 size-4 text-slate-400" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
+              className={`z-50 text-black md:text-gray-400 ${isSearchInputHidden ? "" : isMobile && isProductPage ? "absolute top-[25%] left-2 size-4 text-slate-400" : "top-[20%] left-3 size-5 md:absolute md:size-6"} `}
             />
           </>
         ) : (
